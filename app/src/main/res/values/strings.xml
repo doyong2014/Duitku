@@ -1,0 +1,106 @@
+<resources>
+    <string name="app_name">Duitku</string>
+
+    <string name="splash_bottom_txt">MARI BERGABUNG SEKARANG DAN TERIMA PENDAPATAN PASIF SETIAP KALI BAYAR TOP-UP PREPAID <![CDATA["&"]]> BILL</string>
+    <string name="splash_middle_txt">MASTER\nAGEN ANTAR\nBANGSA</string>
+    <string name="splash_top_txt">MI1 INDONESIA</string>
+
+    <string name="next">NEXT</string>
+    <string name="skip">SKIP</string>
+    <string name="start">GOT IT</string>
+
+    <string name="slide1_title">Life Advice Looking\nThrough A Window</string>
+    <string name="slide1_desc">Secure container separates business and personal data with end to end encryption and managed securety policies.</string>
+
+    <string name="slide2_title">5 Reasons To Purchase\nDesktop Computers</string>
+    <string name="slide2_desc">Secure container separates business and personal data with end to end encryption and managed securety policies.</string>
+
+    <string name="slide3_title">Help Finding\nInformation Online</string>
+    <string name="slide3_desc">Secure container separates business and personal data with end to end encryption and managed securety policies.</string>
+
+    <string name="slide4_title">Compatible Inkjet\nCartridge</string>
+    <string name="slide4_desc">Secure container separates business and personal data with end to end encryption and managed securety policies.</string>
+
+    <string name="slide5_title">Hotels How To Get Free\nGifts</string>
+    <string name="slide5_desc">Secure container separates business and personal data with end to end encryption and managed securety policies.</string>
+
+    <string name="login">LOGIN</string>
+    <string name="signin">DAFTAR</string>
+    <string name="more">LANJUT</string>
+    <string name="submit">SUBMIT</string>
+    <string name="text_size">TEXT SIZE</string>
+    <string name="share">SHARE</string>
+
+    <string name="forget_pass">Lupa password?</string>
+    <string name="no_account">Belum punya akun?</string>
+
+    <string name="full_name">Nama Lengkap</string>
+    <string name="email">Alamat e-mail</string>
+    <string name="phone_num">Nomor Ponsel</string>
+    <string name="birthday">Tanggal Lahir</string>
+    <string name="email_or_phone">Email or PhoneNumber</string>
+    <string name="submit_code">KODE OTP</string>
+    <string name="resubmit_code">Kirim ulang OTP</string>
+    <string name="password">Password</string>
+    <string name="confirm_password">Password Konfirmasi</string>
+    <string name="agree_term">Dengan mendaftar anda setuju dengan Peraturan\nkami dan ketenuan privasi.</string>
+
+    <string name="alert_recovery">Notice message goes here. Please check your e-mail for password change</string>
+    <string name="alert_sign">Notice message goes here. Thank you for registering with us. Before continue please check e-mail for account confirmation</string>
+
+    <string name="error_invalid_email">This email address is invalid</string>
+    <string name="error_invalid_password">This password is too short</string>
+    <string name="error_incorrect_password">This password is incorrect</string>
+    <string name="error_incorrect_phone">This phone number is incorrect</string>
+    <string name="error_null_username">Please enter your full name.</string>
+    <string name="error_null_email">Please enter your email address.</string>
+    <string name="error_null_password">Please enter your password.</string>
+    <string name="error_null_phone">Please enter your phone number.</string>
+    <string name="error_null_code">Please enter your verify code.</string>
+    <string name="error_failed_connect">Failed connect to server.</string>
+
+    <string name="search_hint">Search Mi1 Indonesia</string>
+
+    <string name="nav_profil">PROFIL</string>
+    <string name="nav_beranda">BERANDA</string>
+    <string name="nav_tentang">TENTANG\nMi1</string>
+    <string name="nav_hubungi">HUBUNGI\nKAMI</string>
+    <string name="nav_bantuan">BANTUAN</string>
+    <string name="nav_bagikan">BAGIKAN</string>
+    <string name="nav_logout">LOG OUT</string>
+
+    <string name="news_balance">Saldo Rp %1$s</string>
+    <string name="top_up">TOP UP</string>
+    <string name="top">TOP</string>
+    <string name="pre_paid">Pembayaran</string>
+    <string name="buy">Beli</string>
+    <string name="transfer">Transfer</string>
+
+    <string name="balance">Saldo</string>
+    <string name="pre_payment">Pembayaran Prabayar</string>
+    <string name="post_payment">Pembayaran Prabayar</string>
+    <string name="amount">Jumlah</string>
+    <string name="date">Tanggal</string>
+    <string name="info">Info</string>
+
+    <string name="minimun_amount">Minimum top-up Rp 10.000</string>
+    <string name="disclaimer">Disclaimer When you are a lover of astronomy, the confusion between astronomy and astrology by those who don<![CDATA["'"]]>t really understand the differences can get pretty aggravating.</string>
+    <string name="error_null_amount">Enter amount topup</string>
+    <string name="error_invalid_amount">A minimal amount of Rp 10,000 topup</string>
+    <string name="pay">BAYAR</string>
+    <string name="maybank">Lakukan transfer ke Bank Bii Maybank dengan kide 000 between astronomy and astrology</string>
+
+    <string name="customer_num">Nomor Pelanggan</string>
+    <string name="purchase_amount">Jumlah Pembelian</string>
+
+    <string-array name="prepaid">
+        <item>PLN PRABAYAR</item>
+        <item>PULSA HP</item>
+    </string-array>
+
+    <string-array name="postpaid">
+        <item>PLN PASCABAYAR</item>
+        <item>HP PASCABAYAR</item>
+    </string-array>
+
+</resources>

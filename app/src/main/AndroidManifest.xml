@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.mi1.duitku">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <application
+        android:allowBackup="true"
+        android:hardwareAccelerated="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <activity
+            android:name=".SplashActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppThemeNoTitle">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".WelcomeActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppThemeNoTitle" />
+        <activity
+            android:name=".HomeActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppThemeNoTitle" />
+        <activity
+            android:name=".LoginActivity"
+            android:label="Login"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".RecoveryPasswordActivity"
+            android:label="Lupa Password"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".SignupActivity"
+            android:label="Daftar"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".VerifyCodeActivity"
+            android:label="Kode OTP"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Main.MainActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppThemeNoTitle">
+            <intent-filter>
+                <action android:name="android.intent.action.SEARCH" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".Tab1.ContentsActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppThemeNoTitle" />
+        <activity
+            android:name=".Tab3.TopUpActivity"
+            android:label="Top-up"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Tab3.SelectPaymentActivity"
+            android:label="Pilih Pembayaran"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Tab3.TransferActivity"
+            android:label="Top-up Bank Transfer"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Tab3.PLNPrepaidActivity"
+            android:label="PLN PRABAYAR"
+            android:screenOrientation="portrait" />
+    </application>
+
+</manifest>
