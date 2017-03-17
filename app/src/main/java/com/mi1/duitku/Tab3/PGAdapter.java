@@ -20,13 +20,13 @@ import java.util.ArrayList;
  * Created by owner on 3/7/2017.
  */
 
-public class BankAdapter extends RecyclerView.Adapter<BankAdapter.ViewHolder> {
+public class PGAdapter extends RecyclerView.Adapter<PGAdapter.ViewHolder> {
 
     Context context;
-    ArrayList<BankInfo> bankInfos;
+    ArrayList<PaymentMethod> bankInfos;
     int selPos = 0;
 
-    public BankAdapter(Context context, ArrayList<BankInfo> bankInfos) {
+    public PGAdapter(Context context, ArrayList<PaymentMethod> bankInfos) {
         this.context = context;
         this.bankInfos = bankInfos;
     }
@@ -41,14 +41,14 @@ public class BankAdapter extends RecyclerView.Adapter<BankAdapter.ViewHolder> {
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
-        BankInfo item = bankInfos.get(position);
-        holder.bankName.setText(item.name);
-        holder.markUrl.setBackgroundResource(item.mark);
-        if (selPos == position) {
-            holder.cardView.setCardBackgroundColor(Color.LTGRAY);
-        } else {
-            holder.cardView.setCardBackgroundColor(Color.WHITE);
-        }
+//        BankInfo item = bankInfos.get(position);
+//        holder.bankName.setText(item.name);
+//        holder.markUrl.setBackgroundResource(item.mark);
+//        if (selPos == position) {
+//            holder.cardView.setCardBackgroundColor(0x80FFFFFF);
+//        } else {
+//            holder.cardView.setCardBackgroundColor(Color.WHITE);
+//        }
 
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override

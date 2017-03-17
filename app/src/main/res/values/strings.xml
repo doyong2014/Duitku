@@ -88,7 +88,7 @@
     <string name="error_null_amount">Enter amount topup</string>
     <string name="error_invalid_amount">A minimal amount of Rp 10,000 topup</string>
     <string name="pay">BAYAR</string>
-    <string name="maybank">Lakukan transfer ke Bank Bii Maybank dengan kide 000 between astronomy and astrology</string>
+    <string name="maybank">Lakukan transfer ke Bank Bii Maybank dengan kide 000 between astronomy and astrology.</string>
 
     <string name="customer_num">Nomor Pelanggan</string>
     <string name="purchase_amount">Jumlah Pembelian</string>

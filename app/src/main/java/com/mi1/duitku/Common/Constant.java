@@ -10,6 +10,10 @@ public class Constant {
 	public static final String NEWS_PAGE = "http://renemo.com/komunitas/api/get_category_posts/?category_slug=DUITKU";
 	public static final String PROMOV_PAGE = "http://renemo.com/komunitas/api/get_category_posts/?category_slug=DUITKU";
 	public static final String EVENTS_PAGE = "http://renemo.com/komunitas/api/get_category_posts/?category_slug=DUITKU";
+	public static final String PGLIST_PAGE = "https://passport.duitku.com/webapi/api/topup/paymentmethod";//webapi/api/merchant/paymentmethod/";//"http://182.23.85.10/rbsnewwebapi/api/merchant/paymentmethod/";
+	public static final String INQUIRY_PAGE = "https://passport.duitku.com/webapi/api/topup/request";//webapi/api/merchant/inquiry";
+	public static final String MOBILE_PAY_PAGE = "https://passport.duitku.com/webapi/api/merchant/mobilepay";
+	public static final String BANK_LIST_PAGE = "https://passport.duitku.com/webapi/api/topup/paymentmethod";
 	
 	public static final String JSON_STATUS_MESSAGE = "statusMessage";
 	public static final String JSON_STATUS_CODE = "statusCode";
@@ -22,7 +26,7 @@ public class Constant {
 	public static final String JSON_PHONE_NUM = "phoneNumber";
 	public static final String JSON_PIC_URL = "picUrl";
 
-	public static final String ORDER_DETAIL = "Top-up Duitku";
+	public static final String ORDER_DETAIL = "Top-up Mi1 Indonesia";
 	public static final String STATUS_INQUIRY = "inquiry";
 	public static final String MERCHANT_CODE = "D0011";//"D0019";
 	public static final String MERCHANT_NAME = "Tembang Kenangan";
@@ -32,9 +36,7 @@ public class Constant {
 	public static final String WEB_PAYMENT_STATUS = "code_web_payment_status";
 	public static final String FAILED = "failed";
 	public static final String SUCCEED = "succeed";
-	public static final String PGLIST_PAGE = "https://passport.duitku.com/webapi/api/topup/paymentmethod";//webapi/api/merchant/paymentmethod/";//"http://182.23.85.10/rbsnewwebapi/api/merchant/paymentmethod/";
-	public static final String INQUIRY_PAGE = "https://passport.duitku.com/webapi/api/topup/request";//webapi/api/merchant/inquiry";
-	public static final String MOBILE_PAY_PAGE = "https://passport.duitku.com/webapi/api/merchant/mobilepay";
+
 
 	public static final String COMMUNITY_CODE = "DK";
 

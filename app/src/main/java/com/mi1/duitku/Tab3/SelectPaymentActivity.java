@@ -1,6 +1,7 @@
 package com.mi1.duitku.Tab3;
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
@@ -9,23 +10,31 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
+import android.widget.Toast;
 
-import com.mi1.duitku.Common.CommonFunction;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.mi1.duitku.Common.Constant;
 import com.mi1.duitku.R;
 
-import java.io.UnsupportedEncodingException;
-import java.security.NoSuchAlgorithmException;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
-import java.util.Random;
+import java.util.Collections;
 
 public class SelectPaymentActivity extends AppCompatActivity {
 
     private LinearLayoutManager mLinearLayoutManager;
     private RecyclerView recycler;
-    private BankAdapter adapter;
-    private ArrayList<BankInfo> bankInfos = new ArrayList<>();
-    private String orderId = null;
+    private PGAdapter adapter;
+    private int mAdminFee = 0;
+    private int mPrice;
+    private ArrayList<PaymentMethod> mPaymentMethods = new ArrayList<PaymentMethod>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,46 +48,27 @@ public class SelectPaymentActivity extends AppCompatActivity {
         recycler.setLayoutManager(mLinearLayoutManager);
 
         Intent intent = getIntent();
-        String amount = intent.getExtras().getString("amount");
+        Inquiry inquiry = intent.getParcelableExtra("inquiry");
 
-        init();
-        adapter = new BankAdapter(this, bankInfos);
+        GetPGInfo getPGInfo = new GetPGInfo();
+        getPGInfo.execute();
+
+        adapter = new PGAdapter(this, mPaymentMethods);
         recycler.setAdapter(adapter);
 
-        Random random = new Random();
-        orderId = random.nextInt(1000000) + "";
+        TextView orderDetail = (TextView)findViewById(R.id.txt_order_detail);
+        orderDetail.setText(inquiry.getProductDetail());
 
-        String sign = null;
-        try {
-            sign = CommonFunction.getSHA1(Constant.STATUS_INQUIRY + Constant.API_KEY + orderId + Constant.MERCHANT_CODE);
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
+        TextView price = (TextView)findViewById(R.id.txt_price);
+        price.setText("Rp " + inquiry.getAmount());
 
-        Inquiry inquiry = new Inquiry();
+        mPrice = Integer.valueOf(inquiry.getAmount());
 
-        inquiry.setAction(Constant.STATUS_INQUIRY);
-        inquiry.setMerchantCode(Constant.MERCHANT_CODE);
-        inquiry.setOrderId(orderId);
-        inquiry.setAmount(amount);
-        inquiry.setProductDetail(Constant.ORDER_DETAIL);
-        inquiry.setAdditionalParam("");
-        inquiry.setSign(sign);
+        TextView adminFee = (TextView)findViewById(R.id.txt_price);
+//        adminFee.setText("Rp " + inquiry.getAmount());
 
-    }
-
-    private void init() {
-        bankInfos.add(new BankInfo("BCA\nKlikPay", R.drawable.bcaklikpay));
-        bankInfos.add(new BankInfo("ATM\nBersama", R.drawable.bcaklikpay));
-        bankInfos.add(new BankInfo("CIMB\nKlik", R.drawable.bcaklikpay));
-        bankInfos.add(new BankInfo("BCA\nKlikPay", R.drawable.bcaklikpay));
-        bankInfos.add(new BankInfo("ATM\nBersama", R.drawable.bcaklikpay));
-        bankInfos.add(new BankInfo("CIMB\nKlik", R.drawable.bcaklikpay));
-        bankInfos.add(new BankInfo("BCA\nKlikPay", R.drawable.bcaklikpay));
-        bankInfos.add(new BankInfo("ATM\nBersama", R.drawable.bcaklikpay));
-        bankInfos.add(new BankInfo("CIMB\nKlik", R.drawable.bcaklikpay));
+        TextView totalPrice = (TextView)findViewById(R.id.txt_total_price);
+        totalPrice.setText("Rp " + String.valueOf(mAdminFee+mPrice));
     }
 
     @Override
@@ -108,5 +98,73 @@ public class SelectPaymentActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public class GetPGInfo extends AsyncTask<String, Integer, String> {
+
+        @Override
+        protected void onPreExecute() {
+            // TODO Auto-generated method stub
+            super.onPreExecute();
+        }
+
+        @Override
+        protected String doInBackground(String... param) {
+
+            String result = null;
+
+            try {
+
+                URL url = new URL(Constant.BANK_LIST_PAGE);
+
+                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                conn.setReadTimeout(20000); /* milliseconds */
+                conn.setConnectTimeout(30000); /* milliseconds */
+//                conn.setRequestProperty("Accept", "application/json");
+                conn.setRequestMethod("GET");
+                conn.setDoOutput(true);
+                conn.setDoInput(true);
+
+                if (conn.getResponseCode() == HttpURLConnection.HTTP_OK){
+                    InputStreamReader tmp = new InputStreamReader(conn.getInputStream(), "UTF-8");
+                    BufferedReader reader = new BufferedReader(tmp);
+                    StringBuilder builder = new StringBuilder();
+                    String str;
+
+                    while((str = reader.readLine()) != null){
+                        builder.append(str+"\n");
+                    }
+
+                    result = builder.toString();
+                }
+
+            } catch (MalformedURLException e){
+                //Log.e("oasis", e.toString());
+            } catch (IOException e) {
+                //Log.e("oasis", e.toString());
+            }
+            return result;
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+
+            if (result == null){
+                Toast.makeText(SelectPaymentActivity.this, R.string.error_failed_connect, Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            try {
+                Gson gson = new GsonBuilder().create();
+                PaymentMethod newsData = gson.fromJson(result, PaymentMethod.class);
+
+                Collections.addAll(mPaymentMethods, newsData);
+
+//                adapter.notifyDataSetChanged();
+            } catch (Exception e) {
+                // TODO: handle exception
+                //Log.e("oasis", e.toString());
+            }
+        }
     }
 }

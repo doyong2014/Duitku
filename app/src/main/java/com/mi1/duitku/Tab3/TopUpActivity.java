@@ -14,11 +14,16 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.mi1.duitku.Common.CommonFunction;
+import com.mi1.duitku.Common.Constant;
 import com.mi1.duitku.R;
 
+import java.io.UnsupportedEncodingException;
+import java.security.NoSuchAlgorithmException;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.Locale;
+import java.util.Random;
 
 public class TopUpActivity extends AppCompatActivity {
 
@@ -68,8 +73,31 @@ public class TopUpActivity extends AppCompatActivity {
     }
 
     private void selectPayment() {
+
+        Random random = new Random();
+        String orderId = random.nextInt(1000000) + "";
+
+        String sign = null;
+        try {
+            sign = CommonFunction.getSHA1(Constant.STATUS_INQUIRY + Constant.API_KEY + orderId + Constant.MERCHANT_CODE);
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+
+        Inquiry inquiry = new Inquiry();
+
+        inquiry.setAction(Constant.STATUS_INQUIRY);
+        inquiry.setMerchantCode(Constant.MERCHANT_CODE);
+        inquiry.setOrderId(orderId);
+        inquiry.setAmount(etAmount.getText().toString());
+        inquiry.setProductDetail(Constant.ORDER_DETAIL);
+        inquiry.setAdditionalParam("");
+        inquiry.setSign(sign);
+
         Intent intent = new Intent(TopUpActivity.this, SelectPaymentActivity.class);
-        intent.putExtra("amount", etAmount.getText().toString());
+        intent.putExtra("inquiry", inquiry);
         startActivity(intent);
     }
 

@@ -7,19 +7,12 @@ import android.os.Parcelable;
 public class Inquiry implements Parcelable {
 
     private String action;
-
     private String merchantCode;
-
     private String orderId;
-
     private String amount;
-
     private String productDetail;
-
     private String additionalParam;
-
     private String sign;
-
     private String amoutnAfterFee;
 
     public Inquiry(){
