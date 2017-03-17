@@ -16,6 +16,8 @@ import com.daimajia.slider.library.SliderTypes.BaseSliderView;
 import com.daimajia.slider.library.SliderTypes.TextSliderView;
 import com.mi1.duitku.Common.UserInfo;
 import com.mi1.duitku.R;
+import com.mi1.duitku.Tab1.Common.DataModel;
+import com.mi1.duitku.Tab1.Common.GlobalData;
 import com.squareup.picasso.Picasso;
 
 import java.util.HashMap;

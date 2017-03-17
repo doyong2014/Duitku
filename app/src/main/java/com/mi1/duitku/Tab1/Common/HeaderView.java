@@ -1,29 +1,28 @@
-package com.mi1.duitku.Common;
+package com.mi1.duitku.Tab1.Common;
 
 import android.content.Context;
 import android.util.AttributeSet;
 import android.view.View;
 
-import com.lcodecore.tkrefreshlayout.IBottomView;
 import com.lcodecore.tkrefreshlayout.IHeaderView;
 import com.lcodecore.tkrefreshlayout.OnAnimEndListener;
+import com.mi1.duitku.R;
 
 /**
  * Created by lcodecore on 2016/10/1.
  */
 
-public class FooterView extends com.github.ybq.android.spinkit.SpinKitView implements IBottomView {
+public class HeaderView extends com.github.ybq.android.spinkit.SpinKitView implements IHeaderView {
 
-
-    public FooterView(Context context) {
+    public HeaderView(Context context) {
         super(context);
     }
 
-    public FooterView(Context context, AttributeSet attrs) {
+    public HeaderView(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
 
-    public FooterView(Context context, AttributeSet attrs, int defStyleAttr) {
+    public HeaderView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
     }
 
@@ -33,7 +32,7 @@ public class FooterView extends com.github.ybq.android.spinkit.SpinKitView imple
     }
 
     @Override
-    public void onPullingUp(float fraction, float maxHeadHeight, float headHeight) {
+    public void onPullingDown(float fraction, float maxHeadHeight, float headHeight) {
 
     }
 
@@ -43,14 +42,16 @@ public class FooterView extends com.github.ybq.android.spinkit.SpinKitView imple
     }
 
     @Override
-    public void onFinish() {
+    public void startAnim(float maxHeadHeight, float headHeight) {
 
     }
 
     @Override
-    public void startAnim(float maxHeadHeight, float headHeight) {
+    public void onFinish(OnAnimEndListener animEndListener) {
 
+        animEndListener.onAnimEnd();
     }
+
 
     @Override
     public void reset() {

@@ -33,6 +33,7 @@
 
     <string name="forget_pass">Lupa password?</string>
     <string name="no_account">Belum punya akun?</string>
+    <string name="wait">Please Wait...</string>
 
     <string name="full_name">Nama Lengkap</string>
     <string name="email">Alamat e-mail</string>

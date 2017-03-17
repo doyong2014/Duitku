@@ -12,7 +12,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
@@ -33,18 +32,16 @@ import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 
 public class LoginActivity extends AppCompatActivity implements OnClickListener {
 
-    private String mUserName;
-    private String mPassword;
+    private String userName;
+    private String password;
 
     private EditText etUserName;
     private EditText etPassword;
-    private TextView txtError;
-    private ProgressDialog progressDialog;
+    private TextView tvError;
+    private ProgressDialog progress;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,13 +58,13 @@ public class LoginActivity extends AppCompatActivity implements OnClickListener 
         Button btnLogin = (Button)findViewById(R.id.btn_login);
         btnLogin.setOnClickListener(this);
 
-        txtError = (TextView)findViewById(R.id.txt_login_error);
+        tvError = (TextView)findViewById(R.id.txt_login_error);
 
         etUserName = (EditText)findViewById(R.id.edt_login_email);
         etPassword = (EditText)findViewById(R.id.edt_login_password);
 
-        progressDialog = new ProgressDialog(this);
-        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        progress = new ProgressDialog(this);
+        progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
 
     }
 
@@ -79,8 +76,8 @@ public class LoginActivity extends AppCompatActivity implements OnClickListener 
     private void login(){
 
         String[] params = new String[3];
-//        params[0] = mUserName;
-//        params[1] = md5(mPassword);
+        params[0] = userName;
+        params[1] = CommonFunction.md5(password);
         params[2] = Constant.COMMUNITY_CODE;
         LoginAsync _loginAsync = new LoginAsync();
         _loginAsync.execute(params);
@@ -103,7 +100,7 @@ public class LoginActivity extends AppCompatActivity implements OnClickListener 
                 break;
 
             case R.id.txt_forget_password:
-                txtError.setVisibility(View.INVISIBLE);
+                tvError.setVisibility(View.INVISIBLE);
                 etPassword.setText("");
                 intent = new Intent(LoginActivity.this, RecoveryPasswordActivity.class);
                 startActivity(intent);
@@ -118,17 +115,17 @@ public class LoginActivity extends AppCompatActivity implements OnClickListener 
 
     private boolean validateLogin(){
 
-        txtError.setVisibility(View.INVISIBLE);
-        mUserName = etUserName.getText().toString();
-        mPassword = etPassword.getText().toString();
+        tvError.setVisibility(View.INVISIBLE);
+        userName = etUserName.getText().toString();
+        password = etPassword.getText().toString();
 
-        if (mUserName.isEmpty()){
+        if (userName.isEmpty()){
             dispError(getString(R.string.error_null_email));
             etUserName.requestFocus();
             return false;
         }
 
-        if (mPassword.isEmpty()){
+        if (password.isEmpty()){
             dispError(getString(R.string.error_null_password));
             etPassword.requestFocus();
             return false;
@@ -138,8 +135,8 @@ public class LoginActivity extends AppCompatActivity implements OnClickListener 
     }
 
     private void dispError(String error){
-        txtError.setText(error);
-        txtError.setVisibility(View.VISIBLE);
+        tvError.setText(error);
+        tvError.setVisibility(View.VISIBLE);
     }
 
     public class LoginAsync extends AsyncTask<String, Integer, String> {
@@ -147,8 +144,8 @@ public class LoginActivity extends AppCompatActivity implements OnClickListener 
         @Override
         protected void onPreExecute() {
             // TODO Auto-generated method stub
-            progressDialog.setMessage("Loging...");
-            progressDialog.show();
+            progress.setMessage(getString(R.string.wait));
+            progress.show();
             super.onPreExecute();
         }
 
@@ -210,7 +207,7 @@ public class LoginActivity extends AppCompatActivity implements OnClickListener 
         protected void onPostExecute(String result) {
 
             String success;
-            progressDialog.dismiss();
+            progress.dismiss();
 
             if (result == null){
                 dispError(getString(R.string.error_failed_connect));

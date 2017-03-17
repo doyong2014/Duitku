@@ -10,7 +10,8 @@ public class Constant {
 	public static final String NEWS_PAGE = "http://renemo.com/komunitas/api/get_category_posts/?category_slug=DUITKU";
 	public static final String PROMOV_PAGE = "http://renemo.com/komunitas/api/get_category_posts/?category_slug=DUITKU";
 	public static final String EVENTS_PAGE = "http://renemo.com/komunitas/api/get_category_posts/?category_slug=DUITKU";
-
+	public static final String PRODUCT_LIST_PAGE = "http://sandbox.duitku.com/webapi/api/ppob/listv2";
+	public static final String INQUIRY_BILL_PAGE = "http://sandbox.duitku.com/webapi/api/ppob/inquiry";
 	
 	public static final String JSON_STATUS_MESSAGE = "statusMessage";
 	public static final String JSON_STATUS_CODE = "statusCode";

@@ -1,4 +1,4 @@
-package com.mi1.duitku.Tab1;
+package com.mi1.duitku.Tab1.Common;
 
 /**
  * Created by owner on 3/7/2017.

@@ -19,7 +19,7 @@ import com.brioal.bottomtab.interfaces.OnTabSelectedListener;
 import com.brioal.bottomtab.view.BottomLayout;
 import com.mi1.duitku.LoginActivity;
 import com.mi1.duitku.R;
-import com.mi1.duitku.Tab1.GlobalData;
+import com.mi1.duitku.Tab1.Common.GlobalData;
 
 import java.util.ArrayList;
 import java.util.List;

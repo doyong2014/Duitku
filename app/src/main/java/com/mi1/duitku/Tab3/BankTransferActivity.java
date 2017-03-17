@@ -9,15 +9,14 @@ import android.view.MenuItem;
 import android.widget.TextView;
 
 import com.mi1.duitku.Common.UserInfo;
-import com.mi1.duitku.LoginActivity;
 import com.mi1.duitku.R;
 
-public class TransferActivity extends AppCompatActivity {
+public class BankTransferActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_transfer);
+        setContentView(R.layout.activity_bank_transfer);
 
         TextView accountNum = (TextView)findViewById(R.id.txt_account_num);
         accountNum.setText(UserInfo.mVaNumber);
@@ -42,7 +41,7 @@ public class TransferActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         if (id == android.R.id.home) {
-            TransferActivity.this.finish();
+            BankTransferActivity.this.finish();
         }
 
         return super.onOptionsItemSelected(item);

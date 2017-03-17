@@ -15,25 +15,24 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.mi1.duitku.Main.MainActivity;
-
 public class WelcomeActivity extends AppCompatActivity {
 
     private ViewPager viewPager;
-    private MyViewPagerAdapter myViewPagerAdapter;
-    private LinearLayout dotsLayout;
-    private TextView[] dots;
+    private MyViewPagerAdapter adapter;
+    private LinearLayout layoutDots;
+    private TextView[] tvDots;
     private int[] layouts;
     private Button btnSkip, btnNext;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_welcome);
 
         viewPager = (ViewPager) findViewById(R.id.view_pager);
-        dotsLayout = (LinearLayout) findViewById(R.id.ll_dots);
+        layoutDots = (LinearLayout) findViewById(R.id.ll_dots);
         btnSkip = (Button) findViewById(R.id.btn_skip);
         btnNext = (Button) findViewById(R.id.btn_next);
 
@@ -48,8 +47,8 @@ public class WelcomeActivity extends AppCompatActivity {
         // adding bottom dots
         addBottomDots(0);
 
-        myViewPagerAdapter = new MyViewPagerAdapter();
-        viewPager.setAdapter(myViewPagerAdapter);
+        adapter = new MyViewPagerAdapter();
+        viewPager.setAdapter(adapter);
         viewPager.addOnPageChangeListener(viewPagerPageChangeListener);
 
         btnSkip.setOnClickListener(new View.OnClickListener() {
@@ -77,21 +76,22 @@ public class WelcomeActivity extends AppCompatActivity {
 
     // draw dots
     private void addBottomDots(int currentPage) {
-        dots = new TextView[layouts.length];
+        
+        tvDots = new TextView[layouts.length];
 
         int colorsActive = ContextCompat.getColor(this, R.color.colorActiveDot);
         int colorsInactive = ContextCompat.getColor(this, R.color.colorInactiveDot);
 
-        dotsLayout.removeAllViews();
-        for (int i = 0; i < dots.length; i++) {
-            dots[i] = new TextView(this);
-            dots[i].setText(Html.fromHtml("&#8226;"));
-            dots[i].setTextSize(35);
-            dots[i].setTextColor(colorsInactive);
-            dotsLayout.addView(dots[i]);
+        layoutDots.removeAllViews();
+        for (int i = 0; i < tvDots.length; i++) {
+            tvDots[i] = new TextView(this);
+            tvDots[i].setText(Html.fromHtml("&#8226;"));
+            tvDots[i].setTextSize(35);
+            tvDots[i].setTextColor(colorsInactive);
+            layoutDots.addView(tvDots[i]);
         }
 
-        dots[currentPage].setTextColor(colorsActive);
+        tvDots[currentPage].setTextColor(colorsActive);
     }
 
     private int getItem(int i) {

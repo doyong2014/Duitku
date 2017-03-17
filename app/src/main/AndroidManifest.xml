@@ -62,7 +62,7 @@
             android:label="Top-up"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".Tab3.TransferActivity"
+            android:name=".Tab3.BankTransferActivity"
             android:label="Top-up Bank Transfer"
             android:screenOrientation="portrait" />
         <activity

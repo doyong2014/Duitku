@@ -1,4 +1,6 @@
-package com.mi1.duitku.Tab1;
+package com.mi1.duitku.Tab1.Common;
+
+import com.mi1.duitku.Tab1.Common.DataModel;
 
 import java.util.ArrayList;
 

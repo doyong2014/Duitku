@@ -18,6 +18,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.mi1.duitku.R;
+import com.mi1.duitku.Tab1.Common.DataModel;
+import com.mi1.duitku.Tab1.Common.GlobalData;
 import com.squareup.picasso.Picasso;
 
 public class ContentsActivity extends AppCompatActivity {

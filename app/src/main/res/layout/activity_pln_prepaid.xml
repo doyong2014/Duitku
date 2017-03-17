@@ -27,13 +27,13 @@
                 android:text="@string/customer_num"
                 android:textSize="16sp"/>
 
-            <TextView
+            <EditText
+                android:id="@+id/edt_customer"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="067"
                 android:textSize="24sp"
-                android:textStyle="bold"
-                android:layout_marginTop="3dp"/>
+                android:layout_marginTop="3dp"
+                android:background="@android:color/transparent"/>
 
             <View
                 android:layout_width="match_parent"
@@ -47,13 +47,13 @@
                 android:text="@string/purchase_amount"
                 android:textSize="16sp"/>
 
-            <TextView
-                android:id="@+id/txt_account_num"
+            <EditText
+                android:id="@+id/edt_amount"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textSize="24sp"
-                android:textStyle="bold"
-                android:layout_marginTop="3dp"/>
+                android:layout_marginTop="3dp"
+                android:background="@android:color/transparent"/>
 
             <View
                 android:layout_width="match_parent"
@@ -61,7 +61,7 @@
                 android:background="@color/colorSepLine" />
 
             <Button
-                android:id="@+id/btn_more"
+                android:id="@+id/btn_pay"
                 style="?android:textAppearanceSmall"
                 android:layout_height="40dp"
                 android:layout_width="140dp"

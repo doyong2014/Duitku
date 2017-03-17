@@ -1,11 +1,19 @@
 package com.mi1.duitku.Common;
 
-import java.io.UnsupportedEncodingException;
+import android.content.Context;
+import android.graphics.Typeface;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.TextView;
+
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.Locale;
+import java.util.Set;
 
 /**
  * Created by owner on 3/8/2017.
@@ -45,5 +53,48 @@ public class CommonFunction {
         DecimalFormat df = (DecimalFormat)nf;
 
         return df.format(a);
+    }
+
+    private static final Set<String> abbrs = new HashSet<String>(Arrays.asList(
+            new String[] {"PLN","XL", "HP", "PAM", "BPJS"}
+    ));
+
+    public static String CapitalizeSentences(String sentence) {
+        StringBuilder result = new StringBuilder();
+        String[] words = sentence.split("\\s");
+
+        for(int i=0,l=words.length;i<l;++i) {
+            //give space between words
+            if(i>0 && i < l)
+                result.append(" ");
+
+            //
+            if (abbrs.contains(words[i].toUpperCase()))
+                result.append(words[i]);
+            else {
+                result.append(Character.toUpperCase(words[i].charAt(0)))
+                        .append(words[i].substring(1).toLowerCase());
+            }
+        }
+
+        return result.toString();
+    }
+
+    public static void overrideFonts(final Context context, final View v) {
+        try {
+            if (v instanceof ViewGroup) {
+                ViewGroup vg = (ViewGroup) v;
+
+                for (int i = 0; i < vg.getChildCount(); i++) {
+                    View child = vg.getChildAt(i);
+                    overrideFonts(context, child);
+                }
+
+            } else if (v instanceof TextView) {
+                ((TextView) v).setTypeface(Typeface.createFromAsset(context.getAssets(), "OpenSans-Regular.ttf"));
+            }
+
+        } catch (Exception e) {
+        }
     }
 }
