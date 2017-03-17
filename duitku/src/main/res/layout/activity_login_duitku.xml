@@ -1,0 +1,188 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+                android:background="@android:color/white">
+
+    <include
+        android:id="@+id/tool_bar"
+        layout="@layout/tool_bar">
+
+    </include>
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/imageView2"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"
+        android:src="@mipmap/background"
+        android:scaleType="fitXY"
+        android:visibility="gone"/>
+
+    <LinearLayout
+        android:id="@+id/layoutLogoLinear"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="85dp"
+        android:visibility="visible"
+        android:background="@android:color/transparent"
+        android:layout_marginBottom="20dp">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/imageView3"
+            android:src="@drawable/logo"
+            />
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/imageView4"
+            android:src="@drawable/logoduitku"/>
+    </LinearLayout>
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/text_username"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:hint="Masukkan email anda"
+        android:textColorHint="#555555"
+        android:textColor="#555555"
+        android:singleLine="false"
+        android:textIsSelectable="false"
+        android:backgroundTint="#28bd48"
+        android:width="300dp"
+        android:inputType="textEmailAddress"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/layoutLogoLinear"
+        android:drawableLeft="@drawable/amplop"
+        android:drawableStart="@drawable/amplop"
+        android:drawablePadding="10dp"/>
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/text_password"
+        android:hint="Password"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:textColor="#555555"
+        android:textColorHint="#555555"
+        android:backgroundTint="#FF28BD48"
+        android:width="300dp"
+        android:inputType="textPassword"
+        android:layout_below="@+id/text_username"
+        android:layout_centerHorizontal="true"
+        android:drawableLeft="@drawable/gembok"
+        android:drawableStart="@drawable/gembok"
+        android:drawablePadding="12dp"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Login"
+        android:id="@+id/button_login"
+        android:layout_marginTop="45dp"
+        android:width="300dp"
+        android:background="@drawable/btn_shape_rounded"
+        android:textColor="@android:color/white"
+        android:layout_below="@+id/text_password"
+        android:layout_centerHorizontal="true"/>
+
+    <!--<LinearLayout-->
+        <!--android:id="@+id/linear1"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_below="@id/tool_bar"-->
+        <!--android:orientation="horizontal">-->
+
+        <!--<RelativeLayout-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_margin="@dimen/normal_margin_10">-->
+
+            <!--<Button-->
+                <!--android:id="@+id/button"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:background="@color/background_blue"-->
+                <!--android:text="Merchant Logo"-->
+                <!--android:textColor="@android:color/white" />-->
+
+            <!--<ImageView-->
+                <!--android:id="@+id/img_duitku"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_alignBottom="@+id/button"-->
+                <!--android:layout_alignParentRight="true"-->
+                <!--android:layout_alignParentTop="true"-->
+                <!--android:layout_toEndOf="@+id/button"-->
+                <!--android:layout_toRightOf="@+id/button"-->
+                <!--android:src="@drawable/logo_duitku"-->
+                <!--android:layout_marginLeft="130dp" />-->
+        <!--</RelativeLayout>-->
+
+    <!--</LinearLayout>-->
+
+    <!--<LinearLayout-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:layout_below="@+id/linear1"-->
+        <!--android:layout_centerHorizontal="true"-->
+        <!--android:orientation="vertical">-->
+        <!--<View-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="1dp"-->
+            <!--android:background="@android:color/darker_gray" />-->
+        <!--<EditText-->
+            <!--android:id="@+id/text_username"-->
+            <!--android:layout_width="300dp"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_gravity="center_horizontal"-->
+            <!--android:layout_marginTop="10dp"-->
+            <!--android:hint="Username" />-->
+
+        <!--<EditText-->
+            <!--android:id="@+id/text_password"-->
+            <!--android:layout_width="300dp"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_gravity="center_horizontal"-->
+            <!--android:layout_marginTop="10dp"-->
+            <!--android:ems="10"-->
+            <!--android:hint="Password"-->
+            <!--android:inputType="textPassword" />-->
+
+        <!--<Button-->
+            <!--android:id="@+id/button_login"-->
+            <!--android:layout_width="150dp"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_gravity="center_horizontal"-->
+            <!--android:layout_marginTop="10dp"-->
+            <!--android:background="@color/background_blue"-->
+            <!--android:text="Login"-->
+            <!--android:textColor="@android:color/white" />-->
+
+        <!--<ProgressBar-->
+            <!--android:id="@+id/progress_bar"-->
+            <!--style="?android:attr/progressBarStyleLarge"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_gravity="center_horizontal"-->
+            <!--android:visibility="invisible" />-->
+    <!--</LinearLayout>-->
+
+    <!--<ImageView-->
+        <!--android:id="@+id/imageView"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:src="@drawable/logo_duitku"-->
+        <!--android:layout_marginLeft="550dp"-->
+        <!--android:layout_below="@+id/linear1"-->
+        <!--android:layout_alignParentLeft="true"-->
+        <!--android:layout_alignParentStart="true"-->
+        <!--android:layout_marginStart="550dp" />-->
+</RelativeLayout>

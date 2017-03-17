@@ -1,0 +1,118 @@
+<resources>
+    <string name="app_name">Duitku</string>
+    <string name="label_inquiry">Konfirmasi Top Up</string>
+    <string name="label_login">Login Akun Duitku</string>
+    <string name="label_notifikasi">NOTIFIKASI</string>
+    <string name="label_checkout">Checkout</string>
+    <string name="label_confirmation">Confirmation</string>
+    <string name="label_payment">Payment</string>
+    <string name="label_transaction_status">Transaction Status</string>
+    <string name="label_pilih_pembayaran">Pilih Pembayaran</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+
+    <string-array name="arr_nama_barang">
+        <item>Lemari Es</item>
+        <item>Televisi Flat Samsung</item>
+        <item>Magic Jar Miyako</item>
+    </string-array>
+    <string-array name="arr_harga">
+        <item>50</item>
+        <item>12</item>
+        <item>100</item>
+
+    </string-array>
+    <string-array name="arr_order_id">
+        <item>11992233</item>
+        <item>11115</item>
+        <item>11112</item>
+        <item>11115533</item>
+        <item>111164</item>
+        <item>11115565</item>
+    </string-array>
+    <string-array name="arr_deskripsi_barang">
+        <item>Lemari es kualitas bagus</item>
+        <item>Televisi Flat kualitas bagus</item>
+        <item>Magic Jar kualitas bagus</item>
+    </string-array>
+    <string name="title_activity_login_duitku">LoginDuitkuActivity</string>
+    <string name="title_activity_pay">PayActivity</string>
+    <string name="title_activity_transaction_status">TransactionStatusActivity</string>
+    <string-array name="arr_img_bank">
+        <!--<item>logo_duitku_b</item>-->
+        <!--<item>klikbca</item>-->
+        <!--<item>bcaklikpay</item>-->
+        <!--<item>cimbclick</item>-->
+        <!--<item>bitcoin_logo</item>-->
+        <!--<item>xl_tunai</item>-->
+        <!--<item>bri_mocash</item>-->
+        <!--<item>bri_epay</item>-->
+        <!--<item>mandiri_ecash</item>-->
+        <!--<item>mandiri_clickpay</item>-->
+        <!--<item>bbm_money</item>-->
+        <!--<item>indosat_dompetku</item>-->
+        <item>duitku</item>
+        <item>klikbca</item>
+        <item>bcaklikpay</item>
+        <item>cimbclikcs</item>
+        <item>bitcoin</item>
+        <item>xltunai</item>
+        <item>bri_mocash</item>
+        <item>bri_epay</item>
+        <item>mandiriecash</item>
+        <item>mandiri_clickpay</item>
+        <item>bbmoney</item>
+        <item>indosatdompetku</item>
+    </string-array>
+
+    <string-array name="arr_img_pg">
+        <item>WW</item>
+        <item>XS</item>
+        <item>CS</item>
+        <item>CK</item>
+        <item>CN</item>
+        <item>PU</item>
+        <item>MO</item>
+        <item>BP</item>
+        <item>ME</item>
+        <item>MC</item>
+        <item>PP</item>
+        <item>ID</item>
+    </string-array>
+
+    <string-array name="arr_txt_bank">
+        <item>Duitku Wallet</item>
+        <item>Klik BCA</item>
+        <item>BCA KlikPay</item>
+        <item>Cimb Clicks</item>
+        <item>BitCoin</item>
+        <item>XL Tunai</item>
+        <item>BRI Mocash</item>
+        <item>BRI e-Pay</item>
+        <item>Mandiri e-Cash</item>
+        <item>Mandiri Clickpay</item>
+        <item>BBM Money</item>
+        <item>Indosat Dompetku</item>
+
+    </string-array>
+
+    <string name="login_failed">Login gagal, silahkan coba lagi</string>
+    <string name="null_data">Data tidak tersedia</string>
+    <string name="data_already_inquiry">Data telah diinquiry</string>
+    <string name="payment_succeed">Pembayaran Berhasil</string>
+    <string name="payment_failed">Pembayaran Gagal</string>
+    <string name="thank_you">Terima Kasih</string>
+    <string name="insufficient_balance">Dana tidak mencukupi</string>
+    <string name="orderLabel">Order</string>
+    <string name="separator">:</string>
+    <string name="priceLabel">Harga</string>
+    <string name="merchantLabel">Merchant</string>
+    <string name="referenceLabel">Referensi</string>
+    <string name="adminLabel">*Anda akan dikenakan biaya administrasi </string>
+    <string name="deliveryLabel">Ongkir</string>
+    <string name="totalLabel">Total Order</string>
+    <string name="title_activity_confirmation">ConfirmationActivity</string>
+    <string name="title_activity_test">TestActivity</string>
+
+</resources>

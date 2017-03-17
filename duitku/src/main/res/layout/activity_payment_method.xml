@@ -1,0 +1,362 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@android:color/white"
+    >
+    <include
+        android:id="@+id/tool_bar"
+        layout="@layout/tool_bar"></include>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:paddingLeft="8dp"
+        android:paddingRight="8dp"
+        android:layout_marginTop="65dp"
+        android:layout_marginRight="8dp"
+        android:id="@+id/linearLayout"
+        android:background="@drawable/bg_layout_rounded"
+        android:layout_marginLeft="8dp"
+        android:paddingBottom="5dp">
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="110dp"
+                android:layout_marginTop="8dp">
+
+                <android.support.v7.widget.RecyclerView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/border"
+                    android:id="@+id/rvBank"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:focusableInTouchMode="true"></android.support.v7.widget.RecyclerView>
+
+            </LinearLayout>
+
+            <Button
+                style="?android:attr/buttonStyleSmall"
+                android:layout_width="15dp"
+                android:layout_height="15dp"
+                android:id="@+id/btnSlideLeft"
+                android:background="@drawable/backarrow"
+                android:layout_alignTop="@+id/btnSlideRight"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"/>
+
+            <Button
+                style="?android:attr/buttonStyleSmall"
+                android:layout_width="15dp"
+                android:layout_height="15dp"
+                android:id="@+id/btnSlideRight"
+                android:background="@drawable/forwardarrow"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="45dp"/>
+        </RelativeLayout>
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/scrollView"
+            android:fillViewport="false">
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:showDividers="middle">
+
+                    <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:paddingBottom="13dp"
+                        android:paddingTop="13dp"
+                        android:background="@drawable/border">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/orderLabel"
+                            android:id="@+id/orderLabel"
+                            android:width="90dp"
+                            android:textSize="15sp"
+                            android:textColor="#555555"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/separator"
+                            android:id="@+id/separatorOrder"
+                            android:width="10dp"
+                            android:textSize="15sp"
+                            android:textColor="#555555"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="-"
+                            android:id="@+id/orderValue"
+                            android:textSize="15sp"
+                            android:textColor="#555555"/>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:paddingBottom="13dp"
+                        android:paddingTop="13dp"
+                        android:background="@drawable/border">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/priceLabel"
+                            android:id="@+id/priceLabel"
+                            android:width="90dp"
+                            android:textSize="15sp"
+                            android:textColor="#555555"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/separator"
+                            android:id="@+id/separatorPrice"
+                            android:width="10dp"
+                            android:textSize="15sp"
+                            android:textColor="#555555"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="-"
+                            android:id="@+id/priceValue"
+                            android:textSize="15sp"
+                            android:textColor="#555555"/>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:paddingBottom="13dp"
+                        android:paddingTop="13dp"
+                        android:background="@drawable/border"
+                        android:visibility="gone"
+                        android:id="@+id/codeInput">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Code"
+                            android:id="@+id/merchantLabel"
+                            android:width="90dp"
+                            android:textSize="15sp"
+                            android:textColor="#555555"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/separator"
+                            android:id="@+id/separatorMerchant"
+                            android:width="10dp"
+                            android:textSize="15sp"
+                            android:textColor="#555555"/>
+
+                        <EditText
+                            android:layout_width="237dp"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/txtCode"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Toko Sinar Harapan"
+                            android:id="@+id/merchantValue"
+                            android:textSize="15sp"
+                            android:textColor="#555555"
+                            android:visibility="gone"/>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:paddingBottom="13dp"
+                        android:paddingTop="13dp"
+                        android:background="@drawable/border">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/referenceLabel"
+                            android:id="@+id/referenceLabel"
+                            android:width="90dp"
+                            android:textSize="15sp"
+                            android:textColor="#555555"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/separator"
+                            android:id="@+id/separatorReference"
+                            android:width="10dp"
+                            android:textSize="15sp"
+                            android:textColor="#555555"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="-"
+                            android:id="@+id/referenceValue"
+                            android:textSize="15sp"
+                            android:textColor="#555555"/>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:paddingBottom="13dp"
+                        android:paddingTop="13dp"
+                        android:background="@drawable/border">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/adminLabel"
+                            android:id="@+id/administrationLabel"
+                            android:textSize="12sp"
+                            android:textColor="#555555"
+                            />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="-"
+                            android:id="@+id/administrationValue"
+                            android:textSize="12sp"
+                            android:textColor="#555555"
+                            android:layout_marginLeft="10dp"/>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:paddingBottom="7dp"
+                        android:paddingTop="7dp"
+                        android:background="@drawable/border"
+                        android:visibility="gone">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/deliveryLabel"
+                            android:id="@+id/deliveryLabel"
+                            android:width="90dp"
+                            android:textSize="15sp"
+                            android:textColor="#555555"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/separator"
+                            android:id="@+id/separatorDelivery"
+                            android:width="10dp"
+                            android:textSize="15sp"
+                            android:textColor="#555555"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Rp 1.000.000"
+                            android:id="@+id/deliveryValue"
+                            android:textSize="15sp"
+                            android:textColor="#555555"/>
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:paddingBottom="16dp"
+                    android:paddingTop="16dp"
+                    android:background="@drawable/border"
+                    >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/totalLabel"
+                        android:id="@+id/totalLabel"
+                        android:textSize="20dp"
+                        android:width="110dp"
+                        android:textColor="#555555"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/separator"
+                        android:id="@+id/separatorTotal"
+                        android:textSize="20dp"
+                        android:width="10dp"
+                        android:textColor="#555555"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="-"
+                        android:id="@+id/totalValue"
+                        android:textSize="20dp"
+                        android:textColor="#555555"
+                        android:layout_weight="1"
+                        android:gravity="end"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="duitku"
+                        android:id="@+id/pg_name"
+                        android:visibility="gone"/>
+                </LinearLayout>
+            </LinearLayout>
+        </ScrollView>
+
+    </LinearLayout>
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Bayar"
+        android:id="@+id/btn_bayar"
+        android:layout_gravity="center_horizontal"
+        android:background="@drawable/button_selector"
+        android:textColor="@android:color/white"
+        android:width="200dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"/>
+</RelativeLayout>

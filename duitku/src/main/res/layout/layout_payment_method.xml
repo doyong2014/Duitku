@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <info.hoang8f.widget.FButton
+        android:id="@+id/button_kartu_kredit"
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="220dp"
+        android:layout_height="80dp"
+        android:layout_below="@+id/linear2"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="10dp"
+        android:text="Kartu Kredit" />
+
+    <info.hoang8f.widget.FButton
+        android:id="@+id/button_duitku_wallet"
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="220dp"
+        android:layout_height="80dp"
+        android:layout_below="@+id/linear2"
+        android:layout_centerHorizontal="true"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="10dp"
+        android:text="Duitku Wallet" />
+</LinearLayout>
