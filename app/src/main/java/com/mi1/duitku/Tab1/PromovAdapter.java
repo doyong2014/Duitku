@@ -13,7 +13,7 @@ import android.widget.TextView;
 
 import com.mi1.duitku.R;
 import com.mi1.duitku.Tab1.Common.DataModel;
-import com.mi1.duitku.Tab1.Common.GlobalData;
+import com.mi1.duitku.Tab1.Common.Tab1Global;
 import com.squareup.picasso.Picasso;
 
 /**
@@ -38,15 +38,15 @@ public class PromovAdapter extends RecyclerView.Adapter<PromovAdapter.ViewHolder
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
-        DataModel.Post item = GlobalData._promovData.get(position);
-        holder.txtTitle.setText(item.title);
+        DataModel.Post item = Tab1Global._promovData.get(position);
+        holder.tvTitle.setText(item.title);
         if(item.thumbnail_images.thumbnail.url.isEmpty()) {
-            holder.imgThumbnail.setVisibility(View.GONE);
+            holder.ivThumb.setVisibility(View.GONE);
         } else {
-            Picasso.with(context).load(item.thumbnail_images.thumbnail.url).into(holder.imgThumbnail);
+            Picasso.with(context).load(item.thumbnail_images.thumbnail.url).into(holder.ivThumb);
         }
 
-        holder.imgThumbnail.setOnClickListener(new View.OnClickListener() {
+        holder.ivThumb.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(context, ContentsActivity.class);
@@ -60,17 +60,17 @@ public class PromovAdapter extends RecyclerView.Adapter<PromovAdapter.ViewHolder
 
     @Override
     public int getItemCount() {
-        return GlobalData._promovData.size();
+        return Tab1Global._promovData.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        TextView txtTitle;
-        ImageView imgThumbnail;
+        TextView tvTitle;
+        ImageView ivThumb;
 
         public ViewHolder(View v) {
             super(v);
-            txtTitle = (TextView) v.findViewById(R.id.txt_title);
-            imgThumbnail = (ImageView) v.findViewById(R.id.img_thumb);
+            tvTitle = (TextView) v.findViewById(R.id.txt_title);
+            ivThumb = (ImageView) v.findViewById(R.id.img_thumb);
         }
     }
 }

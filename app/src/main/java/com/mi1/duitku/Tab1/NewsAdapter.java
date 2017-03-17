@@ -14,10 +14,10 @@ import com.daimajia.slider.library.Animations.DescriptionAnimation;
 import com.daimajia.slider.library.SliderLayout;
 import com.daimajia.slider.library.SliderTypes.BaseSliderView;
 import com.daimajia.slider.library.SliderTypes.TextSliderView;
-import com.mi1.duitku.Common.UserInfo;
+import com.mi1.duitku.Common.AppGlobal;
 import com.mi1.duitku.R;
 import com.mi1.duitku.Tab1.Common.DataModel;
-import com.mi1.duitku.Tab1.Common.GlobalData;
+import com.mi1.duitku.Tab1.Common.Tab1Global;
 import com.squareup.picasso.Picasso;
 
 import java.util.HashMap;
@@ -57,25 +57,25 @@ public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> i
 
         if(holder instanceof HeaderViewHolder) {
             HeaderViewHolder headerHolder = (HeaderViewHolder) holder;
-            headerHolder.txtBalance.setText(String.format(context.getString(R.string.news_balance), UserInfo.mUserBalance));
-            headerHolder.txtTopUp.setOnClickListener (new View.OnClickListener () {
+            headerHolder.tvBalance.setText(String.format(context.getString(R.string.news_balance), AppGlobal._userInfo.userbalance));
+            headerHolder.tvTopUp.setOnClickListener (new View.OnClickListener () {
                 @Override
                 public void onClick (View view) {
                     Toast.makeText (context, "Clicked topup", Toast.LENGTH_SHORT).show ();
                 }
             });
         } else if(holder instanceof GenericViewHolder) {
-            DataModel.Post item = GlobalData._newsData.get(position-1);
+            DataModel.Post item = Tab1Global._newsData.get(position-1);
             GenericViewHolder genericViewHolder = (GenericViewHolder) holder;
-            genericViewHolder.txtTitle.setText(item.title);
-            genericViewHolder.txtPostTime.setText(item.date);
+            genericViewHolder.tvTitle.setText(item.title);
+            genericViewHolder.tvPostTime.setText(item.date);
             if(item.thumbnail_images.thumbnail.url.isEmpty()) {
-                genericViewHolder.imgThumbnail.setVisibility(View.GONE);
+                genericViewHolder.ivThumbnail.setVisibility(View.GONE);
             } else {
-                Picasso.with(context).load(item.thumbnail_images.thumbnail.url).into(genericViewHolder.imgThumbnail);
+                Picasso.with(context).load(item.thumbnail_images.thumbnail.url).into(genericViewHolder.ivThumbnail);
             }
 
-            genericViewHolder.imgThumbnail.setOnClickListener(new View.OnClickListener() {
+            genericViewHolder.ivThumbnail.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     Intent intent = new Intent(context, ContentsActivity.class);
@@ -137,7 +137,7 @@ public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> i
 
     @Override
     public int getItemCount() {
-        return GlobalData._newsData.size()+1;
+        return Tab1Global._newsData.size()+1;
     }
 
     @Override
@@ -147,28 +147,28 @@ public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> i
 
     class HeaderViewHolder extends RecyclerView.ViewHolder {
         SliderLayout slider;
-        TextView txtBalance;
-        TextView txtTopUp;
+        TextView tvBalance;
+        TextView tvTopUp;
 
         public HeaderViewHolder (View itemView) {
             super (itemView);
             slider = (SliderLayout)itemView.findViewById(R.id.slider);
-            txtBalance = (TextView)itemView.findViewById(R.id.txt_balance);
-            txtTopUp = (TextView)itemView.findViewById(R.id.txt_topup);
+            tvBalance = (TextView)itemView.findViewById(R.id.txt_balance);
+            tvTopUp = (TextView)itemView.findViewById(R.id.txt_topup);
         }
     }
 
     class GenericViewHolder extends RecyclerView.ViewHolder {
 
-        TextView txtTitle;
-        TextView txtPostTime;
-        ImageView imgThumbnail;
+        TextView tvTitle;
+        TextView tvPostTime;
+        ImageView ivThumbnail;
 
         public GenericViewHolder (View itemView) {
             super (itemView);
-            txtTitle = (TextView) itemView.findViewById(R.id.txt_title);
-            txtPostTime = (TextView) itemView.findViewById(R.id.txt_time);
-            imgThumbnail = (ImageView) itemView.findViewById(R.id.img_thumb);
+            tvTitle = (TextView) itemView.findViewById(R.id.txt_title);
+            tvPostTime = (TextView) itemView.findViewById(R.id.txt_time);
+            ivThumbnail = (ImageView) itemView.findViewById(R.id.img_thumb);
         }
     }
 

@@ -13,13 +13,13 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.android.duitku.inquiry.view.InquiryActivity;
-import com.mi1.duitku.Common.UserInfo;
+import com.mi1.duitku.Common.AppGlobal;
 import com.mi1.duitku.R;
 
 public class TopUpActivity extends AppCompatActivity {
 
     private EditText etAmount;
-    private String mAmount;
+    private String amount;
     private String current = "";
     private final int INQUIRY = 100;
 
@@ -67,24 +67,24 @@ public class TopUpActivity extends AppCompatActivity {
     private void selectPayment() {
 
         Intent intent = new Intent(TopUpActivity.this, InquiryActivity.class);
-        intent.putExtra("nominal", mAmount);
-        intent.putExtra("token", UserInfo.mToken);
+        intent.putExtra("nominal", amount);
+        intent.putExtra("token", AppGlobal._userInfo.token);
         intent.putExtra("order_detail", "Top-up Mi1 Indonesia");
-        intent.putExtra("cp", UserInfo.mPhoneNumber);
+        intent.putExtra("cp", AppGlobal._userInfo.phoneNumber);
         startActivityForResult(intent, INQUIRY);
     }
 
     private boolean validateAmount(){
 
-        mAmount = etAmount.getText().toString();
+        amount = etAmount.getText().toString();
 
-        if (mAmount.isEmpty()){
+        if (amount.isEmpty()){
             Toast.makeText(TopUpActivity.this, getString(R.string.error_null_amount), Toast.LENGTH_SHORT).show();
             etAmount.requestFocus();
             return false;
         }
 
-        if (Integer.valueOf(mAmount) < 10000){
+        if (Integer.valueOf(amount) < 10000){
             Toast.makeText(TopUpActivity.this, getString(R.string.error_invalid_amount), Toast.LENGTH_SHORT).show();
             etAmount.requestFocus();
             return false;

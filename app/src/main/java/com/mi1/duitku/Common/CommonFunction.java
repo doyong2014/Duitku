@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.text.DecimalFormat;
@@ -80,21 +81,4 @@ public class CommonFunction {
         return result.toString();
     }
 
-    public static void overrideFonts(final Context context, final View v) {
-        try {
-            if (v instanceof ViewGroup) {
-                ViewGroup vg = (ViewGroup) v;
-
-                for (int i = 0; i < vg.getChildCount(); i++) {
-                    View child = vg.getChildAt(i);
-                    overrideFonts(context, child);
-                }
-
-            } else if (v instanceof TextView) {
-                ((TextView) v).setTypeface(Typeface.createFromAsset(context.getAssets(), "OpenSans-Regular.ttf"));
-            }
-
-        } catch (Exception e) {
-        }
-    }
 }

@@ -17,7 +17,7 @@ import com.lcodecore.tkrefreshlayout.RefreshListenerAdapter;
 import com.lcodecore.tkrefreshlayout.TwinklingRefreshLayout;
 import com.mi1.duitku.Common.Constant;
 import com.mi1.duitku.Tab1.Common.FooterView;
-import com.mi1.duitku.Tab1.Common.GlobalData;
+import com.mi1.duitku.Tab1.Common.Tab1Global;
 import com.mi1.duitku.Tab1.Common.HeaderView;
 import com.mi1.duitku.R;
 import com.mi1.duitku.Tab1.Common.DataModel;
@@ -35,8 +35,8 @@ import java.util.Collections;
  */
 public class EventsFragment extends Fragment {
 
-    private LinearLayoutManager mLinearLayoutManager;
-    private TwinklingRefreshLayout refreshEvents;
+    private LinearLayoutManager layoutManager;
+    private TwinklingRefreshLayout refresh;
     private RecyclerView recycler;
     private EventsAdapter adapter;
 
@@ -50,12 +50,12 @@ public class EventsFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_events, container, false);
 
-        refreshEvents = (TwinklingRefreshLayout) view.findViewById(R.id.refreshLayout);
+        refresh = (TwinklingRefreshLayout) view.findViewById(R.id.refreshLayout);
         HeaderView headerView = (HeaderView) View.inflate(getActivity(), R.layout.header_refresh, null);
-        refreshEvents.setHeaderView(headerView);
+        refresh.setHeaderView(headerView);
 
         FooterView footerView = (FooterView) View.inflate(getActivity(), R.layout.footer_loadmore, null);
-        refreshEvents.setBottomView(footerView);
+        refresh.setBottomView(footerView);
 
         LinearLayout upArrow = (LinearLayout) view.findViewById(R.id.ll_top);
         upArrow.setOnClickListener(new View.OnClickListener() {
@@ -65,35 +65,35 @@ public class EventsFragment extends Fragment {
             }
         });
 
-        mLinearLayoutManager = new LinearLayoutManager(getActivity());
-        mLinearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        layoutManager = new LinearLayoutManager(getActivity());
+        layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recycler = (RecyclerView) view.findViewById(R.id.recycler_events);
-        recycler.setLayoutManager(mLinearLayoutManager);
+        recycler.setLayoutManager(layoutManager);
 
         adapter = new EventsAdapter(getActivity());
         recycler.setAdapter(adapter);
 
-        refreshEvents.setOnRefreshListener(new RefreshListenerAdapter() {
+        refresh.setOnRefreshListener(new RefreshListenerAdapter() {
 
             @Override
             public void onRefresh(final TwinklingRefreshLayout refreshLayout) {
-                GlobalData._eventsInfo.curPage = 1;
-                getEvents(GlobalData._eventsInfo.refreshItemNum, GlobalData._eventsInfo.curPage);
+                Tab1Global._eventsInfo.curPage = 1;
+                getEvents(Tab1Global._eventsInfo.refreshItemNum, Tab1Global._eventsInfo.curPage);
             }
 
             @Override
             public void onLoadMore(final TwinklingRefreshLayout refreshLayout) {
-                if (GlobalData._eventsInfo.pagesNum < GlobalData._eventsInfo.curPage+1) {
+                if (Tab1Global._eventsInfo.pagesNum < Tab1Global._eventsInfo.curPage+1) {
                     refreshLayout.finishLoadmore();
-                    refreshLayout.setEnableLoadmore(false);
+                    Toast.makeText(getContext(), "No more contents", Toast.LENGTH_SHORT).show();
                 }else {
-                    GlobalData._eventsInfo.curPage++;
-                    getEvents(GlobalData._eventsInfo.refreshItemNum, GlobalData._eventsInfo.curPage);
+                    Tab1Global._eventsInfo.curPage++;
+                    getEvents(Tab1Global._eventsInfo.refreshItemNum, Tab1Global._eventsInfo.curPage);
                 }
             }
         });
 
-        refreshEvents.startRefresh();
+        refresh.startRefresh();
 
         return view;
     }
@@ -156,8 +156,8 @@ public class EventsFragment extends Fragment {
         @Override
         protected void onPostExecute(String result) {
 
-            refreshEvents.finishRefreshing();
-            refreshEvents.finishLoadmore();
+            refresh.finishRefreshing();
+            refresh.finishLoadmore();
 
             if (result == null){
                 Toast.makeText(getActivity(), R.string.error_failed_connect, Toast.LENGTH_SHORT).show();
@@ -168,14 +168,14 @@ public class EventsFragment extends Fragment {
                 Gson gson = new GsonBuilder().create();
                 DataModel eventsData = gson.fromJson(result, DataModel.class);
 
-                GlobalData._eventsInfo.itemsNum = eventsData.category.post_count;
-                GlobalData._eventsInfo.pagesNum = eventsData.pages;
+                Tab1Global._eventsInfo.itemsNum = eventsData.category.post_count;
+                Tab1Global._eventsInfo.pagesNum = eventsData.pages;
 
-                if(GlobalData._eventsInfo.curPage == 1) {
-                    GlobalData._eventsData.clear();
+                if(Tab1Global._eventsInfo.curPage == 1) {
+                    Tab1Global._eventsData.clear();
                 }
 
-                Collections.addAll(GlobalData._eventsData, eventsData.posts);
+                Collections.addAll(Tab1Global._eventsData, eventsData.posts);
 
                 adapter.notifyDataSetChanged();
             } catch (Exception e) {

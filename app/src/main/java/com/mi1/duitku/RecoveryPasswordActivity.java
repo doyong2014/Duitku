@@ -35,8 +35,8 @@ public class RecoveryPasswordActivity extends AppCompatActivity {
     private String phoneNumber;
 
     private EditText etPhoneNumber;
-    private TextView txtError;
-    private ProgressDialog progressDialog;
+    private TextView tvError;
+    private ProgressDialog progress;
 
       @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,8 +49,6 @@ public class RecoveryPasswordActivity extends AppCompatActivity {
               @Override
               public void onClick(View v) {
 
-                  hideKeyboard();
-
                   if(validatePhone()) {
                       recoveryPassword();
                   }
@@ -58,28 +56,30 @@ public class RecoveryPasswordActivity extends AppCompatActivity {
           });
 
           etPhoneNumber = (EditText)findViewById(R.id.edt_recovery_phone);
-          txtError = (TextView)findViewById(R.id.txt_recovery_error);
+          tvError = (TextView)findViewById(R.id.txt_recovery_error);
 
-          progressDialog = new ProgressDialog(this);
-          progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+          progress = new ProgressDialog(this);
+          progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
 
     }
 
     private boolean validatePhone() {
 
-        txtError.setVisibility(View.INVISIBLE);
+        tvError.setVisibility(View.INVISIBLE);
         phoneNumber = etPhoneNumber.getText().toString();
 
         if (phoneNumber.isEmpty()) {
-            dispError(getString(R.string.error_null_phone));
+            etPhoneNumber.setError(getString(R.string.error_null_phone));
             etPhoneNumber.requestFocus();
             return false;
+
         } else if(phoneNumber.length() < 7) {
-            dispError(getString(R.string.error_incorrect_phone));
+            etPhoneNumber.setError(getString(R.string.error_incorrect_phone));
             etPhoneNumber.requestFocus();
             return false;
         }
 
+        hideKeyboard();
         return true;
     }
 
@@ -89,8 +89,8 @@ public class RecoveryPasswordActivity extends AppCompatActivity {
     }
 
     private void dispError(String error){
-        txtError.setText(error);
-        txtError.setVisibility(View.VISIBLE);
+        tvError.setText(error);
+        tvError.setVisibility(View.VISIBLE);
     }
 
     private void recoveryPassword(){
@@ -107,8 +107,8 @@ public class RecoveryPasswordActivity extends AppCompatActivity {
         @Override
         protected void onPreExecute() {
             // TODO Auto-generated method stub
-            progressDialog.setMessage("Recoverying password...");
-            progressDialog.show();
+            progress.setMessage(getString(R.string.wait));
+            progress.show();
             super.onPreExecute();
         }
 
@@ -169,8 +169,7 @@ public class RecoveryPasswordActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(String result) {
 
-            String success;
-            progressDialog.dismiss();
+            progress.dismiss();
 
             if (result == null){
                 dispError(getString(R.string.error_failed_connect));
@@ -180,13 +179,13 @@ public class RecoveryPasswordActivity extends AppCompatActivity {
             try {
 
                 JSONObject jsonObj = new JSONObject(result);
+                String statusCode = jsonObj.getString(Constant.JSON_STATUS_CODE);
 
-                success = jsonObj.getString(Constant.JSON_STATUS_MESSAGE);
-
-                if (success.equals("SUCCESS")){
+                if (statusCode.equals("00")){
                     showDialog();
                 } else {
-                    dispError(success);
+                    String status = jsonObj.getString(Constant.JSON_STATUS_MESSAGE);
+                    dispError(status);
                 }
 
             } catch (Exception e) {

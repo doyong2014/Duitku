@@ -18,7 +18,7 @@ import java.util.ArrayList;
  */
 public class CashOutFragment extends Fragment {
 
-    private LinearLayoutManager mLinearLayoutManager;
+    private LinearLayoutManager layoutManager;
     private RecyclerView recycler;
     private CashAdapter adapter;
     private ArrayList<CashInfo> cashInfos = new ArrayList<>();
@@ -33,10 +33,10 @@ public class CashOutFragment extends Fragment {
         // Inflate the layout for this fragment
         View view =  inflater.inflate(R.layout.fragment_cashin, container, false);
 
-        mLinearLayoutManager = new LinearLayoutManager(getActivity());
-        mLinearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        layoutManager = new LinearLayoutManager(getActivity());
+        layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recycler = (RecyclerView) view.findViewById(R.id.recycler_cash_in);
-        recycler.setLayoutManager(mLinearLayoutManager);
+        recycler.setLayoutManager(layoutManager);
         recycler.addItemDecoration(new DividerItemDecoration(getContext()));
 
         init();

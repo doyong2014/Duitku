@@ -19,7 +19,7 @@ public class WelcomeActivity extends AppCompatActivity {
 
     private ViewPager viewPager;
     private MyViewPagerAdapter adapter;
-    private LinearLayout layoutDots;
+    private LinearLayout llDots;
     private TextView[] tvDots;
     private int[] layouts;
     private Button btnSkip, btnNext;
@@ -32,7 +32,7 @@ public class WelcomeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_welcome);
 
         viewPager = (ViewPager) findViewById(R.id.view_pager);
-        layoutDots = (LinearLayout) findViewById(R.id.ll_dots);
+        llDots = (LinearLayout) findViewById(R.id.ll_dots);
         btnSkip = (Button) findViewById(R.id.btn_skip);
         btnNext = (Button) findViewById(R.id.btn_next);
 
@@ -82,13 +82,13 @@ public class WelcomeActivity extends AppCompatActivity {
         int colorsActive = ContextCompat.getColor(this, R.color.colorActiveDot);
         int colorsInactive = ContextCompat.getColor(this, R.color.colorInactiveDot);
 
-        layoutDots.removeAllViews();
+        llDots.removeAllViews();
         for (int i = 0; i < tvDots.length; i++) {
             tvDots[i] = new TextView(this);
             tvDots[i].setText(Html.fromHtml("&#8226;"));
             tvDots[i].setTextSize(35);
             tvDots[i].setTextColor(colorsInactive);
-            layoutDots.addView(tvDots[i]);
+            llDots.addView(tvDots[i]);
         }
 
         tvDots[currentPage].setTextColor(colorsActive);

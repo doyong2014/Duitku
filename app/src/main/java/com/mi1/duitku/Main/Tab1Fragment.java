@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.mi1.duitku.R;
+import com.mi1.duitku.Tab1.Common.Tab1Global;
 import com.mi1.duitku.Tab1.TabPagerAdapter;
 
 /**
@@ -32,6 +33,9 @@ public class Tab1Fragment extends Fragment {
 
         // Inflate the layout for this fragment
         View view =  inflater.inflate(R.layout.fragment_tab, container, false);
+
+
+        Tab1Global _globalData = new Tab1Global();
 
         Toolbar toolbar = (Toolbar) view.findViewById(R.id.toolbar);
         AppCompatActivity activity = (AppCompatActivity) getActivity();

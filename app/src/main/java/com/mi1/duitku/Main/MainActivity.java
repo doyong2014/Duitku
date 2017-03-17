@@ -17,9 +17,9 @@ import android.widget.LinearLayout;
 import com.brioal.bottomtab.entity.TabEntity;
 import com.brioal.bottomtab.interfaces.OnTabSelectedListener;
 import com.brioal.bottomtab.view.BottomLayout;
+import com.mi1.duitku.Common.AppGlobal;
 import com.mi1.duitku.LoginActivity;
 import com.mi1.duitku.R;
-import com.mi1.duitku.Tab1.Common.GlobalData;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,8 +27,8 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     private DrawerLayout dlDrawer;
-    private BottomLayout mBottomTap;
-    private List<TabEntity> mList;
+    private BottomLayout bottomTab;
+    private List<TabEntity> listTabs;
     public static int cur_tab = 1;
 
     @Override
@@ -37,7 +37,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        mBottomTap = (BottomLayout) findViewById(R.id.main_tab);
+        bottomTab = (BottomLayout) findViewById(R.id.main_tab);
         initBottonLayout();
 
         selectFragment(1);
@@ -65,20 +65,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         LinearLayout navLogout = (LinearLayout)findViewById(R.id.nav_logout);
         navLogout.setOnClickListener(this);
 
-        GlobalData _globalData = new GlobalData();
     }
 
     private void initBottonLayout() {
 
-        mList = new ArrayList<>();
-        mList.add(new TabEntity(R.drawable.ic_icon, "tab1"));
-        mList.add(new TabEntity(R.drawable.ic_icon, "tab2"));
-        mList.add(new TabEntity(R.drawable.ic_icon, "tab3"));
-        mList.add(new TabEntity(R.drawable.ic_icon, "tab4"));
-        mList.add(new TabEntity(R.drawable.ic_icon, "tab5"));
+        listTabs = new ArrayList<>();
+        listTabs.add(new TabEntity(R.drawable.ic_icon, "tab1"));
+        listTabs.add(new TabEntity(R.drawable.ic_icon, "tab2"));
+        listTabs.add(new TabEntity(R.drawable.ic_icon, "tab3"));
+        listTabs.add(new TabEntity(R.drawable.ic_icon, "tab4"));
+        listTabs.add(new TabEntity(R.drawable.ic_icon, "tab5"));
 
-        mBottomTap.setList(mList);
-        mBottomTap.setSelectedListener(new OnTabSelectedListener() {
+        bottomTab.setList(listTabs);
+        bottomTab.setSelectedListener(new OnTabSelectedListener() {
             @Override
             public void onSelected(int position) {
                 cur_tab = position+1;
@@ -178,6 +177,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 intent = new Intent(MainActivity.this, LoginActivity.class);
                 startActivity(intent);
                 MainActivity.this.finish();
+                AppGlobal._userInfo.clear();
                 break;
         }
     }

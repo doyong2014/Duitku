@@ -5,8 +5,6 @@ import android.util.AttributeSet;
 import android.view.View;
 
 import com.lcodecore.tkrefreshlayout.IBottomView;
-import com.lcodecore.tkrefreshlayout.IHeaderView;
-import com.lcodecore.tkrefreshlayout.OnAnimEndListener;
 
 /**
  * Created by lcodecore on 2016/10/1.

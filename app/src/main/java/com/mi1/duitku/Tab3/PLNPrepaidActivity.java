@@ -18,6 +18,7 @@ import android.widget.Toast;
 import com.appsflyer.AFInAppEventParameterName;
 import com.appsflyer.AFInAppEventType;
 import com.appsflyer.AppsFlyerLib;
+import com.mi1.duitku.Common.AppGlobal;
 import com.mi1.duitku.Common.Constant;
 import com.mi1.duitku.Common.UserInfo;
 import com.mi1.duitku.R;
@@ -42,7 +43,7 @@ public class PLNPrepaidActivity extends AppCompatActivity {
     private EditText etCustomer;
     private String amount;
     private String customer;
-    private ProgressDialog progressDialog;
+    private ProgressDialog progress;
     private final static String PRODUCT_CODE = "PLNPRAH";
 
     @Override
@@ -50,8 +51,8 @@ public class PLNPrepaidActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pln_prepaid);
 
-        progressDialog = new ProgressDialog(this);
-        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        progress = new ProgressDialog(this);
+        progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
 
         etAmount = (EditText) findViewById(R.id.edt_amount);
         etCustomer = (EditText) findViewById(R.id.edt_customer);
@@ -110,6 +111,11 @@ public class PLNPrepaidActivity extends AppCompatActivity {
 
         if (id == android.R.id.home) {
             PLNPrepaidActivity.this.finish();
+
+        } else if(id == R.id.action_payment) {
+            if (validate()) {
+                new callInquiryBill().execute();
+            }
         }
 
         return super.onOptionsItemSelected(item);
@@ -121,8 +127,8 @@ public class PLNPrepaidActivity extends AppCompatActivity {
 
         @Override
         protected void onPreExecute() {
-            progressDialog.setMessage(getString(R.string.wait));
-            progressDialog.show();
+            progress.setMessage(getString(R.string.wait));
+            progress.show();
             super.onPreExecute();
         }
 
@@ -139,9 +145,9 @@ public class PLNPrepaidActivity extends AppCompatActivity {
                 try {
                     jsonObject.put("idpelanggan1", customer);
                     jsonObject.put("idpelanggan2", customer);
-                    jsonObject.put("idpelanggan3", UserInfo.mPhoneNumber);
+                    jsonObject.put("idpelanggan3", AppGlobal._userInfo.phoneNumber);
                     jsonObject.put("kodeProduk", PRODUCT_CODE);
-                    jsonObject.put("token", UserInfo.mToken);
+                    jsonObject.put("token", AppGlobal._userInfo.token);
 
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -188,7 +194,7 @@ public class PLNPrepaidActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(String result) {
 
-            progressDialog.dismiss();
+            progress.dismiss();
 
             if (result == null){
                 Toast.makeText(PLNPrepaidActivity.this, getString(R.string.error_failed_connect), Toast.LENGTH_SHORT).show();

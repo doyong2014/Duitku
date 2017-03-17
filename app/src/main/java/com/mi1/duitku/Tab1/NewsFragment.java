@@ -16,11 +16,11 @@ import com.google.gson.GsonBuilder;
 import com.lcodecore.tkrefreshlayout.RefreshListenerAdapter;
 import com.lcodecore.tkrefreshlayout.TwinklingRefreshLayout;
 import com.mi1.duitku.Common.Constant;
-import com.mi1.duitku.Tab1.Common.FooterView;
-import com.mi1.duitku.Tab1.Common.GlobalData;
-import com.mi1.duitku.Tab1.Common.HeaderView;
 import com.mi1.duitku.R;
 import com.mi1.duitku.Tab1.Common.DataModel;
+import com.mi1.duitku.Tab1.Common.FooterView;
+import com.mi1.duitku.Tab1.Common.HeaderView;
+import com.mi1.duitku.Tab1.Common.Tab1Global;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -35,8 +35,8 @@ import java.util.Collections;
  */
 public class NewsFragment extends Fragment{
 
-    private LinearLayoutManager mLinearLayoutManager;
-    private TwinklingRefreshLayout refreshNews;
+    private LinearLayoutManager layoutManager;
+    private TwinklingRefreshLayout refresh;
     private RecyclerView recycler;
     private NewsAdapter adapter;
 
@@ -51,12 +51,12 @@ public class NewsFragment extends Fragment{
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_news, container, false);
 
-        refreshNews = (TwinklingRefreshLayout) view.findViewById(R.id.refreshLayout);
+        refresh = (TwinklingRefreshLayout) view.findViewById(R.id.refreshLayout);
         HeaderView headerView = (HeaderView) View.inflate(getActivity(), R.layout.header_refresh, null);
-        refreshNews.setHeaderView(headerView);
+        refresh.setHeaderView(headerView);
 
         FooterView footerView = (FooterView) View.inflate(getActivity(), R.layout.footer_loadmore, null);
-        refreshNews.setBottomView(footerView);
+        refresh.setBottomView(footerView);
 
         LinearLayout upArrow = (LinearLayout) view.findViewById(R.id.ll_top);
         upArrow.setOnClickListener(new View.OnClickListener() {
@@ -66,35 +66,35 @@ public class NewsFragment extends Fragment{
             }
         });
 
-        mLinearLayoutManager = new LinearLayoutManager(getActivity());
-        mLinearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        layoutManager = new LinearLayoutManager(getActivity());
+        layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recycler = (RecyclerView) view.findViewById(R.id.recycler_news);
-        recycler.setLayoutManager(mLinearLayoutManager);
+        recycler.setLayoutManager(layoutManager);
 
         adapter = new NewsAdapter(getActivity());
         recycler.setAdapter(adapter);
 
-        refreshNews.setOnRefreshListener(new RefreshListenerAdapter() {
+        refresh.setOnRefreshListener(new RefreshListenerAdapter() {
 
             @Override
             public void onRefresh(final TwinklingRefreshLayout refreshLayout) {
-                GlobalData._newsInfo.curPage = 1;
-                getNews(GlobalData._newsInfo.refreshItemNum, GlobalData._newsInfo.curPage);
+                Tab1Global._newsInfo.curPage = 1;
+                getNews(Tab1Global._newsInfo.refreshItemNum, Tab1Global._newsInfo.curPage);
             }
 
             @Override
             public void onLoadMore(final TwinklingRefreshLayout refreshLayout) {
-                if (GlobalData._newsInfo.pagesNum < GlobalData._newsInfo.curPage+1) {
+                if (Tab1Global._newsInfo.pagesNum < Tab1Global._newsInfo.curPage+1) {
                     refreshLayout.finishLoadmore();
-                    refreshLayout.setEnableLoadmore(false);
+                    Toast.makeText(getContext(), "No more contents", Toast.LENGTH_SHORT).show();
                 }else {
-                    GlobalData._newsInfo.curPage++;
-                    getNews(GlobalData._newsInfo.refreshItemNum, GlobalData._newsInfo.curPage);
+                    Tab1Global._newsInfo.curPage++;
+                    getNews(Tab1Global._newsInfo.refreshItemNum, Tab1Global._newsInfo.curPage);
                 }
             }
         });
 
-        refreshNews.startRefresh();
+        refresh.startRefresh();
 
         return view;
     }
@@ -157,8 +157,8 @@ public class NewsFragment extends Fragment{
         @Override
         protected void onPostExecute(String result) {
 
-            refreshNews.finishRefreshing();
-            refreshNews.finishLoadmore();
+            refresh.finishRefreshing();
+            refresh.finishLoadmore();
 
             if (result == null){
                 Toast.makeText(getActivity(), R.string.error_failed_connect, Toast.LENGTH_SHORT).show();
@@ -169,14 +169,14 @@ public class NewsFragment extends Fragment{
                 Gson gson = new GsonBuilder().create();
                 DataModel newsData = gson.fromJson(result, DataModel.class);
 
-                GlobalData._newsInfo.itemsNum = newsData.category.post_count;
-                GlobalData._newsInfo.pagesNum = newsData.pages;
+                Tab1Global._newsInfo.itemsNum = newsData.category.post_count;
+                Tab1Global._newsInfo.pagesNum = newsData.pages;
 
-                if(GlobalData._newsInfo.curPage == 1) {
-                    GlobalData._newsData.clear();
+                if(Tab1Global._newsInfo.curPage == 1) {
+                    Tab1Global._newsData.clear();
                 }
 
-                Collections.addAll(GlobalData._newsData, newsData.posts);
+                Collections.addAll(Tab1Global._newsData, newsData.posts);
 
                 adapter.notifyDataSetChanged();
             } catch (Exception e) {

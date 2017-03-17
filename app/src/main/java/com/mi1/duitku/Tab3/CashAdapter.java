@@ -38,8 +38,8 @@ public class CashAdapter extends RecyclerView.Adapter<CashAdapter.ViewHolder> {
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         CashInfo item = cashInfos.get(position);
-        holder.amount.setText("Rp "+item.amount);
-        holder.date.setText(item.date);
+        holder.tvAmount.setText("Rp "+item.amount);
+        holder.tvDate.setText(item.date);
     }
 
     @Override
@@ -48,13 +48,13 @@ public class CashAdapter extends RecyclerView.Adapter<CashAdapter.ViewHolder> {
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        TextView amount;
-        TextView date;
+        TextView tvAmount;
+        TextView tvDate;
 
         public ViewHolder(View v) {
             super(v);
-            amount = (TextView) v.findViewById(R.id.txt_amount);
-            date = (TextView) v.findViewById(R.id.txt_date);
+            tvAmount = (TextView) v.findViewById(R.id.txt_amount);
+            tvDate = (TextView) v.findViewById(R.id.txt_date);
         }
     }
 }

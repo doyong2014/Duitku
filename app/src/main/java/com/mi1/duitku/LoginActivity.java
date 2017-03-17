@@ -17,6 +17,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.mi1.duitku.Common.AppGlobal;
 import com.mi1.duitku.Common.CommonFunction;
 import com.mi1.duitku.Common.Constant;
 import com.mi1.duitku.Common.UserInfo;
@@ -92,15 +95,12 @@ public class LoginActivity extends AppCompatActivity implements OnClickListener 
 
             case R.id.btn_login:
 
-                hideKeyboard();
-
                 if (validateLogin()) {
                     login();
                 }
                 break;
 
             case R.id.txt_forget_password:
-                tvError.setVisibility(View.INVISIBLE);
                 etPassword.setText("");
                 intent = new Intent(LoginActivity.this, RecoveryPasswordActivity.class);
                 startActivity(intent);
@@ -120,17 +120,18 @@ public class LoginActivity extends AppCompatActivity implements OnClickListener 
         password = etPassword.getText().toString();
 
         if (userName.isEmpty()){
-            dispError(getString(R.string.error_null_email));
+            etUserName.setError(getString(R.string.error_null_email));
             etUserName.requestFocus();
             return false;
         }
 
         if (password.isEmpty()){
-            dispError(getString(R.string.error_null_password));
+            etPassword.setError(getString(R.string.error_null_password));
             etPassword.requestFocus();
             return false;
         }
 
+        hideKeyboard();
         return true;
     }
 
@@ -206,7 +207,6 @@ public class LoginActivity extends AppCompatActivity implements OnClickListener 
         @Override
         protected void onPostExecute(String result) {
 
-            String success;
             progress.dismiss();
 
             if (result == null){
@@ -215,33 +215,29 @@ public class LoginActivity extends AppCompatActivity implements OnClickListener 
             }
 
             try {
+
                 JSONObject jsonObj = new JSONObject(result);
+                String statusCode = jsonObj.getString(Constant.JSON_STATUS_CODE);
 
-                success = jsonObj.getString(Constant.JSON_STATUS_MESSAGE);
+                if (statusCode.equals("00")){
 
-                if (success.equals("SUCCESS")){
-                    String token = jsonObj.getString(Constant.JSON_TOKEN);
-                    String email = jsonObj.getString(Constant.JSON_EMAIL);
-                    String userBalance = jsonObj.getString(Constant.JSON_USER_BALANCE);
-                    String vaNumber = jsonObj.getString(Constant.JSON_VA_NUMBER);
-                    String vaNumberPermata = jsonObj.getString(Constant.JSON_VA_NUMBER_PERMATA);
-                    String username = jsonObj.getString(Constant.JSON_USER_NAME);
-                    String phoneNum = jsonObj.getString(Constant.JSON_PHONE_NUM);
-                    String userPic = jsonObj.getString(Constant.JSON_PIC_URL);
+                    Gson gson = new GsonBuilder().create();
+                    AppGlobal._userInfo = gson.fromJson(result, UserInfo.class);
 
-                    setUserInfo(token, email, userBalance, vaNumber, vaNumberPermata, username, phoneNum, userPic);
                     Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                     startActivity(intent);
                     HomeActivity._instance.finish();
                     LoginActivity.this.finish();
+
+                } else if (statusCode.equals("-124")) {
+
+                    AppGlobal._userInfo.phoneNumber = jsonObj.getString(Constant.JSON_PHONE_NUM);
+                    Intent intent = new Intent(LoginActivity.this, VerifyCodeActivity.class);
+                    startActivity(intent);
+
                 } else {
-                    String statusCode = jsonObj.getString(Constant.JSON_STATUS_CODE);
-                    if (statusCode.equals("-124")) {
-                        UserInfo.mPhoneNumber = jsonObj.getString(Constant.JSON_PHONE_NUM);
-                        Intent intent = new Intent(LoginActivity.this, VerifyCodeActivity.class);
-                        startActivity(intent);
-                    }
-                    dispError(success);
+                    String status = jsonObj.getString(Constant.JSON_STATUS_MESSAGE);
+                    dispError(status);
                 }
 
 
@@ -250,18 +246,6 @@ public class LoginActivity extends AppCompatActivity implements OnClickListener 
                 //Log.e("oasis", e.toString());
             }
         }
-    }
-
-    private void setUserInfo(String token, String email, String balance, String vaNumber, String vaNumberPermata,
-                             String username, String phoneNum, String userPic) {
-        UserInfo.mToken = token;
-        UserInfo.mEmail = email;
-        UserInfo.mUserBalance = balance;
-        UserInfo.mVaNumber = vaNumber;
-        UserInfo.mVaNumberPermata = vaNumberPermata;
-        UserInfo.mUserName = username;
-        UserInfo.mPhoneNumber = phoneNum;
-        UserInfo.mPicUrl = userPic;
     }
 
     @Override
@@ -285,9 +269,9 @@ public class LoginActivity extends AppCompatActivity implements OnClickListener 
         int id = item.getItemId();
 
         if (id == R.id.action_settings) {
-//            if (validateLogin()) {
+            if (validateLogin()) {
                 login();
-//            }
+            }
         } else if (id == android.R.id.home) {
             LoginActivity.this.finish();
         }

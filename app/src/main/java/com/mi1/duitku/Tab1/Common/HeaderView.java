@@ -6,7 +6,6 @@ import android.view.View;
 
 import com.lcodecore.tkrefreshlayout.IHeaderView;
 import com.lcodecore.tkrefreshlayout.OnAnimEndListener;
-import com.mi1.duitku.R;
 
 /**
  * Created by lcodecore on 2016/10/1.

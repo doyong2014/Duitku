@@ -20,9 +20,9 @@ import android.widget.TextView;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.mi1.duitku.Common.AppGlobal;
 import com.mi1.duitku.Common.CommonFunction;
 import com.mi1.duitku.Common.Constant;
-import com.mi1.duitku.Common.UserInfo;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -34,23 +34,21 @@ import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 
 public class SignupActivity extends AppCompatActivity{
 
-    private String mUserName;
-    private String mPassword;
-    private String mEmailAddress;
-    private String mPhoneNumber;
+    private String userName;
+    private String password;
+    private String emailAddress;
+    private String phoneNumber;
 
-    private ProgressDialog progressDialog;
+    private ProgressDialog progress;
     private EditText etUserName;
     private EditText etPhoneNumber;
     private EditText etEmailAddress;
     private EditText etPassword;
-    private EditText etConfirmPassword;
-    private TextView txtError;
+    private EditText etConfirpassword;
+    private TextView tvError;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,19 +60,16 @@ public class SignupActivity extends AppCompatActivity{
         etEmailAddress = (EditText)findViewById(R.id.edt_sign_email);
         etPhoneNumber = (EditText) findViewById(R.id.edt_sign_phone);
         etPassword = (EditText)findViewById(R.id.edt_sign_password);
-        etConfirmPassword = (EditText)findViewById(R.id.edt_sign_confirm_pwd);
-        txtError = (TextView)findViewById(R.id.txt_sign_error);
+        etConfirpassword = (EditText)findViewById(R.id.edt_sign_confirm_pwd);
+        tvError = (TextView)findViewById(R.id.txt_sign_error);
 
-        progressDialog = new ProgressDialog(this);
-        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        progress = new ProgressDialog(this);
+        progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
 
         Button btnSign = (Button)findViewById(R.id.btn_sign);
         btnSign.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                hideKeyboard();
-
                 if (validateSignup()) {
                     signup();
                 }
@@ -85,49 +80,50 @@ public class SignupActivity extends AppCompatActivity{
 
     private boolean validateSignup(){
 
-        txtError.setVisibility(View.INVISIBLE);
-        mUserName = etUserName.getText().toString();
-        mPassword = etPassword.getText().toString();
-        mEmailAddress = etEmailAddress.getText().toString();
-        mPhoneNumber = etPhoneNumber.getText().toString();
-        String confirmPassword = etConfirmPassword.getText().toString();
+        tvError.setVisibility(View.INVISIBLE);
+        userName = etUserName.getText().toString();
+        password = etPassword.getText().toString();
+        emailAddress = etEmailAddress.getText().toString();
+        phoneNumber = etPhoneNumber.getText().toString();
+        String confirpassword = etConfirpassword.getText().toString();
 
-        if (mUserName.isEmpty()){
-            dispError(getString(R.string.error_null_username));
+        if (userName.isEmpty()){
+            etUserName.setError(getString(R.string.error_null_username));
             etUserName.requestFocus();
             return false;
         }
 
-        if (mEmailAddress.isEmpty()){
-            dispError(getString(R.string.error_null_email));
+        if (emailAddress.isEmpty()){
+            etEmailAddress.setError(getString(R.string.error_null_email));
             etEmailAddress.requestFocus();
             return false;
         }
 
-        if (!android.util.Patterns.EMAIL_ADDRESS.matcher(mEmailAddress).matches()){
-            dispError(getString(R.string.error_invalid_email));
+        if (!android.util.Patterns.EMAIL_ADDRESS.matcher(emailAddress).matches()){
+            etEmailAddress.setError(getString(R.string.error_invalid_email));
             etEmailAddress.requestFocus();
             return false;
         }
 
-        if (mPhoneNumber.isEmpty()) {
+        if (phoneNumber.isEmpty()) {
             dispError(getString(R.string.error_null_phone));
             etPhoneNumber.requestFocus();
             return false;
         }
 
-        if (mPassword.isEmpty()){
-            dispError(getString(R.string.error_null_password));
+        if (password.isEmpty()){
+            etPassword.setError(getString(R.string.error_null_password));
             etPassword.requestFocus();
             return false;
         }
 
-        if (mPassword.compareTo(confirmPassword) != 0){
-            dispError(getString(R.string.error_incorrect_password));
+        if (password.compareTo(confirpassword) != 0){
+            etPassword.setError(getString(R.string.error_incorrect_password));
             etPassword.requestFocus();
             return false;
         }
 
+        hideKeyboard();
         return true;
     }
 
@@ -139,18 +135,18 @@ public class SignupActivity extends AppCompatActivity{
     private void signup(){
 
         String[] params = new String[5];
-        params[0] = mEmailAddress; //email
-        params[1] = mPhoneNumber; //phone
-        params[2] = CommonFunction.md5(mPassword); //password
-        params[3] = mUserName; //name
+        params[0] = emailAddress; //email
+        params[1] = phoneNumber; //phone
+        params[2] = CommonFunction.md5(password); //password
+        params[3] = userName; //name
         params[4] = Constant.COMMUNITY_CODE;; //community_code
         SignupAsync _signupAsync = new SignupAsync();
         _signupAsync.execute(params);
     }
 
     private void dispError(String error){
-        txtError.setText(error);
-        txtError.setVisibility(View.VISIBLE);
+        tvError.setText(error);
+        tvError.setVisibility(View.VISIBLE);
     }
 
     public class SignupAsync extends AsyncTask<String, Integer, String> {
@@ -158,9 +154,8 @@ public class SignupActivity extends AppCompatActivity{
         @Override
         protected void onPreExecute() {
             // TODO Auto-generated method stub
-
-            progressDialog.setMessage("SignUping...");
-            progressDialog.show();
+            progress.setMessage(getString(R.string.wait));
+            progress.show();
             super.onPreExecute();
         }
 
@@ -224,8 +219,7 @@ public class SignupActivity extends AppCompatActivity{
         @Override
         protected void onPostExecute(String result) {
 
-            String success;
-            progressDialog.dismiss();
+            progress.dismiss();
 
             if (result == null){
                 dispError(getString(R.string.error_failed_connect));
@@ -233,29 +227,23 @@ public class SignupActivity extends AppCompatActivity{
             }
 
             try {
+
                 JSONObject jsonObj = new JSONObject(result);
+                String statusCode = jsonObj.getString(Constant.JSON_STATUS_CODE);
 
-                success = jsonObj.getString(Constant.JSON_STATUS_MESSAGE);
-
-                if (success.equals("SUCCESS")){
-                    setUserInfo();
+                if (statusCode.equals("00")){
+                    AppGlobal._userInfo.phoneNumber = jsonObj.getString(Constant.JSON_PHONE_NUM);
                     showDialog();
                 } else {
-                    dispError(success);
+                    String status = jsonObj.getString(Constant.JSON_STATUS_MESSAGE);
+                    dispError(status);
                 }
-
 
             } catch (Exception e) {
                 // TODO: handle exception
                 //Log.e("oasis", e.toString());
             }
         }
-    }
-
-    private void setUserInfo() {
-        UserInfo.mEmail = mEmailAddress;
-        UserInfo.mPhoneNumber = mPhoneNumber;
-        UserInfo.mUserName = mUserName;
     }
 
     private void showDialog() {

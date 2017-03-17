@@ -15,7 +15,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.mi1.duitku.Common.CommonFunction;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.mi1.duitku.Common.AppGlobal;
 import com.mi1.duitku.Common.Constant;
 import com.mi1.duitku.Common.UserInfo;
 import com.mi1.duitku.Main.MainActivity;
@@ -37,8 +39,8 @@ public class VerifyCodeActivity extends AppCompatActivity {
     private String phoneNumber;
 
     private EditText etVerifyCode;
-    private TextView txtError;
-    private ProgressDialog progressDialog;
+    private TextView tvError;
+    private ProgressDialog progress;
 
       @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,17 +52,15 @@ public class VerifyCodeActivity extends AppCompatActivity {
           btnVerify.setOnClickListener(new View.OnClickListener() {
               @Override
               public void onClick(View v) {
-
-                  hideKeyboard();
-
                   if(validateCode()) {
                       VerifyCode();
                   }
               }
           });
 
+          phoneNumber = AppGlobal._userInfo.phoneNumber;
           etVerifyCode = (EditText)findViewById(R.id.edt_verify_code);
-          txtError = (TextView)findViewById(R.id.txt_verify_error);
+          tvError = (TextView)findViewById(R.id.txt_verify_error);
 
           TextView resubmitCode = (TextView)findViewById(R.id.txt_resubmit);
           resubmitCode.setOnClickListener(new View.OnClickListener() {
@@ -70,21 +70,22 @@ public class VerifyCodeActivity extends AppCompatActivity {
               }
           });
 
-          progressDialog = new ProgressDialog(this);
-          progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+          progress = new ProgressDialog(this);
+          progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
     }
 
     private boolean validateCode() {
 
-        txtError.setVisibility(View.INVISIBLE);
+        tvError.setVisibility(View.INVISIBLE);
         verifyCode = etVerifyCode.getText().toString();
-        phoneNumber = UserInfo.mPhoneNumber;
 
         if (verifyCode.isEmpty()) {
-            dispError(getString(R.string.error_null_code));
+            etVerifyCode.setError(getString(R.string.error_null_code));
             etVerifyCode.requestFocus();
             return false;
         }
+
+        hideKeyboard();
         return true;
     }
 
@@ -94,13 +95,13 @@ public class VerifyCodeActivity extends AppCompatActivity {
     }
 
     private void dispError(String error){
-        txtError.setText(error);
-        txtError.setVisibility(View.VISIBLE);
+        tvError.setText(error);
+        tvError.setVisibility(View.VISIBLE);
     }
 
     private void resubmitCode() {
 
-        phoneNumber = UserInfo.mPhoneNumber;
+
         String[] params = new String[2];
         params[0] = phoneNumber;
         params[1] = Constant.COMMUNITY_CODE;
@@ -123,8 +124,8 @@ public class VerifyCodeActivity extends AppCompatActivity {
         @Override
         protected void onPreExecute() {
             // TODO Auto-generated method stub
-            progressDialog.setMessage("Verifying code...");
-            progressDialog.show();
+            progress.setMessage(getString(R.string.wait));
+            progress.show();
             super.onPreExecute();
         }
 
@@ -186,8 +187,7 @@ public class VerifyCodeActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(String result) {
 
-            String success;
-            progressDialog.dismiss();
+            progress.dismiss();
 
             if (result == null){
                 dispError(getString(R.string.error_failed_connect));
@@ -197,25 +197,21 @@ public class VerifyCodeActivity extends AppCompatActivity {
             try {
 
                 JSONObject jsonObj = new JSONObject(result);
+                String statusCode = jsonObj.getString(Constant.JSON_STATUS_CODE);
 
-                success = jsonObj.getString(Constant.JSON_STATUS_MESSAGE);
+                if (statusCode.equals("00")){
 
-                if (success.equals("SUCCESS")){String token = jsonObj.getString(Constant.JSON_TOKEN);
-                    String email = jsonObj.getString(Constant.JSON_EMAIL);
-                    String userBalance = jsonObj.getString(Constant.JSON_USER_BALANCE);
-                    String vaNumber = jsonObj.getString(Constant.JSON_VA_NUMBER);
-                    String vaNumberPermata = jsonObj.getString(Constant.JSON_VA_NUMBER_PERMATA);
-                    String username = jsonObj.getString(Constant.JSON_USER_NAME);
-                    String phoneNum = jsonObj.getString(Constant.JSON_PHONE_NUM);
-                    String userPic = jsonObj.getString(Constant.JSON_PIC_URL);
+                    Gson gson = new GsonBuilder().create();
+                    AppGlobal._userInfo = gson.fromJson(result, UserInfo.class);
 
-                    setUserInfo(token, email, userBalance, vaNumber, vaNumberPermata, username, phoneNum, userPic);
                     Intent intent = new Intent(VerifyCodeActivity.this, MainActivity.class);
                     startActivity(intent);
                     HomeActivity._instance.finish();
                     VerifyCodeActivity.this.finish();
+
                 } else {
-                    dispError(success);
+                    String status = jsonObj.getString(Constant.JSON_STATUS_MESSAGE);
+                    dispError(status);
                 }
 
             } catch (Exception e) {
@@ -225,25 +221,13 @@ public class VerifyCodeActivity extends AppCompatActivity {
         }
     }
 
-    private void setUserInfo(String token, String email, String balance, String vaNumber, String vaNumberPermata,
-                             String username, String phoneNum, String userPic) {
-        UserInfo.mToken = token;
-        UserInfo.mEmail = email;
-        UserInfo.mUserBalance = balance;
-        UserInfo.mVaNumber = vaNumber;
-        UserInfo.mVaNumberPermata = vaNumberPermata;
-        UserInfo.mUserName = username;
-        UserInfo.mPhoneNumber = phoneNum;
-        UserInfo.mPicUrl = userPic;
-    }
-
     public class resubmitCodeAsync extends AsyncTask<String, Integer, String> {
 
         @Override
         protected void onPreExecute() {
             // TODO Auto-generated method stub
-            progressDialog.setMessage("Resubmit fetch code...");
-            progressDialog.show();
+            progress.setMessage(getString(R.string.wait));
+            progress.show();
             super.onPreExecute();
         }
 
@@ -299,7 +283,7 @@ public class VerifyCodeActivity extends AppCompatActivity {
         protected void onPostExecute(String result) {
 
             String success;
-            progressDialog.dismiss();
+            progress.dismiss();
 
             if (result == null){
                 dispError(getString(R.string.error_failed_connect));
@@ -309,13 +293,13 @@ public class VerifyCodeActivity extends AppCompatActivity {
             try {
 
                 JSONObject jsonObj = new JSONObject(result);
+                String statusCode = jsonObj.getString(Constant.JSON_STATUS_CODE);
 
-                success = jsonObj.getString(Constant.JSON_STATUS_MESSAGE);
-
-                if (success.equals("SUCCESS")){
+                if (statusCode.equals("00")) {
                     //VerifyCodeActivity.this.finish();
                 } else {
-                    dispError(success);
+                    String status = jsonObj.getString(Constant.JSON_STATUS_MESSAGE);
+                    dispError(status);
                 }
 
             } catch (Exception e) {

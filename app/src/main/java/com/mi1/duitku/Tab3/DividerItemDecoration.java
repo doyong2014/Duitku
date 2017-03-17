@@ -14,6 +14,7 @@ import com.mi1.duitku.R;
  */
 
 public class DividerItemDecoration extends RecyclerView.ItemDecoration {
+
     private Drawable mDivider;
 
     public DividerItemDecoration(Context context) {

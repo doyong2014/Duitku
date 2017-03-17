@@ -19,7 +19,7 @@ import android.widget.TextView;
 
 import com.mi1.duitku.R;
 import com.mi1.duitku.Tab1.Common.DataModel;
-import com.mi1.duitku.Tab1.Common.GlobalData;
+import com.mi1.duitku.Tab1.Common.Tab1Global;
 import com.squareup.picasso.Picasso;
 
 public class ContentsActivity extends AppCompatActivity {
@@ -35,10 +35,10 @@ public class ContentsActivity extends AppCompatActivity {
         this.setSupportActionBar(toolbar);
         getSupportActionBar().setTitle(title);
 
-        ImageView selNewsImg = (ImageView)findViewById(R.id.img_full);
-        TextView selNewsTitle = (TextView)findViewById(R.id.txt_title);
-        TextView selNewsTime = (TextView)findViewById(R.id.txt_time);
-        TextView selNewsContents = (TextView)findViewById(R.id.txt_content);
+        ImageView ivThumb = (ImageView)findViewById(R.id.img_full);
+        TextView tvTitle = (TextView)findViewById(R.id.txt_title);
+        TextView tvPostTime = (TextView)findViewById(R.id.txt_time);
+        TextView tvContents = (TextView)findViewById(R.id.txt_content);
 
         Intent intent = getIntent();
         int tab = intent.getExtras().getInt("tab");
@@ -46,20 +46,20 @@ public class ContentsActivity extends AppCompatActivity {
 
         DataModel.Post item = null;
         if (tab == 1) {
-            item = GlobalData._newsData.get(position);
+            item = Tab1Global._newsData.get(position);
             title = "NEWS";
         }else if(tab == 2) {
-            item = GlobalData._promovData.get(position);
+            item = Tab1Global._promovData.get(position);
             title = "PROMOV";
         }else {
-            item = GlobalData._eventsData.get(position);
+            item = Tab1Global._eventsData.get(position);
             title = "EVENTS";
         }
 
-        Picasso.with(this).load(item.thumbnail_images.medium.url).into(selNewsImg);
-        selNewsTitle.setText(item.title);
-        selNewsTime.setText(item.date);
-        selNewsContents.setText(fromHtml(item.content));
+        Picasso.with(this).load(item.thumbnail_images.medium.url).into(ivThumb);
+        tvTitle.setText(item.title);
+        tvPostTime.setText(item.date);
+        tvContents.setText(fromHtml(item.content));
 
         final CollapsingToolbarLayout collapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
         AppBarLayout appBarLayout = (AppBarLayout) findViewById(R.id.appbar);
@@ -109,7 +109,6 @@ public class ContentsActivity extends AppCompatActivity {
 
         actionBar.setHomeButtonEnabled(true);
         actionBar.setDisplayHomeAsUpEnabled(true);
-//        actionBar.setBackgroundDrawable(ContextCompat.getDrawable(this, R.drawable.actionbar_bg));
 
         getMenuInflater().inflate(R.menu.menu_content, menu);
 

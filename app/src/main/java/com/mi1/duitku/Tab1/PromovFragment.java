@@ -17,7 +17,7 @@ import com.lcodecore.tkrefreshlayout.RefreshListenerAdapter;
 import com.lcodecore.tkrefreshlayout.TwinklingRefreshLayout;
 import com.mi1.duitku.Common.Constant;
 import com.mi1.duitku.Tab1.Common.FooterView;
-import com.mi1.duitku.Tab1.Common.GlobalData;
+import com.mi1.duitku.Tab1.Common.Tab1Global;
 import com.mi1.duitku.Tab1.Common.HeaderView;
 import com.mi1.duitku.R;
 import com.mi1.duitku.Tab1.Common.DataModel;
@@ -35,8 +35,8 @@ import java.util.Collections;
  */
 public class PromovFragment extends Fragment {
 
-    private LinearLayoutManager mLinearLayoutManager;
-    private TwinklingRefreshLayout refreshPromov;
+    private LinearLayoutManager layoutManager;
+    private TwinklingRefreshLayout refresh;
     private RecyclerView recycler;
     private PromovAdapter adapter;
 
@@ -45,17 +45,17 @@ public class PromovFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(LayoutInflater inflater, final ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_promov, container, false);
 
-        refreshPromov = (TwinklingRefreshLayout) view.findViewById(R.id.refreshLayout);
+        refresh = (TwinklingRefreshLayout) view.findViewById(R.id.refreshLayout);
         HeaderView headerView = (HeaderView) View.inflate(getActivity(), R.layout.header_refresh, null);
-        refreshPromov.setHeaderView(headerView);
+        refresh.setHeaderView(headerView);
 
         FooterView footerView = (FooterView) View.inflate(getActivity(), R.layout.footer_loadmore, null);
-        refreshPromov.setBottomView(footerView);
+        refresh.setBottomView(footerView);
 
         LinearLayout upArrow = (LinearLayout) view.findViewById(R.id.ll_top);
         upArrow.setOnClickListener(new View.OnClickListener() {
@@ -65,35 +65,35 @@ public class PromovFragment extends Fragment {
             }
         });
 
-        mLinearLayoutManager = new LinearLayoutManager(getActivity());
-        mLinearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        layoutManager = new LinearLayoutManager(getActivity());
+        layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recycler = (RecyclerView) view.findViewById(R.id.recycler_promov);
-        recycler.setLayoutManager(mLinearLayoutManager);
+        recycler.setLayoutManager(layoutManager);
 
         adapter = new PromovAdapter(getActivity());
         recycler.setAdapter(adapter);
 
-        refreshPromov.setOnRefreshListener(new RefreshListenerAdapter() {
+        refresh.setOnRefreshListener(new RefreshListenerAdapter() {
 
             @Override
             public void onRefresh(final TwinklingRefreshLayout refreshLayout) {
-                GlobalData._promovInfo.curPage = 1;
-                getPromov(GlobalData._promovInfo.refreshItemNum, GlobalData._promovInfo.curPage);
+                Tab1Global._promovInfo.curPage = 1;
+                getPromov(Tab1Global._promovInfo.refreshItemNum, Tab1Global._promovInfo.curPage);
             }
 
             @Override
             public void onLoadMore(final TwinklingRefreshLayout refreshLayout) {
-                if (GlobalData._promovInfo.pagesNum < GlobalData._promovInfo.curPage+1) {
+                if (Tab1Global._promovInfo.pagesNum < Tab1Global._promovInfo.curPage+1) {
                     refreshLayout.finishLoadmore();
-                    refreshLayout.setEnableLoadmore(false);
+                    Toast.makeText(getContext(), "No more contents", Toast.LENGTH_SHORT).show();
                 }else {
-                    GlobalData._promovInfo.curPage++;
-                    getPromov(GlobalData._promovInfo.refreshItemNum, GlobalData._promovInfo.curPage);
+                    Tab1Global._promovInfo.curPage++;
+                    getPromov(Tab1Global._promovInfo.refreshItemNum, Tab1Global._promovInfo.curPage);
                 }
             }
         });
 
-        refreshPromov.startRefresh();
+        refresh.startRefresh();
 
         return view;
     }
@@ -156,8 +156,8 @@ public class PromovFragment extends Fragment {
         @Override
         protected void onPostExecute(String result) {
 
-            refreshPromov.finishRefreshing();
-            refreshPromov.finishLoadmore();
+            refresh.finishRefreshing();
+            refresh.finishLoadmore();
 
             if (result == null){
                 Toast.makeText(getActivity(), R.string.error_failed_connect, Toast.LENGTH_SHORT).show();
@@ -168,14 +168,14 @@ public class PromovFragment extends Fragment {
                 Gson gson = new GsonBuilder().create();
                 DataModel promovData = gson.fromJson(result, DataModel.class);
 
-                GlobalData._promovInfo.itemsNum = promovData.category.post_count;
-                GlobalData._promovInfo.pagesNum = promovData.pages;
+                Tab1Global._promovInfo.itemsNum = promovData.category.post_count;
+                Tab1Global._promovInfo.pagesNum = promovData.pages;
 
-                if(GlobalData._promovInfo.curPage == 1) {
-                    GlobalData._promovData.clear();
+                if(Tab1Global._promovInfo.curPage == 1) {
+                    Tab1Global._promovData.clear();
                 }
 
-                Collections.addAll(GlobalData._promovData, promovData.posts);
+                Collections.addAll(Tab1Global._promovData, promovData.posts);
 
                 adapter.notifyDataSetChanged();
             } catch (Exception e) {

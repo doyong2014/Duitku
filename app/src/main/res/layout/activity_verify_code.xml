@@ -7,8 +7,7 @@
     android:paddingLeft="10dp"
     android:paddingRight="10dp"
     android:paddingTop="@dimen/activity_vertical_margin"
-    android:background="@color/colorMainBg"
-    tools:context="com.mi1.duitku.LoginActivity">
+    android:background="@color/colorMainBg">
 
     <LinearLayout
         android:layout_width="match_parent"
