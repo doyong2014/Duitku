@@ -49,7 +49,7 @@ public class CheckoutActivity extends BaseActivity implements CheckoutView {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.confirmation_page_activity);
-        initToolbarView();
+
         duitkuPreferences = new DuitkuPreferences(CheckoutActivity.this);
         mCheckoutPresenter = PresenterFactory.createCheckoutPresenter(this, getNetworkManager());
         mCheckoutPresenter.onInitView();

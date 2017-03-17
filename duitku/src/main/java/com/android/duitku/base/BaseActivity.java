@@ -24,11 +24,6 @@ public class BaseActivity extends NetworkActivity {
 
     private DuitkuPreferences duitkuPreferences;
 
-    public void initToolbarView() {
-        mToolbar = (Toolbar) findViewById(R.id.tool_bar);
-        setSupportActionBar(mToolbar);
-    }
-
     public void showSimpleDialog(String title, String message, String btnTitle, boolean cancelable, DialogInterface.OnClickListener listner){
         if(btnTitle == null)
             btnTitle = "Close";

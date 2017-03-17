@@ -93,7 +93,6 @@ public class LoginDuitkuActivity extends BaseActivity implements LoginDuitkuView
         duitkuPreferences = new DuitkuPreferences(LoginDuitkuActivity.this);
         mLoginDuitkuPresenter = PresenterFactory.createLoginFactory(this, getNetworkManager());
         mLoginDuitkuPresenter.onInitView();
-        initToolbarView();
 
         final Toolbar toolbar = (Toolbar) findViewById(R.id.tool_bar);
         setSupportActionBar(toolbar);

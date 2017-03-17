@@ -62,10 +62,6 @@
             android:label="Top-up"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".Tab3.SelectPaymentActivity"
-            android:label="Pilih Pembayaran"
-            android:screenOrientation="portrait" />
-        <activity
             android:name=".Tab3.TransferActivity"
             android:label="Top-up Bank Transfer"
             android:screenOrientation="portrait" />

@@ -111,24 +111,6 @@ public class PaymentMethodActivity extends BaseActivity implements PaymentMethod
 
         setContentView(R.layout.activity_payment_method);
 
-        initToolbarView();
-        final Toolbar toolbar = (Toolbar) findViewById(R.id.tool_bar);
-        setSupportActionBar(toolbar);
-        //region ActionBar
-        ActionBar actionBar = getSupportActionBar();
-        if (actionBar != null) {
-            actionBar.setHomeButtonEnabled(true);
-            actionBar.setDisplayHomeAsUpEnabled(true);
-            toolbar.setNavigationIcon(getResources().getDrawable(R.drawable.ic_action_arrow));
-        }
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onBackPressed();
-            }
-        });
-        //endregion
-
         duitkuPreferences = new DuitkuPreferences(PaymentMethodActivity.this);
         inquiry = new Gson().fromJson(duitkuPreferences.getInquiry(), Inquiry.class);
         mPaymentMethodPresenter = PresenterFactory.createPaymentMethodFactory(this);

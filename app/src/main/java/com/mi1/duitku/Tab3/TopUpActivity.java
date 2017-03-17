@@ -5,8 +5,6 @@ import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -14,22 +12,16 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.mi1.duitku.Common.CommonFunction;
-import com.mi1.duitku.Common.Constant;
+import com.android.duitku.inquiry.view.InquiryActivity;
+import com.mi1.duitku.Common.UserInfo;
 import com.mi1.duitku.R;
-
-import java.io.UnsupportedEncodingException;
-import java.security.NoSuchAlgorithmException;
-import java.text.DecimalFormat;
-import java.text.NumberFormat;
-import java.util.Locale;
-import java.util.Random;
 
 public class TopUpActivity extends AppCompatActivity {
 
     private EditText etAmount;
     private String mAmount;
     private String current = "";
+    private final int INQUIRY = 100;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,31 +66,12 @@ public class TopUpActivity extends AppCompatActivity {
 
     private void selectPayment() {
 
-        Random random = new Random();
-        String orderId = random.nextInt(1000000) + "";
-
-        String sign = null;
-        try {
-            sign = CommonFunction.getSHA1(Constant.STATUS_INQUIRY + Constant.API_KEY + orderId + Constant.MERCHANT_CODE);
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
-
-        Inquiry inquiry = new Inquiry();
-
-        inquiry.setAction(Constant.STATUS_INQUIRY);
-        inquiry.setMerchantCode(Constant.MERCHANT_CODE);
-        inquiry.setOrderId(orderId);
-        inquiry.setAmount(etAmount.getText().toString());
-        inquiry.setProductDetail(Constant.ORDER_DETAIL);
-        inquiry.setAdditionalParam("");
-        inquiry.setSign(sign);
-
-        Intent intent = new Intent(TopUpActivity.this, SelectPaymentActivity.class);
-        intent.putExtra("inquiry", inquiry);
-        startActivity(intent);
+        Intent intent = new Intent(TopUpActivity.this, InquiryActivity.class);
+        intent.putExtra("nominal", mAmount);
+        intent.putExtra("token", UserInfo.mToken);
+        intent.putExtra("order_detail", "Top-up Mi1 Indonesia");
+        intent.putExtra("cp", UserInfo.mPhoneNumber);
+        startActivityForResult(intent, INQUIRY);
     }
 
     private boolean validateAmount(){
@@ -149,5 +122,17 @@ public class TopUpActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data)
+    {
+        super.onActivityResult(requestCode, resultCode, data);
+        // check if the request code is same as what is passed  here it is 2
+        if(requestCode == INQUIRY)
+        {
+            Intent broadcast = new Intent();
+            //getActivity().sendBroadcast(broadcast);
+        }
     }
 }
