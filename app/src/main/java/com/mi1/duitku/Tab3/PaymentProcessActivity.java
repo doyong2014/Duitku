@@ -1,6 +1,7 @@
 package com.mi1.duitku.Tab3;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -11,17 +12,20 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.appsflyer.AFInAppEventParameterName;
 import com.appsflyer.AFInAppEventType;
 import com.appsflyer.AppsFlyerLib;
 import com.mi1.duitku.Common.AppGlobal;
 import com.mi1.duitku.Common.Constant;
-import com.mi1.duitku.Common.UserInfo;
+import com.mi1.duitku.LoginActivity;
 import com.mi1.duitku.R;
+import com.mi1.duitku.Tab3.Common.CPPOBProduct;
 import com.mi1.duitku.Tab3.Common.CPaymentInfo;
 
 import org.json.JSONException;
@@ -37,69 +41,81 @@ import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 
-public class PLNPrepaidActivity extends AppCompatActivity {
+/**
+ * Created by WORYA on 3/16/2016.
+ */
+public class PaymentProcessActivity extends AppCompatActivity {
 
-    private EditText etAmount;
-    private EditText etCustomer;
-    private String amount;
-    private String customer;
+    public static final String TAG_ACTIVITYTITLE = "activity_title";
+    public static final String TAG_ACTIVITYPRODUCTCODE = "product_code";
+    public static final String TAG_ACTIVITYPRODUCTNAME = "product_name";
+
     private ProgressDialog progress;
-    private final static String PRODUCT_CODE = "PLNPRAH";
+
+    private String subscriberId;
+    private String activityTitle;
+    private String productCode;
+    private String productName;
+
+    private EditText etSubscriberId;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_pln_prepaid);
+        setContentView(R.layout.activity_payment_process);
+
+        Intent intent = getIntent();
+        if(intent != null)
+        {
+            activityTitle = intent.getStringExtra(TAG_ACTIVITYTITLE);
+            productName = intent.getStringExtra(TAG_ACTIVITYPRODUCTNAME);
+            productCode = intent.getStringExtra(TAG_ACTIVITYPRODUCTCODE);
+        }
 
         progress = new ProgressDialog(this);
         progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
 
-        etAmount = (EditText) findViewById(R.id.edt_amount);
-        etCustomer = (EditText) findViewById(R.id.edt_customer);
-
-        Button btnPay = (Button) findViewById(R.id.btn_pay);
-        btnPay.setOnClickListener(new View.OnClickListener() {
+        etSubscriberId = (EditText) findViewById(R.id.edt_subscriber_id);
+        Button btnPayBills = (Button) findViewById(R.id.btn_pay);
+        btnPayBills.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (validate()) {
+                if(validate()) {
                     new callInquiryBill().execute();
                 }
             }
         });
+    }
+    
+    private boolean validate() {
 
+        subscriberId = etSubscriberId.getText().toString();
+
+        if(subscriberId.isEmpty()) {
+            etSubscriberId.setError("Nomor Pelanggan tidak boleh kosong");
+            etSubscriberId.requestFocus();
+            return false;
+        }
+
+        hideKeyboard();
+        return true;
     }
 
-    public boolean validate() {
-
-        amount = etAmount.getText().toString();
-        customer = etCustomer.getText().toString();
-
-        if (amount.isEmpty()) {
-            etAmount.setError("please fill payment amount");
-            return false;
-        }
-        else if (Double.parseDouble(amount) < (double)10000) {
-            etAmount.setError("Pembayaran minimum RP 10.000,00");
-            return false;
-        }
-        else if (customer.isEmpty()) {
-            etCustomer.setError("Mohon masukkan nomor pelanggan");
-            return false;
-        }
-        return true;
+    private void hideKeyboard(){
+        InputMethodManager inputManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        inputManager.hideSoftInputFromWindow(this.getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
 
         ActionBar actionBar = getSupportActionBar();
 
         actionBar.setHomeButtonEnabled(true);
         actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setTitle(activityTitle);
         actionBar.setBackgroundDrawable(ContextCompat.getDrawable(this, R.drawable.actionbar_bg));
-
-        getMenuInflater().inflate(R.menu.menu_pay, menu);
 
         return true;
     }
@@ -110,12 +126,7 @@ public class PLNPrepaidActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         if (id == android.R.id.home) {
-            PLNPrepaidActivity.this.finish();
-
-        } else if(id == R.id.action_payment) {
-            if (validate()) {
-                new callInquiryBill().execute();
-            }
+            PaymentProcessActivity.this.finish();
         }
 
         return super.onOptionsItemSelected(item);
@@ -139,14 +150,14 @@ public class PLNPrepaidActivity extends AppCompatActivity {
 
             try {
 
-                URL url = new URL(Constant.LOGIN_PAGE);
+                URL url = new URL(Constant.INQUIRY_BILL_PAGE);
 
                 JSONObject jsonObject = new JSONObject();
                 try {
-                    jsonObject.put("idpelanggan1", customer);
-                    jsonObject.put("idpelanggan2", customer);
+                    jsonObject.put("idpelanggan1", subscriberId);
+                    jsonObject.put("idpelanggan2", subscriberId);
                     jsonObject.put("idpelanggan3", AppGlobal._userInfo.phoneNumber);
-                    jsonObject.put("kodeProduk", PRODUCT_CODE);
+                    jsonObject.put("kodeProduk", productCode);
                     jsonObject.put("token", AppGlobal._userInfo.token);
 
                 } catch (JSONException e) {
@@ -179,7 +190,7 @@ public class PLNPrepaidActivity extends AppCompatActivity {
 
                     result = builder.toString();
                 } else if (conn.getResponseCode() == 401) {
-                    //session expired
+                    return "401";
                 }
 
             } catch (MalformedURLException e){
@@ -188,7 +199,6 @@ public class PLNPrepaidActivity extends AppCompatActivity {
                 //Log.e("oasis", e.toString());
             }
             return result;
-
         }
 
         @Override
@@ -197,7 +207,14 @@ public class PLNPrepaidActivity extends AppCompatActivity {
             progress.dismiss();
 
             if (result == null){
-                Toast.makeText(PLNPrepaidActivity.this, getString(R.string.error_failed_connect), Toast.LENGTH_SHORT).show();
+                showAlert("Proses gagal", "inquiry failed, please try again later.");
+                return;
+            } else if(result == "401") {
+                AppGlobal._userInfo.clear();
+                Toast.makeText(PaymentProcessActivity.this, "Sesi anda telah habis", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(PaymentProcessActivity.this, LoginActivity.class);
+                startActivity(intent);
+                PaymentProcessActivity.this.finish();
                 return;
             }
 
@@ -218,49 +235,33 @@ public class PLNPrepaidActivity extends AppCompatActivity {
 
             } catch (JSONException e) {
                 Log.e("JSON Parser", "Error parsing data " + e.toString());
+                return;
             }
 
-//            if (returnStatus.getHttpCode() == 200 && returnStatus.getReturnCode().equals("00")) {
-//                Intent intent = new Intent(PurchaseProcessPLNActivity.this, ConfirmationPaymentActivity.class);
-//                intent.putExtra(ConfirmationPaymentActivity.TAG_SUBSCRIBER, edit_subscriberid.getText());
-//                paymentInfo.nominal = Double.parseDouble(edit_paymentAmount.getText().toString());
-//                intent.putExtra(ConfirmationPaymentActivity.TAG_PAYMENT_PRODUCT, paymentInfo );
-//                intent.putExtra(ConfirmationPaymentActivity.TAG_ACTIVITYTITLE, mStrActivityTitle);
-//                intent.putExtra(ConfirmationPaymentActivity.TAG_PRODUCT_CODE, ppobProduct.productCode);
+            Intent intent = new Intent(PaymentProcessActivity.this, ConfirmationPaymentActivity.class);
+            intent.putExtra(ConfirmationPaymentActivity.TAG_SUBSCRIBER, subscriberId);
+            intent.putExtra(ConfirmationPaymentActivity.TAG_PAYMENT_PRODUCT, paymentInfo );
+            intent.putExtra(ConfirmationPaymentActivity.TAG_ACTIVITYTITLE, productName);
+            intent.putExtra(ConfirmationPaymentActivity.TAG_PRODUCT_CODE, productCode);
 
-                Map<String, Object> eventValue = new HashMap<String, Object>();
-                eventValue.put(AFInAppEventParameterName.PRICE,paymentInfo.nominal);
-                eventValue.put(AFInAppEventParameterName.DESCRIPTION,paymentInfo);
-                AppsFlyerLib.getInstance().trackEvent(PLNPrepaidActivity.this, AFInAppEventType.SPENT_CREDIT,eventValue);
+            Map<String, Object> eventValue = new HashMap<String, Object>();
+            eventValue.put(AFInAppEventParameterName.PRICE,paymentInfo.nominal);
+            eventValue.put(AFInAppEventParameterName.DESCRIPTION,paymentInfo);
+            AppsFlyerLib.getInstance().trackEvent(PaymentProcessActivity.this, AFInAppEventType.SPENT_CREDIT,eventValue);
 
-//                startActivity(intent);
-                //PurchaseProcessPLNActivity.this.finish();
-//            }
-//            else if(returnStatus.getReturnCode().equals("02"))
-//            {
-//                Intent intent = new Intent(PurchaseProcessPLNActivity.this, LoginActivity.class);
-//                startActivity(intent);
-//                finish();
-//                Toast.makeText(PurchaseProcessPLNActivity.this, "Sesi anda telah habis", Toast.LENGTH_LONG).show();
-//            }
-//            else {
-//                showAlert("Proses gagal", returnStatus.getMessage());
-//            }
+            startActivity(intent);
+            PaymentProcessActivity.this.finish();
         }
-
     }
 
     public void showAlert(String paramString1, String paramString2)
     {
-//        final CustomAlertDialog customAlertDialog = new CustomAlertDialog();
-//        customAlertDialog.setDialog(PLNPrepaidActivity.this, paramString1, paramString2);
-//        customAlertDialog.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                customAlertDialog.dialog.dismiss();
-//            }
-//        });
-//        customAlertDialog.showDialog();
-    }
+        new MaterialDialog.Builder(PaymentProcessActivity.this)
+                .title(paramString1)
+                .content(paramString2)
+                .positiveText("OK")
+                .positiveColorRes(R.color.colorPrimary)
+                .show();
 
+    }
 }

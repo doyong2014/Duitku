@@ -1,12 +1,5 @@
 package com.mi1.duitku.Common;
 
-import android.content.Context;
-import android.graphics.Typeface;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.TextView;
-
-import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.text.DecimalFormat;
@@ -46,7 +39,26 @@ public class CommonFunction {
         return "";
     }
 
+    public static String formatNumbering(Double amount)
+    {
+        Locale currentLocale = new Locale("id", "ID");
+        NumberFormat nf = NumberFormat.getNumberInstance(currentLocale);
+        DecimalFormat df = (DecimalFormat)nf;
+
+        return "Rp " + df.format(amount);
+    }
+
     public static String formatNumbering(String amount)
+    {
+        Locale currentLocale = new Locale("id", "ID");
+        Double a = Double.valueOf(amount);
+        NumberFormat nf = NumberFormat.getNumberInstance(currentLocale);
+        DecimalFormat df = (DecimalFormat)nf;
+
+        return "Rp " + df.format(a);
+    }
+
+    public static String formatNumberingWithoutRP(String amount)
     {
         Locale currentLocale = new Locale("id", "ID");
         Double a = Double.valueOf(amount);

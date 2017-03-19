@@ -69,6 +69,15 @@ public class DompetFragment extends Fragment {
             }
         });
 
+        TextView tvTransfer = (TextView) view.findViewById(R.id.txt_transfer);
+        tvTransfer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent  = new Intent(context, TransferActivity.class);
+                context.startActivity(intent);
+            }
+        });
+
         return view;
     }
 
@@ -80,10 +89,11 @@ public class DompetFragment extends Fragment {
                     @Override
                     public boolean onSelection(MaterialDialog dialog, View view, int which, CharSequence text) {
                         if(which == 0) {
-                            Intent intent = new Intent(context, PLNPrepaidActivity.class);
+                            Intent intent = new Intent(context, PurchaseProcessPLNActivity.class);
                             startActivity(intent);
                         } else if(which == 1){
-                            int b = 1;
+                            Intent intent = new Intent(context, PurchaseActivity.class);
+                            startActivity(intent);
                         }
                         return true;
                     }
@@ -104,10 +114,13 @@ public class DompetFragment extends Fragment {
                     public boolean onSelection(MaterialDialog dialog, View view, int which, CharSequence text) {
                         Intent intent = null;
                         if(which == 0) {
-                            intent = new Intent(getContext(), PLNPrepaidActivity.class);
+                            intent = new Intent(getContext(), PaymentProcessActivity.class);
+                            intent.putExtra(PaymentProcessActivity.TAG_ACTIVITYTITLE, "PLN Pasca Bayar");
+                            intent.putExtra(PaymentProcessActivity.TAG_ACTIVITYPRODUCTCODE, "PLNPASCH");
+                            intent.putExtra(PaymentProcessActivity.TAG_ACTIVITYPRODUCTNAME, "PLN PASCA BAYAR");
                             startActivity(intent);
                         } else if(which == 1){
-                            intent = new Intent(getContext(), PLNPrepaidActivity.class);
+                            intent = new Intent(getContext(), PaymentActivity.class);
                             startActivity(intent);
                         }
                         return true;

@@ -16,4 +16,7 @@
     <color name="colorWrong">#D0021B</color>
 
     <color name="colorDisable">#40000000</color>
+    <color name="colorLabel">#60000000</color>
+
+    <color name="gray_second">#8d8d8d</color>
 </resources>

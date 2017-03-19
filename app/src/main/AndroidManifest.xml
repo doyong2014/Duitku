@@ -66,8 +66,36 @@
             android:label="Top-up Bank Transfer"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".Tab3.PLNPrepaidActivity"
+            android:name=".Tab3.PurchaseProcessPLNActivity"
             android:label="PLN PRABAYAR"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Tab3.ConfirmationPaymentActivity"
+            android:label="Confirm"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Tab3.PurchaseActivity"
+            android:label="PULSA HP"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Tab3.PurchaseProcessActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Tab3.ConfirmationActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Tab3.PaymentActivity"
+            android:label="HP PASCABAR"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Tab3.PaymentProcessActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Tab3.ProcessDoneActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Tab3.TransferActivity"
+            android:label="TRANSFER"
             android:screenOrientation="portrait" />
     </application>
 

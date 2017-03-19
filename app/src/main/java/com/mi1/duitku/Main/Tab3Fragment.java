@@ -18,7 +18,7 @@ import com.mi1.duitku.Common.Constant;
 import com.mi1.duitku.R;
 import com.mi1.duitku.Tab3.Common.CPPOBProduct;
 import com.mi1.duitku.Tab3.Common.CPPOBProductParent;
-import com.mi1.duitku.Tab3.Common.Tab2Global;
+import com.mi1.duitku.Tab3.Common.Tab3Global;
 import com.mi1.duitku.Tab3.TabPagerAdapter;
 
 import org.json.JSONArray;
@@ -55,7 +55,7 @@ public class Tab3Fragment extends Fragment {
         progress = new ProgressDialog(getContext());
         progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
 
-        if (Tab2Global.m_product_payment == null || Tab2Global.m_product_purchase == null) {
+        if (Tab3Global.m_product_payment == null || Tab3Global.m_product_purchase == null) {
             new callProductList().execute();
         }
 
@@ -109,7 +109,7 @@ public class Tab3Fragment extends Fragment {
 
         @Override
         protected void onPreExecute() {
-            progress.setMessage("Processing...");
+            progress.setMessage(getString(R.string.wait));
             progress.show();
             super.onPreExecute();
         }
@@ -165,10 +165,10 @@ public class Tab3Fragment extends Fragment {
                 for (int i = 0; i < objArr.length(); i++) {
                     JSONObject obj = objArr.getJSONObject(i);
                     if (obj.getString("name").toString().toUpperCase().equals("PPOB PRA BAYAR")) {
-                        Tab2Global.m_product_purchase = ConvertJsontoCCPOBProductParent(obj);
+                        Tab3Global.m_product_purchase = ConvertJsontoCCPOBProductParent(obj);
                     }
                     else if (obj.getString("name").toString().toUpperCase().equals("PPOB PASCA BAYAR")) {
-                        Tab2Global.m_product_payment = ConvertJsontoCCPOBProductParent(obj);
+                        Tab3Global.m_product_payment = ConvertJsontoCCPOBProductParent(obj);
                     }
                 }
             } catch (JSONException e) {
