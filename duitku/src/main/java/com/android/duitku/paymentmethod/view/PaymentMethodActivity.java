@@ -6,44 +6,32 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Typeface;
-import android.graphics.drawable.Drawable;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Build;
 import android.os.Bundle;
-import android.provider.SyncStateContract;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
-import android.widget.AdapterView;
 import android.widget.Button;
-import android.widget.ListView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.android.duitku.R;
 import com.android.duitku.base.BaseActivity;
 import com.android.duitku.base.PresenterFactory;
-import com.android.duitku.checkoutpage.presenter.CheckoutPresenter;
-import com.android.duitku.checkoutpage.view.CheckoutActivity;
-import com.android.duitku.inquiry.view.InquiryActivity;
 import com.android.duitku.login.view.LoginDuitkuActivity;
 import com.android.duitku.model.Inquiry;
-//import com.android.duitku.model.PGClick;
-import com.android.duitku.model.InquiryResponse;
 import com.android.duitku.model.PaymentMethod;
 import com.android.duitku.paymentmethod.presenter.PaymentMethodPresenter;
 import com.android.duitku.redirectbankpage.view.RedirectBankPage;
 import com.android.duitku.utils.DuitkuPreferences;
-import com.android.duitku.utils.InquiryTransaction;
-import com.android.duitku.utils.Util;
 import com.android.duitku.utils.constant;
 import com.google.gson.Gson;
 import com.squareup.okhttp.Call;
@@ -57,10 +45,10 @@ import com.squareup.okhttp.Response;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.w3c.dom.Text;
-
 
 import java.io.IOException;
+
+//import com.android.duitku.model.PGClick;
 
 /**
  * Created by latifalbar on 11/16/2015.
@@ -131,8 +119,8 @@ public class PaymentMethodActivity extends BaseActivity implements PaymentMethod
         mBankName = (TextView) findViewById(R.id.pg_name);
         mReference = (TextView)findViewById(R.id.referenceValue);
         mButtonBayar = (Button)findViewById(R.id.btn_bayar);
-        mButtonLeft = (Button)findViewById(R.id.btnSlideLeft);
-        mButtonRight = (Button)findViewById(R.id.btnSlideRight);
+//        mButtonLeft = (Button)findViewById(R.id.btnSlideLeft);
+//        mButtonRight = (Button)findViewById(R.id.btnSlideRight);
         TextView orderLabel = (TextView)findViewById(R.id.orderLabel);
         TextView priceLabel = (TextView)findViewById(R.id.priceLabel);
         TextView referenceLabel = (TextView)findViewById(R.id.referenceLabel);
@@ -141,25 +129,23 @@ public class PaymentMethodActivity extends BaseActivity implements PaymentMethod
         rvBank = (RecyclerView) findViewById(R.id.rvBank);
 
         //region set Typeface
-        Typeface fontRegular = Typeface.createFromAsset(getAssets(), "OpenSans-Regular.ttf");
-        Typeface fontSemibold = Typeface.createFromAsset(getAssets(), "OpenSans-Semibold.ttf");
-        orderLabel.setTypeface(fontRegular);
-        priceLabel.setTypeface(fontRegular);
-        referenceLabel.setTypeface(fontRegular);
-        admLabel.setTypeface(fontRegular);
-        totalLabel.setTypeface(fontRegular);
-        mTxtTotalPrice.setTypeface(fontRegular);
-        mTxtPrice.setTypeface(fontRegular);
-        mTxtMerchant.setTypeface(fontRegular);
-        mTxtAdmin.setTypeface(fontRegular);
-        mTxtOrder.setTypeface(fontRegular);
-        mReference.setTypeface(fontRegular);
-        mButtonBayar.setTypeface(fontSemibold);
+//        Typeface fontRegular = Typeface.createFromAsset(getAssets(), "OpenSans-Regular.ttf");
+//        Typeface fontSemibold = Typeface.createFromAsset(getAssets(), "OpenSans-Semibold.ttf");
+//        orderLabel.setTypeface(fontRegular);
+//        priceLabel.setTypeface(fontRegular);
+//        referenceLabel.setTypeface(fontRegular);
+//        admLabel.setTypeface(fontRegular);
+//        totalLabel.setTypeface(fontRegular);
+//        mTxtTotalPrice.setTypeface(fontRegular);
+//        mTxtPrice.setTypeface(fontRegular);
+//        mTxtMerchant.setTypeface(fontRegular);
+//        mTxtAdmin.setTypeface(fontRegular);
+//        mTxtOrder.setTypeface(fontRegular);
+//        mReference.setTypeface(fontRegular);
+//        mButtonBayar.setTypeface(fontSemibold);
         //endregion
 
-        //endregion
-
-        inquiry = new Gson().fromJson(duitkuPreferences.getInquiry(), Inquiry.class);
+//        inquiry = new Gson().fromJson(duitkuPreferences.getInquiry(), Inquiry.class);
 
         //region AssignInitialValue
         mTxtTotalPrice.setText("Rp " + (Integer.parseInt(inquiry.getAmount()) + adminFee));
@@ -193,6 +179,31 @@ public class PaymentMethodActivity extends BaseActivity implements PaymentMethod
                 }
             }
         });
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+
+        ActionBar actionBar = getSupportActionBar();
+
+        actionBar.setHomeButtonEnabled(true);
+        actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setBackgroundDrawable(ContextCompat.getDrawable(this, R.drawable.actionbar_bg));
+
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        int id = item.getItemId();
+
+        if (id == android.R.id.home) {
+            PaymentMethodActivity.this.finish();
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
 
@@ -427,6 +438,7 @@ public class PaymentMethodActivity extends BaseActivity implements PaymentMethod
                 });
         builder.show();
     }
+
     private void showErrorDialogStay(String title, String message, String buttonText)
     {
         AlertDialog.Builder builder = new AlertDialog.Builder(this)

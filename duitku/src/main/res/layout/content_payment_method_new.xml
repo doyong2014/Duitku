@@ -1,33 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:tools="http://schemas.android.com/tools"
-                android:orientation="horizontal"
-                android:layout_width="108dp"
-                android:layout_height="100dp"
-                android:paddingTop="20dp"
-                android:paddingBottom="5dp"
-                android:background="@drawable/bg_payment_method"
-                android:layout_marginLeft="0.5dp"
-                android:layout_marginRight="0.5dp"
-                android:id="@+id/relativeLayout">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content" >
 
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/img_logo_bank"
-        android:src="@drawable/duitku"
-        android:layout_centerHorizontal="true"
-        android:paddingBottom="3dp"
-        />
+    <android.support.v7.widget.CardView
+        android:id="@+id/card_bank"
+        android:layout_width="100dp"
+        android:layout_height="120dp"
+        card_view:cardBackgroundColor="#FFFFFF"
+        card_view:cardUseCompatPadding="true">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Duitku Wallet"
-        android:id="@+id/txt_bank_name"
-        android:layout_below="@+id/img_logo_bank"
-        android:layout_centerHorizontal="true"
-        android:textSize="14sp"
-        android:textColor="#FF000000"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:gravity="center">
 
-</RelativeLayout>
+            <ImageView
+                android:id="@+id/img_logo_bank"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:scaleType="fitCenter" />
+
+            <TextView
+                android:id="@+id/txt_bank_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="3dp"
+                android:textSize="14sp"
+                android:text="Duitku\nWallet"
+                android:gravity="center"/>
+
+        </LinearLayout>
+
+    </android.support.v7.widget.CardView>
+
+</LinearLayout>

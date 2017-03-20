@@ -61,6 +61,7 @@ public class InquiryActivity extends BaseActivity implements InquiryActivityView
     private String[] namaBarang;
     private String[] hargaBarang;
     private DuitkuPreferences duitkuPreferences;
+    public static final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,6 +74,21 @@ public class InquiryActivity extends BaseActivity implements InquiryActivityView
 
         mInquiryPresenter.onInitView();
 
+        final Toolbar toolbar = (Toolbar) findViewById(R.id.tool_bar);
+        setSupportActionBar(toolbar);
+        //region ActionBar
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setHomeButtonEnabled(true);
+            actionBar.setDisplayHomeAsUpEnabled(true);
+            toolbar.setNavigationIcon(getResources().getDrawable(R.drawable.ic_action_arrow));
+        }
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
     }
 
     @Override

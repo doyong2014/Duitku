@@ -21,7 +21,7 @@
         <activity
             android:name=".paymentmethod.view.PaymentMethodActivity"
             android:label="@string/label_pilih_pembayaran"
-            android:theme="@style/Theme.AppCompat.NoActionBar"/>
+            android:theme="@style/Theme.AppCompat.Light.DarkActionBar"/>
 
         <service android:name=".network.NetworkManager"/>
 

@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
@@ -81,7 +82,7 @@ public class PGAdapter extends RecyclerView.Adapter<PGAdapter.PGViewHolder> {
     {
         public TextView mBankName;
         public ImageView mImageBank;
-        public RelativeLayout mRelativeLayout;
+        public CardView mSelView;
         public RecyclerView mRecyclerView;
         public TextView mAdminFeeLabel;
         public TextView mOngkirLabel;
@@ -95,7 +96,7 @@ public class PGAdapter extends RecyclerView.Adapter<PGAdapter.PGViewHolder> {
 
             mBankName = (TextView) itemView.findViewById(R.id.txt_bank_name);
             mImageBank = (ImageView)itemView.findViewById(R.id.img_logo_bank);
-            mRelativeLayout = (RelativeLayout) itemView.findViewById(R.id.relativeLayout);
+            mSelView = (CardView) itemView.findViewById(R.id.card_bank);
             mRecyclerView = (RecyclerView) itemView.findViewById(R.id.rvBank);
 
             View rootView = ((Activity)mContext).getWindow().getDecorView().findViewById(android.R.id.content);
@@ -148,11 +149,11 @@ public class PGAdapter extends RecyclerView.Adapter<PGAdapter.PGViewHolder> {
 
             if(pgPositionArray[position])
             {
-                mRelativeLayout.setSelected(true);
+                mSelView.setSelected(true);
             }
             else
             {
-                mRelativeLayout.setSelected(false);
+                mSelView.setSelected(false);
             }
         }
 

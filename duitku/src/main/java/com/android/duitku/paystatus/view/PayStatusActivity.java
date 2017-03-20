@@ -1,7 +1,6 @@
 package com.android.duitku.paystatus.view;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -11,12 +10,10 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.android.duitku.R;
 import com.android.duitku.base.BaseActivity;
 import com.android.duitku.base.PresenterFactory;
-import com.android.duitku.inquiry.view.InquiryActivity;
 import com.android.duitku.model.Inquiry;
 import com.android.duitku.model.InquiryResponse;
 import com.android.duitku.model.Login;
@@ -26,16 +23,6 @@ import com.android.duitku.model.PayResponse;
 import com.android.duitku.paymentmethod.view.PaymentMethodActivity;
 import com.android.duitku.paystatus.presenter.PayPresenter;
 import com.android.duitku.utils.DuitkuPreferences;
-import com.android.duitku.utils.Util;
-import com.android.duitku.utils.constant;
-import com.google.gson.Gson;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-import org.json.JSONStringer;
-
-import java.io.UnsupportedEncodingException;
-import java.security.NoSuchAlgorithmException;
 
 /**
  * Created by latifalbar on 11/19/2015.

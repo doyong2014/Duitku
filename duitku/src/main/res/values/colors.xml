@@ -7,4 +7,5 @@
     <color name="notification_bar_green">#37A459</color>
     <color name="notification_bar_brown">#715247</color>
     <color name="primaryBlue">#0f579d</color>
+    <color name="colorSepLine">#CCCCCC</color>
 </resources>
