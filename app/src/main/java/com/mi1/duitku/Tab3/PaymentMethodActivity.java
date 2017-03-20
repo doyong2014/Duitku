@@ -29,6 +29,7 @@ import android.widget.Toast;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.google.gson.Gson;
 import com.mi1.duitku.Common.AppGlobal;
+import com.mi1.duitku.Common.CommonFunction;
 import com.mi1.duitku.Common.Constant;
 import com.mi1.duitku.R;
 import com.mi1.duitku.Tab3.Common.Inquiry;
@@ -95,7 +96,7 @@ public class PaymentMethodActivity  extends AppCompatActivity {
         tvOrderDetail.setText(inquiry.getProductDetail());
 
         TextView tvPrice = (TextView)findViewById(R.id.txt_price);
-        tvPrice.setText("Rp " + inquiry.getAmount());
+        tvPrice.setText(CommonFunction.formatNumbering(inquiry.getAmount()));
 
         mPrice = Integer.valueOf(inquiry.getAmount());
 
@@ -103,7 +104,7 @@ public class PaymentMethodActivity  extends AppCompatActivity {
         tvAdminFee.setText("Rp " + mAdminFee);
 
         tvTotalPrice = (TextView)findViewById(R.id.txt_total_price);
-        tvTotalPrice.setText("Rp " + String.valueOf(mAdminFee+mPrice));
+        tvTotalPrice.setText(CommonFunction.formatNumbering(String.valueOf(mAdminFee+mPrice)));
 
         Button btnPay = (Button)findViewById(R.id.btn_pay);
         btnPay.setOnClickListener(new View.OnClickListener() {

@@ -33,7 +33,7 @@ public class PurchaseProcessActivity extends AppCompatActivity {
     private String sellPrice;
 
     private Spinner spinDenom;
-    private TextView tvSellPrice;
+    private EditText etSellPrice;
     private EditText etPhoneNumer;
     private CPPOBProduct ppobProduct;
 
@@ -49,7 +49,8 @@ public class PurchaseProcessActivity extends AppCompatActivity {
         CPPOBProductParent product = getIntent().getParcelableExtra(this.TAG_ACTIVITYPRODUCT);
 
         spinDenom = (Spinner) findViewById(R.id.spinner_denom);
-        tvSellPrice = (TextView) findViewById(R.id.txt_sell_price);
+        etSellPrice = (EditText) findViewById(R.id.edt_sell_price);
+        etSellPrice.setFocusable(false);
 
         etPhoneNumer = (EditText) findViewById(R.id.edt_phone_num);
         etPhoneNumer.setText(AppGlobal._userInfo.phoneNumber);
@@ -75,7 +76,7 @@ public class PurchaseProcessActivity extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                     ppobProduct = (CPPOBProduct)spinDenom.getSelectedItem();
                     sellPrice = CommonFunction.formatNumbering(ppobProduct.productPrice);
-                    tvSellPrice.setText(sellPrice);
+                    etSellPrice.setText(sellPrice);
             }
 
             @Override

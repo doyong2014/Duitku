@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.mi1.duitku.Common.AppGlobal;
+import com.mi1.duitku.Common.CommonFunction;
 import com.mi1.duitku.R;
 
 /**
@@ -33,7 +34,7 @@ public class DompetFragment extends Fragment {
         context = getContext();
 
         TextView tvBalance = (TextView) view.findViewById(R.id.txt_balance);
-        tvBalance.setText(AppGlobal._userInfo.userbalance);
+        tvBalance.setText(CommonFunction.formatNumberingWithoutRP(AppGlobal._userInfo.userbalance));
 
         TextView tvTopup = (TextView) view.findViewById(R.id.txt_topup);
         tvTopup.setOnClickListener(new View.OnClickListener() {

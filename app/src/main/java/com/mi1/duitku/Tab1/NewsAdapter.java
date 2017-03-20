@@ -15,6 +15,7 @@ import com.daimajia.slider.library.SliderLayout;
 import com.daimajia.slider.library.SliderTypes.BaseSliderView;
 import com.daimajia.slider.library.SliderTypes.TextSliderView;
 import com.mi1.duitku.Common.AppGlobal;
+import com.mi1.duitku.Common.CommonFunction;
 import com.mi1.duitku.R;
 import com.mi1.duitku.Tab1.Common.DataModel;
 import com.mi1.duitku.Tab1.Common.Tab1Global;
@@ -57,7 +58,7 @@ public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> i
 
         if(holder instanceof HeaderViewHolder) {
             HeaderViewHolder headerHolder = (HeaderViewHolder) holder;
-            headerHolder.tvBalance.setText(String.format(context.getString(R.string.news_balance), AppGlobal._userInfo.userbalance));
+            headerHolder.tvBalance.setText(String.format(context.getString(R.string.news_balance), CommonFunction.formatNumberingWithoutRP(AppGlobal._userInfo.userbalance)));
             headerHolder.tvTopUp.setOnClickListener (new View.OnClickListener () {
                 @Override
                 public void onClick (View view) {
