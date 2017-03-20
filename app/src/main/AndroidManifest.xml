@@ -104,6 +104,9 @@
         <activity
             android:name=".Tab3.RedirectBankActivity"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".Tab3.PayStatusActivity"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>
