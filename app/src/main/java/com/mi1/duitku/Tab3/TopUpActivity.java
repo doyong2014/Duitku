@@ -13,13 +13,10 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 
-import com.android.duitku.model.Inquiry;
-import com.android.duitku.paymentmethod.view.PaymentMethodActivity;
-import com.android.duitku.utils.DuitkuPreferences;
-import com.android.duitku.utils.Util;
-import com.android.duitku.utils.constant;
-import com.google.gson.Gson;
+import com.mi1.duitku.Common.CommonFunction;
+import com.mi1.duitku.Common.Constant;
 import com.mi1.duitku.R;
+import com.mi1.duitku.Tab3.Common.Inquiry;
 
 import java.io.UnsupportedEncodingException;
 import java.security.NoSuchAlgorithmException;
@@ -30,23 +27,15 @@ public class TopUpActivity extends AppCompatActivity {
     private EditText etAmount;
     private String amount;
     private String current = "";
-    private DuitkuPreferences duitkuPreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_top_up);
 
-        duitkuPreferences = new DuitkuPreferences(this);
-        duitkuPreferences.saveLogin("");
-        duitkuPreferences.saveLoginResponse("");
-        duitkuPreferences.savePayResponse("");
-        duitkuPreferences.setUsingDuitku(false);
-        duitkuPreferences.saveImageName("");
-        duitkuPreferences.saveAdminFee(0);
-        duitkuPreferences.saveInquiryResponse("");
-        duitkuPreferences.saveInquiry("");
-        duitkuPreferences.setIsLastPaymentFailed(false);
+//        Tab3Global._duitkuPreferences = new DuitkuPreferences();
+//        Tab3Global._duitkuPreferences.init();
 
         etAmount = (EditText)findViewById(R.id.edt_amount);
 //        etAmount.addTextChangedListener(new TextWatcher() {
@@ -98,7 +87,7 @@ public class TopUpActivity extends AppCompatActivity {
 
         String sign = null;
         try {
-            sign = Util.getSHA1(constant.statusInquiry + constant.apiKey + orderId + constant.merchantCode);
+            sign = CommonFunction.getSHA1(Constant.STATUS_INQUIRY + Constant.API_KEY + orderId + Constant.MERCHANT_CODE);
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
         } catch (UnsupportedEncodingException e) {
@@ -107,17 +96,18 @@ public class TopUpActivity extends AppCompatActivity {
 
         Inquiry inquiry = new Inquiry();
 
-        inquiry.setAction(constant.statusInquiry);
-        inquiry.setMerchantCode(constant.merchantCode);
+        inquiry.setAction(Constant.STATUS_INQUIRY);
+        inquiry.setMerchantCode(Constant.MERCHANT_CODE);
         inquiry.setOrderId(orderId);
         inquiry.setAmount(amount);
         inquiry.setProductDetail("Top-up Mi1 Indonesia");
         inquiry.setAdditionalParam("");
         inquiry.setSign(sign);
 
-        duitkuPreferences.saveInquiry(new Gson().toJson(inquiry));
+//        Tab3Global._duitkuPreferences.inquiry = new Gson().toJson(inquiry);
 
         Intent intent = new Intent(TopUpActivity.this, PaymentMethodActivity.class);
+        intent.putExtra("inquiry", inquiry);
         startActivity(intent);
     }
 

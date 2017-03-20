@@ -104,4 +104,20 @@
         <item>HP PASCABAYAR</item>
     </string-array>
 
+    <string name="login_failed">Login gagal, silahkan coba lagi</string>
+    <string name="null_data">Data tidak tersedia</string>
+    <string name="data_already_inquiry">Data telah diinquiry</string>
+    <string name="payment_succeed">Pembayaran Berhasil</string>
+    <string name="payment_failed">Pembayaran Gagal</string>
+    <string name="thank_you">Terima Kasih</string>
+    <string name="insufficient_balance">Dana tidak mencukupi</string>
+    <string name="orderLabel">Order</string>
+    <string name="separator">:</string>
+    <string name="priceLabel">Harga</string>
+    <string name="merchantLabel">Merchant</string>
+    <string name="referenceLabel">Referensi</string>
+    <string name="adminLabel">*Anda akan dikenakan biaya administrasi </string>
+    <string name="deliveryLabel">Ongkir</string>
+    <string name="totalLabel">Total Order</string>
+
 </resources>

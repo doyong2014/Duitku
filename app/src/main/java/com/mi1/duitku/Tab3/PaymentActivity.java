@@ -1,7 +1,5 @@
 package com.mi1.duitku.Tab3;
 
-import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
@@ -33,8 +31,8 @@ public class PaymentActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ppoblist);
 
-        for (int i = 0; i < Tab3Global.m_product_payment.child.size(); i++) {
-            CPPOBProductParent tempProduct = Tab3Global.m_product_payment.child.get(i);
+        for (int i = 0; i < Tab3Global._productPayment.child.size(); i++) {
+            CPPOBProductParent tempProduct = Tab3Global._productPayment.child.get(i);
             if (tempProduct.name.equals("HP PASCABAYAR")) {
                 product = tempProduct;
             }

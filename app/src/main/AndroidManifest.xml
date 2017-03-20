@@ -97,6 +97,13 @@
             android:name=".Tab3.TransferActivity"
             android:label="TRANSFER"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".Tab3.PaymentMethodActivity"
+            android:label="Pilih Pembayaran"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Tab3.RedirectBankActivity"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

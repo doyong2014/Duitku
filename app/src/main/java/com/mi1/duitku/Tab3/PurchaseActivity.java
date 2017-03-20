@@ -30,8 +30,8 @@ public class PurchaseActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ppoblist);
 
-        for (int i = 0; i < Tab3Global.m_product_purchase.child.size(); i++) {
-            CPPOBProductParent tempProduct = Tab3Global.m_product_purchase.child.get(i);
+        for (int i = 0; i < Tab3Global._productPurchase.child.size(); i++) {
+            CPPOBProductParent tempProduct = Tab3Global._productPurchase.child.get(i);
             if (tempProduct.name.equals("PULSA HP")) {
                 product = tempProduct;
             }

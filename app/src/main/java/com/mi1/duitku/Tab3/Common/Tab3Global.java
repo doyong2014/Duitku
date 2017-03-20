@@ -8,6 +8,7 @@ import com.mi1.duitku.Tab3.Common.CPPOBProductParent;
 
 public class Tab3Global {
 
-    public static CPPOBProductParent m_product_payment;
-    public static CPPOBProductParent m_product_purchase;
+    public static CPPOBProductParent _productPayment;
+    public static CPPOBProductParent _productPurchase;
+    public static DuitkuPreferences _duitkuPreferences;
 }

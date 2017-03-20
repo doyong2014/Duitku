@@ -9,6 +9,7 @@ import com.mi1.duitku.Common.CommonFunction;
  * Created by easten on 28.04.16.
  */
 public class CPPOBProduct implements Parcelable {
+
     public String productCode;
     public String productName;
     public String productType;

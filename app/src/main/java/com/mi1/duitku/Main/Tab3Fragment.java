@@ -55,7 +55,7 @@ public class Tab3Fragment extends Fragment {
         progress = new ProgressDialog(getContext());
         progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
 
-        if (Tab3Global.m_product_payment == null || Tab3Global.m_product_purchase == null) {
+        if (Tab3Global._productPayment == null || Tab3Global._productPurchase == null) {
             new callProductList().execute();
         }
 
@@ -165,10 +165,10 @@ public class Tab3Fragment extends Fragment {
                 for (int i = 0; i < objArr.length(); i++) {
                     JSONObject obj = objArr.getJSONObject(i);
                     if (obj.getString("name").toString().toUpperCase().equals("PPOB PRA BAYAR")) {
-                        Tab3Global.m_product_purchase = ConvertJsontoCCPOBProductParent(obj);
+                        Tab3Global._productPurchase = ConvertJsontoCCPOBProductParent(obj);
                     }
                     else if (obj.getString("name").toString().toUpperCase().equals("PPOB PASCA BAYAR")) {
-                        Tab3Global.m_product_payment = ConvertJsontoCCPOBProductParent(obj);
+                        Tab3Global._productPayment = ConvertJsontoCCPOBProductParent(obj);
                     }
                 }
             } catch (JSONException e) {

@@ -1,4 +1,0 @@
-<selector xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:state_selected="true" android:drawable="@drawable/kotak_hover" />
-    <item android:drawable="@drawable/kotak" android:state_selected="false" />
-</selector>

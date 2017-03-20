@@ -19,4 +19,7 @@
     <color name="colorLabel">#60000000</color>
 
     <color name="gray_second">#8d8d8d</color>
+    <color name="primaryBlue">#0f579d</color>
+    <color name="background_blue">#00b3f1</color>
+    <color name="font_blue">#495c97</color>
 </resources>

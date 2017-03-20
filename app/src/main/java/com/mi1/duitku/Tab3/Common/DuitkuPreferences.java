@@ -6,16 +6,28 @@ package com.mi1.duitku.Tab3.Common;
 
 public class DuitkuPreferences {
 
-    public final String INQUIRY = "inquiry";
-    public final String INQUIRY_RESPONSE = "inquiry_response";
-    public final String ISLOGIN = "is_login";
-    public final String LOGIN = "login";
-    public final String LOGIN_RESPONSE = "login_response";
-    public final String BANK_URL = "bank_url";
-    public final String USING_DUITKU = "using_duitku";
-    public final String LAST_PAYMENT_FAILED = "last_payment_failed";
-    public final String IMAGE_NAME = "image_name";
-    public final String ADMIN_FEE = "admin_fee";
-    public final String USING_BBM = "using_bbm";
-    public final String PAY_RESPONSE = "payresponse";
+    public String inquiry;
+    public String inquiryResponse;
+    public String isLogin;
+    public String login;
+    public String loginResponse;
+    public String bankUrl;
+    public boolean usingDuitku;
+    public boolean lastPaymentFailed;
+    public String imageName;
+    public double adminFee;
+    public String usingBbm;
+    public String payResponse;
+
+    public void init() {
+        login = "";
+        loginResponse = "";
+        payResponse = "";
+        usingDuitku = false;
+        imageName = "";
+        adminFee = 0;
+        inquiryResponse = "";
+        inquiry = "";
+        lastPaymentFailed = false;
+    }
 }
