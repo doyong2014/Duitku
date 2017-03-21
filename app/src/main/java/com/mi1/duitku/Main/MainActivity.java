@@ -40,26 +40,26 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         bottomTab = (BottomLayout) findViewById(R.id.main_tab);
         initBottonLayout();
 
-        selectFragment(1);
+        selectFragment(cur_tab);
 
         dlDrawer = (DrawerLayout) findViewById(R.id.drawer_layout);
 
-        LinearLayout navProfil = (LinearLayout)findViewById(R.id.nav_profil);
+        LinearLayout navProfil = (LinearLayout)findViewById(R.id.nav_profile);
         navProfil.setOnClickListener(this);
 
-        LinearLayout navBeranda = (LinearLayout)findViewById(R.id.nav_beranda);
+        LinearLayout navBeranda = (LinearLayout)findViewById(R.id.nav_home);
         navBeranda.setOnClickListener(this);
 
-        LinearLayout navTentang = (LinearLayout)findViewById(R.id.nav_tentang);
+        LinearLayout navTentang = (LinearLayout)findViewById(R.id.nav_about);
         navTentang.setOnClickListener(this);
 
-        LinearLayout navHubungi = (LinearLayout)findViewById(R.id.nav_hubungi);
+        LinearLayout navHubungi = (LinearLayout)findViewById(R.id.nav_contact);
         navHubungi.setOnClickListener(this);
 
-        LinearLayout navBantuan = (LinearLayout)findViewById(R.id.nav_bantuan);
+        LinearLayout navBantuan = (LinearLayout)findViewById(R.id.nav_help);
         navBantuan.setOnClickListener(this);
 
-        LinearLayout navBagikan = (LinearLayout)findViewById(R.id.nav_bagikan);
+        LinearLayout navBagikan = (LinearLayout)findViewById(R.id.nav_share);
         navBagikan.setOnClickListener(this);
 
         LinearLayout navLogout = (LinearLayout)findViewById(R.id.nav_logout);
@@ -152,24 +152,42 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View v) {
 
         Intent intent = null;
+        Fragment fragment = null;
+
         switch (v.getId()) {
 
-            case R.id.nav_profil:
+            case R.id.nav_profile:
                 dlDrawer.closeDrawers();
+                if (cur_tab != 5) {
+                    bottomTab.setCurrentIndex(4);
+                    cur_tab = 5;
+                    selectFragment(cur_tab);
+                }
                 break;
-            case R.id.nav_beranda:
+            case R.id.nav_home:
                 dlDrawer.closeDrawers();
+                if (cur_tab != 1) {
+                    bottomTab.setCurrentIndex(0);
+                    cur_tab = 1;
+                    selectFragment(cur_tab);
+                }
                 break;
-            case R.id.nav_tentang:
+            case R.id.nav_about:
                 dlDrawer.closeDrawers();
+                intent = new Intent(MainActivity.this, AboutUsActivity.class);
+                startActivity(intent);
                 break;
-            case R.id.nav_hubungi:
+            case R.id.nav_contact:
                 dlDrawer.closeDrawers();
+                intent = new Intent(MainActivity.this, ContactUsActivity.class);
+                startActivity(intent);
                 break;
-            case R.id.nav_bantuan:
+            case R.id.nav_help:
                 dlDrawer.closeDrawers();
+                intent = new Intent(MainActivity.this, HelpActivity.class);
+                startActivity(intent);
                 break;
-            case R.id.nav_bagikan:
+            case R.id.nav_share:
                 dlDrawer.closeDrawers();
                 break;
             case R.id.nav_logout:

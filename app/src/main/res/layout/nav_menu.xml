@@ -15,7 +15,7 @@
         android:layout_weight="2" />
 
     <LinearLayout
-        android:id="@+id/nav_profil"
+        android:id="@+id/nav_profile"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="14"
@@ -50,7 +50,7 @@
         android:background="#333333" />
 
     <LinearLayout
-        android:id="@+id/nav_beranda"
+        android:id="@+id/nav_home"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="14"
@@ -63,7 +63,7 @@
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:adjustViewBounds="true"
-            android:src="@drawable/ic_icon"
+            android:src="@drawable/ic_home"
             android:scaleType="fitCenter"
             />
 
@@ -85,7 +85,7 @@
         android:background="#333333" />
 
     <LinearLayout
-        android:id="@+id/nav_tentang"
+        android:id="@+id/nav_about"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="14"
@@ -98,7 +98,7 @@
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:adjustViewBounds="true"
-            android:src="@drawable/ic_icon"
+            android:src="@drawable/ic_about"
             android:scaleType="fitCenter"
             />
 
@@ -120,7 +120,7 @@
         android:background="#333333" />
 
     <LinearLayout
-        android:id="@+id/nav_hubungi"
+        android:id="@+id/nav_contact"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="14"
@@ -133,7 +133,7 @@
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:adjustViewBounds="true"
-            android:src="@drawable/ic_icon"
+            android:src="@drawable/ic_contact"
             android:scaleType="fitCenter"
             />
 
@@ -155,7 +155,7 @@
         android:background="#333333" />
 
     <LinearLayout
-        android:id="@+id/nav_bantuan"
+        android:id="@+id/nav_help"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="14"
@@ -168,7 +168,7 @@
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:adjustViewBounds="true"
-            android:src="@drawable/ic_icon"
+            android:src="@drawable/ic_help"
             android:scaleType="fitCenter"
             />
 
@@ -190,7 +190,7 @@
         android:background="#333333" />
 
     <LinearLayout
-        android:id="@+id/nav_bagikan"
+        android:id="@+id/nav_share"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="14"
@@ -203,7 +203,7 @@
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:adjustViewBounds="true"
-            android:src="@drawable/ic_icon"
+            android:src="@drawable/ic_share"
             android:scaleType="fitCenter"
             />
 
@@ -238,7 +238,7 @@
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:adjustViewBounds="true"
-            android:src="@drawable/ic_icon"
+            android:src="@drawable/ic_logout"
             android:scaleType="fitCenter"
             />
 

@@ -2,6 +2,7 @@ package com.mi1.duitku.Tab1;
 
 import android.content.Context;
 import android.content.Intent;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,6 +20,8 @@ import com.mi1.duitku.Common.CommonFunction;
 import com.mi1.duitku.R;
 import com.mi1.duitku.Tab1.Common.DataModel;
 import com.mi1.duitku.Tab1.Common.Tab1Global;
+import com.mi1.duitku.Tab3.TopUpActivity;
+import com.mi1.duitku.Tab3.TransferActivity;
 import com.squareup.picasso.Picasso;
 
 import java.util.HashMap;
@@ -62,7 +65,27 @@ public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> i
             headerHolder.tvTopUp.setOnClickListener (new View.OnClickListener () {
                 @Override
                 public void onClick (View view) {
-                    Toast.makeText (context, "Clicked topup", Toast.LENGTH_SHORT).show ();
+                    Intent intent  = new Intent(context, TopUpActivity.class);
+                    context.startActivity(intent);
+                }
+            });
+            headerHolder.cardPayment.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                }
+            });
+            headerHolder.cardBuy.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                }
+            });
+            headerHolder.cardTransfer.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent  = new Intent(context, TransferActivity.class);
+                    context.startActivity(intent);
                 }
             });
         } else if(holder instanceof GenericViewHolder) {
@@ -150,12 +173,18 @@ public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> i
         SliderLayout slider;
         TextView tvBalance;
         TextView tvTopUp;
+        CardView cardPayment;
+        CardView cardBuy;
+        CardView cardTransfer;
 
         public HeaderViewHolder (View itemView) {
             super (itemView);
             slider = (SliderLayout)itemView.findViewById(R.id.slider);
             tvBalance = (TextView)itemView.findViewById(R.id.txt_balance);
             tvTopUp = (TextView)itemView.findViewById(R.id.txt_topup);
+            cardPayment = (CardView) itemView.findViewById(R.id.card_payment);
+            cardBuy = (CardView) itemView.findViewById(R.id.card_buy);
+            cardTransfer = (CardView) itemView.findViewById(R.id.card_transfer);
         }
     }
 

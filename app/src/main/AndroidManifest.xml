@@ -105,8 +105,21 @@
             android:name=".Tab3.RedirectBankActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".Tab3.PayStatusActivity"
+            android:name=".Main.AboutUsActivity"
+            android:theme="@style/AppThemeNoTitle"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".Main.ContactUsActivity"
+            android:theme="@style/AppThemeNoTitle"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Main.HelpActivity"
+            android:label="BANTUAN"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Main.HelpContentsActivity"
+            android:screenOrientation="portrait" />
+
     </application>
 
 </manifest>
