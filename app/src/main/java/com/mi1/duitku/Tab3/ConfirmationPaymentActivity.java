@@ -11,6 +11,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -59,12 +60,12 @@ public class ConfirmationPaymentActivity extends AppCompatActivity {
         progress = new ProgressDialog(this);
         progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
 
-        TextView tvSubscriberId = (TextView) findViewById(R.id.txt_subscriber_id);
-        TextView tvSubscriberName = (TextView) findViewById(R.id.txt_subscriber_name);
-        TextView tvFee = (TextView) findViewById(R.id.txt_fee);
-        TextView tvTotalPayment = (TextView) findViewById(R.id.txt_total_payment);
-        TextView tvNominal = (TextView) findViewById(R.id.txt_nominal);
-        TextView tvReference = (TextView) findViewById(R.id.txt_reference);
+        EditText tvSubscriberId = (EditText) findViewById(R.id.edit_subscriber_id);
+        EditText tvSubscriberName = (EditText) findViewById(R.id.edit_subscriber_name);
+        EditText tvFee = (EditText) findViewById(R.id.edit_fee);
+        EditText tvTotalPayment = (EditText) findViewById(R.id.edit_total_payment);
+        EditText tvNominal = (EditText) findViewById(R.id.edit_nominal);
+        EditText tvReference = (EditText) findViewById(R.id.edit_reference);
 
         Intent intent = getIntent();
 
@@ -121,14 +122,24 @@ public class ConfirmationPaymentActivity extends AppCompatActivity {
 
                 JSONObject jsonObject = new JSONObject();
                 try {
-                    jsonObject.put("idPelanggan1", mPaymentInfo.idPelanggan1);
-                    jsonObject.put("idpelanggan2", mPaymentInfo.idPelanggan2);
-                    jsonObject.put("idpelanggan3", mPaymentInfo.idPelanggan3);
-                    jsonObject.put("kodeProduk", mStrCodeProduct);
-                    jsonObject.put("token", AppGlobal._userInfo.token);
-                    jsonObject.put("nominal", mPaymentInfo.nominal);
-                    jsonObject.put("reference", mPaymentInfo.ref2);
-
+                    if (mStrCodeProduct.equals("ASRBPJSKS")) {
+                        jsonObject.put("idPelanggan", mPaymentInfo.idPelanggan1);
+                        jsonObject.put("kodeProduk", mStrCodeProduct);
+                        jsonObject.put("noHp", AppGlobal._userInfo.phoneNumber);
+                        jsonObject.put("token", AppGlobal._userInfo.token);
+                        jsonObject.put("nominal", mPaymentInfo.nominal);
+                        jsonObject.put("reference", mPaymentInfo.ref2);
+                        jsonObject.put("periodeBulan", getIntent().getStringExtra(TAG_MONTH_PERIOD));
+                    }
+                    else {
+                        jsonObject.put("idPelanggan1", mPaymentInfo.idPelanggan1);
+                        jsonObject.put("idPelanggan2", mPaymentInfo.idPelanggan2);
+                        jsonObject.put("idPelanggan3", mPaymentInfo.idPelanggan3);
+                        jsonObject.put("kodeProduk", mStrCodeProduct);
+                        jsonObject.put("token", AppGlobal._userInfo.token);
+                        jsonObject.put("nominal", mPaymentInfo.nominal);
+                        jsonObject.put("reference", mPaymentInfo.ref2);
+                    }
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -174,7 +185,6 @@ public class ConfirmationPaymentActivity extends AppCompatActivity {
         protected void onPostExecute(String result) {
 
             progress.dismiss();
-
             if (result == null){
                 showAlert("Proses gagal", "inquiry failed, please try again later.");
                 return;
@@ -197,7 +207,10 @@ public class ConfirmationPaymentActivity extends AppCompatActivity {
 
             Intent intent = new Intent(ConfirmationPaymentActivity.this, ProcessDoneActivity.class);
             intent.putExtra(ProcessDoneActivity.TAG_BILLAMOUNT, mStrTotalPayment.replace("Rp ",""));
-            intent.putExtra(ProcessDoneActivity.TAG_SUBSCRIBERID, mStrSubscriberId);
+            if (mStrCodeProduct.equals("TELEPON"))
+                intent.putExtra(ProcessDoneActivity.TAG_SUBSCRIBERID, mStrSubscriberId + "-" + mPaymentInfo.idPelanggan2);
+            else
+                intent.putExtra(ProcessDoneActivity.TAG_SUBSCRIBERID, mStrSubscriberId);
             intent.putExtra(ProcessDoneActivity.TAG_STATUS_MESSAGE, status);
 
             AppsflyerUtil appFlyerUtil = new AppsflyerUtil(getApplicationContext());
@@ -206,7 +219,6 @@ public class ConfirmationPaymentActivity extends AppCompatActivity {
 
             startActivity(intent);
             ConfirmationPaymentActivity.this.finish();
-
         }
     }
 
