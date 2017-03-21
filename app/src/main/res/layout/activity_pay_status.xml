@@ -80,7 +80,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/separator"
+                    android:text=":"
                     android:id="@+id/transIdSeparator"
                     android:gravity="center_horizontal"
                     android:layout_marginLeft="10dp"
@@ -111,7 +111,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/separator"
+                    android:text=":"
                     android:id="@+id/transValueSeparator"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"

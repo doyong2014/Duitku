@@ -73,6 +73,7 @@
     <string name="news_balance">Saldo Rp %1$s</string>
     <string name="top_up">TOP UP</string>
     <string name="top">TOP</string>
+    <string name="back">BACK</string>
     <string name="pre_paid">Pembayaran</string>
     <string name="buy">Beli</string>
     <string name="transfer">Transfer</string>
@@ -111,13 +112,37 @@
     <string name="payment_failed">Pembayaran Gagal</string>
     <string name="thank_you">Terima Kasih</string>
     <string name="insufficient_balance">Dana tidak mencukupi</string>
-    <string name="orderLabel">Order</string>
-    <string name="separator">:</string>
-    <string name="priceLabel">Harga</string>
-    <string name="merchantLabel">Merchant</string>
-    <string name="referenceLabel">Referensi</string>
-    <string name="adminLabel">*Anda akan dikenakan biaya administrasi </string>
-    <string name="deliveryLabel">Ongkir</string>
-    <string name="totalLabel">Total Order</string>
+
+    <string name="about_title">Tentang Mi1 Indonesia</string>
+    <string name="about_content1">The following is not a definitive article on this subject.
+        It is just an expression of my own thoughts. My opinion is that enlightenment is not just
+        one state but is a progressive and gradual establishing of states of consciousness.</string>
+    <string name="about_content2">\nI, myself have not reach the end of the road. But from years on a spiritual quest,
+        I can safely say that enlightenment happens ina series or stages of self-realisations and self-discoveries.\n\nUsually
+        there is a difference between an initial awakening and a later stabilisation of that stage that happens through
+        practice or experiences. The initial awakenings are new discoveries about the dynamics of consciousness, while
+        the stabilisation is the assimilation of what is being discovered into one<![CDATA["'"]]>s life experience. Sometimes,
+        a new discovery can completely over-rule or modify upon an older one.</string>
+    <string name="contact_title">Mi1 Indonesia</string>
+    <string name="contact_msg">Gedung Wisma Mitra Sunter, Tower B, Room 701, JI, Yos Sudarso Kav 89. Boulevar Mitra Sunter.
+        Jakarta Utara Undonesia</string>
+    <string name="contact_phone_num">021-65301763</string>
+    <string name="contact_email">mohr.arvid@gmail.com</string>
+
+    <string-array name="help_content">
+        <item>Developed by the Intel Corporation, HDCP stands for high-bandwidth digital content protection. As the descriptive
+            name implies, HDCP is all about protecting the integrity of various audio and video content as it travels over a
+            multiplicity of different type of interfaces. Such data interfaces as GVIF, DVI, and HDMI will all support the functionality
+            of HECP. \n\nIs HDCP Free? \n\nNo. HDCP requires an authorized license.The license can be obtained through Digital Content
+            Protection, which is a subsidiary of Intel Corporation. Generally, the license can be obtained by filing an application
+            and paying an annual fee. Once the application is accepted and the user agrees to the terms found in the licensing
+            agrees to the terms found in the licensing agreement, the right to make use of HDCP is granted. \n\nWhat Are Some Of The Key
+            Terms of Use For HDCP? \n\nOne key term hax to do with the transmission of data to unauthorized receivers. That is, an HDCP
+            protected video source is not allowed to transmit protected content to any receiver that has not be verified to be HDCP compliant.</item>
+        <item>Cara Transfer</item>
+        <item>Cara Cash out</item>
+        <item>Cara Daftar</item>
+        <item>Pengetahuan Wallet</item>
+    </string-array>
 
 </resources>
