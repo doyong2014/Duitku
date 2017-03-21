@@ -80,7 +80,7 @@
 
     <string name="balance">Saldo</string>
     <string name="pre_payment">Pembayaran Prabayar</string>
-    <string name="post_payment">Pembayaran Prabayar</string>
+    <string name="post_payment">Pembayaran Pascabayar</string>
     <string name="amount">Jumlah</string>
     <string name="date">Tanggal</string>
     <string name="info">Info</string>
