@@ -17,7 +17,6 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
-import android.view.ViewGroup;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.appsflyer.AFInAppEventParameterName;
@@ -27,7 +26,6 @@ import com.mi1.duitku.Common.AppGlobal;
 import com.mi1.duitku.Common.Constant;
 import com.mi1.duitku.LoginActivity;
 import com.mi1.duitku.R;
-import com.mi1.duitku.Tab3.Common.CPPOBProduct;
 import com.mi1.duitku.Tab3.Common.CPaymentInfo;
 
 import org.json.JSONException;
@@ -136,16 +134,11 @@ public class PaymentProcessActivity extends AppCompatActivity {
     }
 
     private void hideKeyboard(){
-<<<<<<< HEAD
         View view = this.getCurrentFocus();
         if (view != null) {
             InputMethodManager inputManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
             inputManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
         }
-=======
-        //InputMethodManager inputManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-        //inputManager.hideSoftInputFromWindow(this.getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
->>>>>>> origin/master
     }
 
     @Override
