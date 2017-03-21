@@ -91,7 +91,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="70dp"
+            android:layout_height="80dp"
             android:orientation="horizontal"
             android:weightSum="90"
             android:layout_marginTop="5dp">
@@ -122,6 +122,7 @@
                         android:textSize="12sp"
                         android:text="@string/pre_paid"
                         android:gravity="center"
+                        android:padding="3dp"
                         />
 
                 </LinearLayout>
@@ -153,7 +154,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:textSize="12sp"
-                        android:padding="1dp"
+                        android:padding="3dp"
                         android:text="@string/buy"
                         android:gravity="center"
                         />
@@ -188,7 +189,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:textSize="12sp"
-                        android:padding="1dp"
+                        android:padding="3dp"
                         android:text="@string/transfer"
                         android:gravity="center"
                         />
