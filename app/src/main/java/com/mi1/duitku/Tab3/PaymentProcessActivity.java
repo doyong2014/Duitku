@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.design.widget.TextInputLayout;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -16,6 +17,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+import android.view.ViewGroup;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.appsflyer.AFInAppEventParameterName;
@@ -56,8 +58,12 @@ public class PaymentProcessActivity extends AppCompatActivity {
     private String activityTitle;
     private String productCode;
     private String productName;
+    private String periodeBulan;
+    private String kodeDaerah;
 
     private EditText etSubscriberId;
+    private EditText edit_periodebulan;
+    private EditText edit_kodedaerah;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -77,6 +83,20 @@ public class PaymentProcessActivity extends AppCompatActivity {
         progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
 
         etSubscriberId = (EditText) findViewById(R.id.edt_subscriber_id);
+        edit_periodebulan = (EditText) findViewById(R.id.edit_periodebulan);
+        edit_kodedaerah = (EditText) findViewById(R.id.edit_kodedaerah);
+        Log.d("test",productCode );
+        Log.d("test",productName );
+        //untuk pembayaran BPJS
+        if(productCode.equals("ASRBPJSKS")) {
+            TextInputLayout textInputLayout = (TextInputLayout) findViewById(R.id.textlayout_periodebulan);
+            textInputLayout.setVisibility(View.VISIBLE);
+        }
+        else if(productCode.equals("TELEPON")) {
+            TextInputLayout textInputLayout = (TextInputLayout) findViewById(R.id.textlayout_kodedaerah);
+            textInputLayout.setVisibility(View.VISIBLE);
+        }
+
         Button btnPayBills = (Button) findViewById(R.id.btn_pay);
         btnPayBills.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -91,6 +111,8 @@ public class PaymentProcessActivity extends AppCompatActivity {
     private boolean validate() {
 
         subscriberId = etSubscriberId.getText().toString();
+        periodeBulan = edit_periodebulan.getText().toString();
+        kodeDaerah = edit_kodedaerah.getText().toString();
 
         if(subscriberId.isEmpty()) {
             etSubscriberId.setError("Nomor Pelanggan tidak boleh kosong");
@@ -98,13 +120,24 @@ public class PaymentProcessActivity extends AppCompatActivity {
             return false;
         }
 
-        hideKeyboard();
+        if(productCode.equals("ASRBPJSKS") && periodeBulan.isEmpty()) {
+            edit_periodebulan.setError("Periode Bulan tidak boleh kosong");
+            edit_periodebulan.requestFocus();
+            return false;
+        }
+        else if(productCode.equals("TELEPON") && kodeDaerah.isEmpty()) {
+            edit_kodedaerah.setError("Kode Daerah tidak boleh kosong");
+            edit_kodedaerah.requestFocus();
+            return false;
+        }
+
+        //hideKeyboard();
         return true;
     }
 
     private void hideKeyboard(){
-        InputMethodManager inputManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-        inputManager.hideSoftInputFromWindow(this.getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+        //InputMethodManager inputManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        //inputManager.hideSoftInputFromWindow(this.getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
     }
 
     @Override
@@ -154,12 +187,27 @@ public class PaymentProcessActivity extends AppCompatActivity {
 
                 JSONObject jsonObject = new JSONObject();
                 try {
-                    jsonObject.put("idpelanggan1", subscriberId);
-                    jsonObject.put("idpelanggan2", subscriberId);
-                    jsonObject.put("idpelanggan3", AppGlobal._userInfo.phoneNumber);
-                    jsonObject.put("kodeProduk", productCode);
-                    jsonObject.put("token", AppGlobal._userInfo.token);
-
+                    if (productCode.equals("ASRBPJSKS")) {
+                        jsonObject.put("idPelanggan", subscriberId);
+                        jsonObject.put("periodeBulan", periodeBulan);
+                        jsonObject.put("kodeProduk", productCode);
+                        jsonObject.put("token", AppGlobal._userInfo.token);
+                    }
+                    else if (productCode.equals("TELEPON")) {
+                        jsonObject.put("idpelanggan1", kodeDaerah);
+                        jsonObject.put("idpelanggan2", subscriberId);
+                        jsonObject.put("idpelanggan3", "");
+                        jsonObject.put("kodeProduk", productCode);
+                        jsonObject.put("token", AppGlobal._userInfo.token);
+                    }
+                    else
+                    {
+                        jsonObject.put("idpelanggan1", subscriberId);
+                        jsonObject.put("idpelanggan2", subscriberId);
+                        jsonObject.put("idpelanggan3", AppGlobal._userInfo.phoneNumber);
+                        jsonObject.put("kodeProduk", productCode);
+                        jsonObject.put("token", AppGlobal._userInfo.token);
+                    }
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -243,6 +291,10 @@ public class PaymentProcessActivity extends AppCompatActivity {
             intent.putExtra(ConfirmationPaymentActivity.TAG_PAYMENT_PRODUCT, paymentInfo );
             intent.putExtra(ConfirmationPaymentActivity.TAG_ACTIVITYTITLE, productName);
             intent.putExtra(ConfirmationPaymentActivity.TAG_PRODUCT_CODE, productCode);
+
+            if (productCode.toUpperCase().equals("ASRBPJSKS")) {
+                intent.putExtra(ConfirmationPaymentActivity.TAG_MONTH_PERIOD, periodeBulan);
+            }
 
             Map<String, Object> eventValue = new HashMap<String, Object>();
             eventValue.put(AFInAppEventParameterName.PRICE,paymentInfo.nominal);

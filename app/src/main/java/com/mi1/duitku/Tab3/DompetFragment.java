@@ -120,8 +120,10 @@ public class DompetFragment extends Fragment {
                             intent.putExtra(PaymentProcessActivity.TAG_ACTIVITYPRODUCTCODE, "PLNPASCH");
                             intent.putExtra(PaymentProcessActivity.TAG_ACTIVITYPRODUCTNAME, "PLN PASCA BAYAR");
                             startActivity(intent);
-                        } else if(which == 1){
+                        } else {
                             intent = new Intent(getContext(), PaymentActivity.class);
+                            String product_title = getResources().getStringArray(R.array.postpaid)[which];
+                            intent.putExtra(PaymentActivity.TAG_ACTIVITYTITLE, product_title);
                             startActivity(intent);
                         }
                         return true;

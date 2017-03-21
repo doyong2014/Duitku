@@ -31,8 +31,43 @@
                     android:layout_height="wrap_content"
                     android:textSize="18sp"
                     android:hint="@string/customer_num"
-                    android:inputType="numberDecimal"
+                    android:inputType="phone"
                     android:maxLines="1"/>
+
+            </android.support.design.widget.TextInputLayout>
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/textlayout_periodebulan"
+                android:visibility="gone"
+                android:layout_marginTop="20dp">
+
+                <EditText
+                    android:id="@+id/edit_periodebulan"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="18sp"
+                    android:hint="Periode Bulan (contoh: 1 Bulan)"
+                    android:inputType="phone"
+                    android:maxLines="1"/>
+
+            </android.support.design.widget.TextInputLayout>
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/textlayout_kodedaerah"
+                android:visibility="gone"
+                android:layout_marginTop="20dp">
+
+                <EditText
+                    android:id="@+id/edit_kodedaerah"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="18sp"
+                    android:hint="Kode Daerah (contoh: 021)"
+                    android:inputType="phone"
+                    android:maxLines="1"
+                    android:maxLength="3"/>
 
             </android.support.design.widget.TextInputLayout>
 

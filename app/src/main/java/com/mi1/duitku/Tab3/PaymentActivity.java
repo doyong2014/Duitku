@@ -22,8 +22,12 @@ import com.mi1.duitku.Tab3.Common.Tab3Global;
  */
 public class PaymentActivity extends AppCompatActivity {
 
+    public static final String TAG_ACTIVITYTITLE = "activity_title";
+    public static final String TAG_ACTIVITYPRODUCT = "activity_product";
+
     private CPPOBProductParent product = new CPPOBProductParent();
     private ListView listPayment;
+    private String mStrActivityTitle;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -31,10 +35,17 @@ public class PaymentActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ppoblist);
 
+        Intent intent = getIntent();
+        if(intent != null)
+        {
+            mStrActivityTitle = intent.getStringExtra(TAG_ACTIVITYTITLE).toLowerCase();
+        }
+
         for (int i = 0; i < Tab3Global._productPayment.child.size(); i++) {
             CPPOBProductParent tempProduct = Tab3Global._productPayment.child.get(i);
-            if (tempProduct.name.equals("HP PASCABAYAR")) {
+            if (tempProduct.name.toLowerCase().equals(mStrActivityTitle)) {
                 product = tempProduct;
+                break;
             }
         }
 

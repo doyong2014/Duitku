@@ -102,6 +102,9 @@
     <string-array name="postpaid">
         <item>PLN PASCABAYAR</item>
         <item>HP PASCABAYAR</item>
+        <item>ASURANSI</item>
+        <item>PAM</item>
+        <item>TELKOM GROUP</item>
     </string-array>
 
     <string name="login_failed">Login gagal, silahkan coba lagi</string>
