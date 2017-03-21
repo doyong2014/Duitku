@@ -72,8 +72,11 @@ public class LoginActivity extends AppCompatActivity implements OnClickListener 
     }
 
     private void hideKeyboard(){
-        InputMethodManager inputManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-        inputManager.hideSoftInputFromWindow(this.getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+        View view = this.getCurrentFocus();
+        if (view != null) {
+            InputMethodManager inputManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+            inputManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        }
     }
 
     private void login(){
@@ -161,13 +164,13 @@ public class LoginActivity extends AppCompatActivity implements OnClickListener 
 
                 JSONObject jsonObject = new JSONObject();
                 try {
-//                    jsonObject.put("username", param[0]);
-//                    jsonObject.put("password", param[1]);
-//                    jsonObject.put("community_code", param[2]);
-
-                    jsonObject.put("username", "0818718184");
-                    jsonObject.put("password", CommonFunction.md5("ZOP8AUK2"));
+                    jsonObject.put("username", param[0]);
+                    jsonObject.put("password", param[1]);
                     jsonObject.put("community_code", param[2]);
+
+//                    jsonObject.put("username", "0818718184");
+//                    jsonObject.put("password", CommonFunction.md5("ZOP8AUK2"));
+//                    jsonObject.put("community_code", param[2]);
 
                 } catch (JSONException e) {
                     e.printStackTrace();

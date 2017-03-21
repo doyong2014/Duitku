@@ -119,6 +119,10 @@
         <activity
             android:name=".Main.HelpContentsActivity"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".Tab5.ShareCodeActivity"
+            android:label="Share code"
+            android:screenOrientation="portrait" />
 
     </application>
 

@@ -94,7 +94,9 @@ public class NewsFragment extends Fragment{
             }
         });
 
-        refresh.startRefresh();
+        if(Tab1Global._newsData.size() == 0) {
+            refresh.startRefresh();
+        }
 
         return view;
     }

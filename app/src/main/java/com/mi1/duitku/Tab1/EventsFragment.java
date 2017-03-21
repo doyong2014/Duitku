@@ -93,7 +93,9 @@ public class EventsFragment extends Fragment {
             }
         });
 
-        refresh.startRefresh();
+        if(Tab1Global._eventsData.size() == 0) {
+            refresh.startRefresh();
+        }
 
         return view;
     }

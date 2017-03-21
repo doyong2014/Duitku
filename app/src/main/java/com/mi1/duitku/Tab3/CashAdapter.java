@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.mi1.duitku.R;
+import com.mi1.duitku.Tab3.Common.CashInfo;
 
 import java.util.ArrayList;
 

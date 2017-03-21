@@ -70,11 +70,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private void initBottonLayout() {
 
         listTabs = new ArrayList<>();
-        listTabs.add(new TabEntity(R.drawable.ic_icon, "tab1"));
-        listTabs.add(new TabEntity(R.drawable.ic_icon, "tab2"));
-        listTabs.add(new TabEntity(R.drawable.ic_icon, "tab3"));
-        listTabs.add(new TabEntity(R.drawable.ic_icon, "tab4"));
-        listTabs.add(new TabEntity(R.drawable.ic_icon, "tab5"));
+        listTabs.add(new TabEntity(R.drawable.ic_news, "tab1"));
+        listTabs.add(new TabEntity(R.drawable.ic_alarm, "tab2"));
+        listTabs.add(new TabEntity(R.drawable.ic_pay, "tab3"));
+        listTabs.add(new TabEntity(R.drawable.ic_buy1, "tab4"));
+        listTabs.add(new TabEntity(R.drawable.ic_user, "tab5"));
 
         bottomTab.setList(listTabs);
         bottomTab.setSelectedListener(new OnTabSelectedListener() {

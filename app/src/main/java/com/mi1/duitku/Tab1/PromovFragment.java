@@ -92,8 +92,9 @@ public class PromovFragment extends Fragment {
                 }
             }
         });
-
-        refresh.startRefresh();
+        if(Tab1Global._promovData.size() == 0) {
+            refresh.startRefresh();
+        }
 
         return view;
     }

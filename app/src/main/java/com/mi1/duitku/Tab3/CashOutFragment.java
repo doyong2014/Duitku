@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.mi1.duitku.R;
+import com.mi1.duitku.Tab3.Common.CashInfo;
 
 import java.util.ArrayList;
 
