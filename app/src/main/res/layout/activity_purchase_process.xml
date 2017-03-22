@@ -62,7 +62,9 @@
                     android:layout_height="wrap_content"
                     android:textSize="18sp"
                     android:hint="Harga Jual"
-                    android:enabled="false"
+                    android:focusable="false"
+                    android:inputType="none"
+                    android:clickable="false"
                     android:maxLines="1"/>
 
             </android.support.design.widget.TextInputLayout>
