@@ -53,7 +53,6 @@ public class PurchaseProcessActivity extends AppCompatActivity {
         etSellPrice.setFocusable(false);
 
         etPhoneNumer = (EditText) findViewById(R.id.edt_phone_num);
-        etPhoneNumer.setText(AppGlobal._userInfo.phoneNumber);
 
         Button btnProcess = (Button) findViewById(R.id.btn_process);
         btnProcess.setOnClickListener(new View.OnClickListener() {

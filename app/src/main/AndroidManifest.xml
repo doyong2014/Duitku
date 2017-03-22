@@ -22,6 +22,9 @@
             </intent-filter>
         </activity>
         <activity
+            android:name=".Tab3.PayStatusActivity"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".WelcomeActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppThemeNoTitle" />

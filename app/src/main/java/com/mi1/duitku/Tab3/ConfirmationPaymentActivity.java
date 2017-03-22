@@ -60,12 +60,12 @@ public class ConfirmationPaymentActivity extends AppCompatActivity {
         progress = new ProgressDialog(this);
         progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
 
-        EditText tvSubscriberId = (EditText) findViewById(R.id.edit_subscriber_id);
-        EditText tvSubscriberName = (EditText) findViewById(R.id.edit_subscriber_name);
-        EditText tvFee = (EditText) findViewById(R.id.edit_fee);
-        EditText tvTotalPayment = (EditText) findViewById(R.id.edit_total_payment);
-        EditText tvNominal = (EditText) findViewById(R.id.edit_nominal);
-        EditText tvReference = (EditText) findViewById(R.id.edit_reference);
+        TextView tvSubscriberId = (TextView) findViewById(R.id.txt_subscriber_id);
+        TextView tvSubscriberName = (TextView) findViewById(R.id.txt_subscriber_name);
+        TextView tvFee = (TextView) findViewById(R.id.txt_fee);
+        TextView tvTotalPayment = (TextView) findViewById(R.id.txt_total_payment);
+        TextView tvNominal = (TextView) findViewById(R.id.txt_nominal);
+        TextView tvReference = (TextView) findViewById(R.id.txt_reference);
 
         Intent intent = getIntent();
 
