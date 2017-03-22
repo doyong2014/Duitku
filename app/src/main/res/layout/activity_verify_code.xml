@@ -1,5 +1,5 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
@@ -9,74 +9,80 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     android:background="@color/colorMainBg">
 
-    <LinearLayout
+    <android.support.v7.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:background="@drawable/bg_white">
-
-        <TextView
-            android:id="@+id/txt_verify_error"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:background="@color/colorWrong"
-            android:paddingLeft="20dp"
-            android:paddingRight="20dp"
-            android:gravity="center_vertical"
-            android:text="error message"
-            android:textSize="16sp"
-            android:textColor="@android:color/white"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp"
-            android:visibility="invisible"/>
-
+        android:layout_marginTop="5dp"
+        card_view:cardUseCompatPadding="true" >
 
         <LinearLayout
-            android:id="@+id/ll_login"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <android.support.design.widget.TextInputLayout
+            <TextView
+                android:id="@+id/txt_verify_error"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@color/colorWrong"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
+                android:gravity="center_vertical"
+                android:text="error message"
+                android:textSize="16sp"
+                android:textColor="@android:color/white"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:visibility="invisible"/>
+
+
+            <LinearLayout
+                android:id="@+id/ll_login"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingLeft="10dp"
-                android:paddingRight="10dp">
+                android:orientation="vertical">
 
-                <EditText
-                    android:id="@+id/edt_verify_code"
+                <android.support.design.widget.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/submit_code"
-                    android:textSize="16sp"
-                    android:inputType="text"
-                    android:maxLines="1" />
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp">
 
-            </android.support.design.widget.TextInputLayout>
+                    <EditText
+                        android:id="@+id/edt_verify_code"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/submit_code"
+                        android:textSize="16sp"
+                        android:inputType="text"
+                        android:maxLines="1" />
 
-            <TextView
-                android:id="@+id/txt_resubmit"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="right"
-                android:text="@string/resubmit_code"
-                android:textSize="14sp"
-                android:paddingRight="15dp"
-                />
+                </android.support.design.widget.TextInputLayout>
 
-            <Button
-                android:id="@+id/btn_verify"
-                style="?android:textAppearanceSmall"
-                android:layout_height="40dp"
-                android:layout_width="140dp"
-                android:layout_marginTop="30dp"
-                android:layout_gravity="center_horizontal"
-                android:text="@string/submit"
-                android:textSize="18sp"
-                android:textColor="@android:color/white"
-                android:background="@drawable/btn_green"
-                />
+                <TextView
+                    android:id="@+id/txt_resubmit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right"
+                    android:text="@string/resubmit_code"
+                    android:textSize="14sp"
+                    android:paddingRight="15dp"
+                    />
 
+                <Button
+                    android:id="@+id/btn_verify"
+                    style="?android:textAppearanceSmall"
+                    android:layout_height="40dp"
+                    android:layout_width="140dp"
+                    android:layout_marginTop="30dp"
+                    android:layout_gravity="center_horizontal"
+                    android:text="@string/submit"
+                    android:textSize="18sp"
+                    android:textColor="@android:color/white"
+                    android:background="@drawable/btn_green"
+                    />
+
+            </LinearLayout>
         </LinearLayout>
-    </LinearLayout>
+    </android.support.v7.widget.CardView>
 </LinearLayout>
