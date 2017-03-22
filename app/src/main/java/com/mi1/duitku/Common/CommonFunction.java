@@ -5,7 +5,10 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Locale;
 import java.util.Set;
@@ -120,4 +123,17 @@ public class CommonFunction {
         return buf.toString();
     }
 
+    public static String getFormatedDate(String date) {
+
+        String retDate = "";
+        SimpleDateFormat df = new SimpleDateFormat("MM/dd/yyyy hh:mm:ss a", Locale.US);
+        try {
+            Date newDate = df.parse(date);
+            df = new SimpleDateFormat("MM/dd/yyyy");
+            retDate = df.format(newDate);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return  retDate;
+    }
 }

@@ -148,4 +148,7 @@
         <item>Pengetahuan Wallet</item>
     </string-array>
 
+    <string name="alert_cash">Philosophy is considered a science but it is difficult to say, when one has to compare with an
+        ordinary science, for example biology, or chemistry.</string>
+
 </resources>

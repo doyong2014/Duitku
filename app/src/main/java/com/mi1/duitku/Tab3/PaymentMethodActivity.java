@@ -348,7 +348,7 @@ public class PaymentMethodActivity  extends AppCompatActivity {
         @Override
         public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
-            View v = LayoutInflater.from(context).inflate(R.layout.card_bank, parent, false);
+            View v = LayoutInflater.from(context).inflate(R.layout.link_bank, parent, false);
             return new ViewHolder(v);
         }
 

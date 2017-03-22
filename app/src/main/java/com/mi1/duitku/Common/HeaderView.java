@@ -1,4 +1,4 @@
-package com.mi1.duitku.Tab1.Common;
+package com.mi1.duitku.Common;
 
 import android.content.Context;
 import android.util.AttributeSet;

@@ -49,7 +49,7 @@ public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> i
             init_slider(view);
             return view;
         } else if(viewType == TYPE_ITEM) {
-            View v = LayoutInflater.from(context).inflate(R.layout.card_news, parent, false);
+            View v = LayoutInflater.from(context).inflate(R.layout.list_news, parent, false);
             return new GenericViewHolder (v);
         }
         return null;

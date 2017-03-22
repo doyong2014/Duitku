@@ -16,9 +16,9 @@ import com.google.gson.GsonBuilder;
 import com.lcodecore.tkrefreshlayout.RefreshListenerAdapter;
 import com.lcodecore.tkrefreshlayout.TwinklingRefreshLayout;
 import com.mi1.duitku.Common.Constant;
-import com.mi1.duitku.Tab1.Common.FooterView;
+import com.mi1.duitku.Common.FooterView;
 import com.mi1.duitku.Tab1.Common.Tab1Global;
-import com.mi1.duitku.Tab1.Common.HeaderView;
+import com.mi1.duitku.Common.HeaderView;
 import com.mi1.duitku.R;
 import com.mi1.duitku.Tab1.Common.DataModel;
 
@@ -92,6 +92,7 @@ public class PromovFragment extends Fragment {
                 }
             }
         });
+
         if(Tab1Global._promovData.size() == 0) {
             refresh.startRefresh();
         }
@@ -108,12 +109,6 @@ public class PromovFragment extends Fragment {
     }
 
     public class GetPromovAsync extends AsyncTask<String, Integer, String> {
-
-        @Override
-        protected void onPreExecute() {
-            // TODO Auto-generated method stub
-            super.onPreExecute();
-        }
 
         @Override
         protected String doInBackground(String... param) {

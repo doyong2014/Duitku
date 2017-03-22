@@ -19,14 +19,15 @@ public class Tab1Global {
     public static ArrayList<DataModel.Post> _eventsData = null;
     public static DataInfo _eventsInfo = null;
 
-    public Tab1Global(){
+    public static void initData(){
 
         _newsData = new ArrayList<DataModel.Post>();
-        _promovData = new ArrayList<DataModel.Post>();
-        _eventsData = new ArrayList<DataModel.Post>();
-
         _newsInfo = new DataInfo();
+
+        _promovData = new ArrayList<DataModel.Post>();
         _promovInfo = new DataInfo();
+
+        _eventsData = new ArrayList<DataModel.Post>();
         _eventsInfo = new DataInfo();
     }
 

@@ -18,8 +18,8 @@ import com.lcodecore.tkrefreshlayout.TwinklingRefreshLayout;
 import com.mi1.duitku.Common.Constant;
 import com.mi1.duitku.R;
 import com.mi1.duitku.Tab1.Common.DataModel;
-import com.mi1.duitku.Tab1.Common.FooterView;
-import com.mi1.duitku.Tab1.Common.HeaderView;
+import com.mi1.duitku.Common.FooterView;
+import com.mi1.duitku.Common.HeaderView;
 import com.mi1.duitku.Tab1.Common.Tab1Global;
 
 import java.io.BufferedReader;

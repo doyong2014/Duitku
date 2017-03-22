@@ -31,7 +31,7 @@ public class EventsAdapter extends RecyclerView.Adapter<EventsAdapter.ViewHolder
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
-        View v = LayoutInflater.from(context).inflate(R.layout.card_common, parent, false);
+        View v = LayoutInflater.from(context).inflate(R.layout.list_common, parent, false);
         return new ViewHolder(v);
     }
 

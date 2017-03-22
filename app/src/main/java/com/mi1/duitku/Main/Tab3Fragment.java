@@ -59,6 +59,10 @@ public class Tab3Fragment extends Fragment {
             new callProductList().execute();
         }
 
+        if (Tab3Global._cashInData == null || Tab3Global._cashInInfo == null){
+            Tab3Global.initCash();
+        }
+
         Toolbar toolbar = (Toolbar) view.findViewById(R.id.toolbar);
         AppCompatActivity activity = (AppCompatActivity) getActivity();
         activity.setSupportActionBar(toolbar);
