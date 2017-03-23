@@ -46,8 +46,8 @@
     <string name="confirm_password">Password Konfirmasi</string>
     <string name="agree_term">Dengan mendaftar anda setuju dengan Peraturan\nkami dan ketenuan privasi.</string>
 
-    <string name="alert_recovery">Notice message goes here. Please check your e-mail for password change</string>
-    <string name="alert_sign">Thank you for registering with us. Before continue please check e-mail for account confirmation</string>
+    <string name="alert_recovery">password baru anda telah dikirim ke nomor telepon anda.</string>
+    <string name="alert_sign">Terima kasih telah registrasi di Mi-1. Sebelum melanjutkan mohon cek nomor telepon anda untuk konfirmasi</string>
 
     <string name="error_invalid_email">This email address is invalid</string>
     <string name="error_invalid_password">This password is too short</string>
