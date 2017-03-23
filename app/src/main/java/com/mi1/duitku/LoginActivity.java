@@ -230,14 +230,13 @@ public class LoginActivity extends AppCompatActivity implements OnClickListener 
 
                     Gson gson = new GsonBuilder().create();
                     AppGlobal._userInfo = gson.fromJson(result, UserInfo.class);
-
                     Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                     startActivity(intent);
                     HomeActivity._instance.finish();
                     LoginActivity.this.finish();
 
                 } else if (statusCode.equals("-124")) {
-
+                    AppGlobal._userInfo = new UserInfo();
                     AppGlobal._userInfo.phoneNumber = jsonObj.getString(Constant.JSON_PHONE_NUM);
                     Intent intent = new Intent(LoginActivity.this, VerifyCodeActivity.class);
                     startActivity(intent);
