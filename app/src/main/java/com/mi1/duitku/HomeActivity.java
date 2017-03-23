@@ -6,9 +6,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 
+import com.mi1.duitku.Common.AppGlobal;
+
 public class HomeActivity extends AppCompatActivity {
 
     public static HomeActivity _instance;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -16,6 +19,9 @@ public class HomeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_home);
 
         _instance = this;
+        if (AppGlobal._userInfo == null){
+            AppGlobal.initData();
+        }
 
         Button btnLogin = (Button)findViewById(R.id.btn_home_login);
         btnLogin.setOnClickListener(new View.OnClickListener() {

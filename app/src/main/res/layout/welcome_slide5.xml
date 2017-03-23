@@ -22,7 +22,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/slide5_title"
-            android:textAlignment="center"
+            android:gravity="center"
             android:textSize="@dimen/slide_title"
             android:layout_marginTop="10dp"
             android:padding="10dp"
@@ -34,7 +34,7 @@
             android:paddingLeft="@dimen/desc_padding"
             android:paddingRight="@dimen/desc_padding"
             android:text="@string/slide5_desc"
-            android:textAlignment="center"
+            android:gravity="center"
             android:textSize="@dimen/slide_desc"
             android:textColor="@color/colorSlideDesc" />
 

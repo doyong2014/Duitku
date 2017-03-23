@@ -164,13 +164,13 @@ public class LoginActivity extends AppCompatActivity implements OnClickListener 
 
                 JSONObject jsonObject = new JSONObject();
                 try {
-                    jsonObject.put("username", param[0]);
-                    jsonObject.put("password", param[1]);
-                    jsonObject.put("community_code", param[2]);
-
-//                    jsonObject.put("username", "0818718184");
-//                    jsonObject.put("password", CommonFunction.md5("ZOP8AUK2"));
+//                    jsonObject.put("username", param[0]);
+//                    jsonObject.put("password", param[1]);
 //                    jsonObject.put("community_code", param[2]);
+
+                    jsonObject.put("username", "0818718184");
+                    jsonObject.put("password", CommonFunction.md5("ZOP8AUK2"));
+                    jsonObject.put("community_code", param[2]);
 
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -236,7 +236,6 @@ public class LoginActivity extends AppCompatActivity implements OnClickListener 
                     LoginActivity.this.finish();
 
                 } else if (statusCode.equals("-124")) {
-                    AppGlobal._userInfo = new UserInfo();
                     AppGlobal._userInfo.phoneNumber = jsonObj.getString(Constant.JSON_PHONE_NUM);
                     Intent intent = new Intent(LoginActivity.this, VerifyCodeActivity.class);
                     startActivity(intent);

@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.daimajia.slider.library.Animations.DescriptionAnimation;
 import com.daimajia.slider.library.SliderLayout;
 import com.daimajia.slider.library.SliderTypes.BaseSliderView;
@@ -20,6 +21,10 @@ import com.mi1.duitku.Common.CommonFunction;
 import com.mi1.duitku.R;
 import com.mi1.duitku.Tab1.Common.DataModel;
 import com.mi1.duitku.Tab1.Common.Tab1Global;
+import com.mi1.duitku.Tab3.PaymentActivity;
+import com.mi1.duitku.Tab3.PaymentProcessActivity;
+import com.mi1.duitku.Tab3.PurchaseActivity;
+import com.mi1.duitku.Tab3.PurchaseProcessPLNActivity;
 import com.mi1.duitku.Tab3.TopUpActivity;
 import com.mi1.duitku.Tab3.TransferActivity;
 import com.squareup.picasso.Picasso;
@@ -72,13 +77,13 @@ public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> i
             headerHolder.cardPayment.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-
+                    showPrePaidDialog();
                 }
             });
             headerHolder.cardBuy.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-
+                    showPostPaidDialog();
                 }
             });
             headerHolder.cardTransfer.setOnClickListener(new View.OnClickListener() {
@@ -200,6 +205,60 @@ public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> i
             tvPostTime = (TextView) itemView.findViewById(R.id.txt_time);
             ivThumbnail = (ImageView) itemView.findViewById(R.id.img_thumb);
         }
+    }
+
+    private void showPrePaidDialog() {
+
+        new MaterialDialog.Builder(context)
+                .items(R.array.prepaid)
+                .itemsCallbackSingleChoice(-1, new MaterialDialog.ListCallbackSingleChoice() {
+                    @Override
+                    public boolean onSelection(MaterialDialog dialog, View view, int which, CharSequence text) {
+                        if(which == 0) {
+                            Intent intent = new Intent(context, PurchaseProcessPLNActivity.class);
+                            context.startActivity(intent);
+                        } else if(which == 1){
+                            Intent intent = new Intent(context, PurchaseActivity.class);
+                            context.startActivity(intent);
+                        }
+                        return true;
+                    }
+                })
+                .positiveText("OK")
+                .positiveColorRes(R.color.colorPrimary)
+                .negativeText("CANCEL")
+                .negativeColorRes(R.color.colorDisable)
+                .show();
+    }
+
+    private void showPostPaidDialog() {
+
+        new MaterialDialog.Builder(context)
+                .items(R.array.postpaid)
+                .itemsCallbackSingleChoice(-1, new MaterialDialog.ListCallbackSingleChoice() {
+                    @Override
+                    public boolean onSelection(MaterialDialog dialog, View view, int which, CharSequence text) {
+                        Intent intent = null;
+                        if(which == 0) {
+                            intent = new Intent(context, PaymentProcessActivity.class);
+                            intent.putExtra(PaymentProcessActivity.TAG_ACTIVITYTITLE, "PLN Pasca Bayar");
+                            intent.putExtra(PaymentProcessActivity.TAG_ACTIVITYPRODUCTCODE, "PLNPASCH");
+                            intent.putExtra(PaymentProcessActivity.TAG_ACTIVITYPRODUCTNAME, "PLN PASCA BAYAR");
+                            context.startActivity(intent);
+                        } else {
+                            intent = new Intent(context, PaymentActivity.class);
+                            String product_title = context.getResources().getStringArray(R.array.postpaid)[which];
+                            intent.putExtra(PaymentActivity.TAG_ACTIVITYTITLE, product_title);
+                            context.startActivity(intent);
+                        }
+                        return true;
+                    }
+                })
+                .positiveText("OK")
+                .positiveColorRes(R.color.colorPrimary)
+                .negativeText("CANCEL")
+                .negativeColorRes(R.color.colorDisable)
+                .show();
     }
 
 }

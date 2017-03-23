@@ -84,7 +84,7 @@ public class DompetFragment extends Fragment {
         cardPayment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                showPrePaidDialog();
             }
         });
 
@@ -92,7 +92,7 @@ public class DompetFragment extends Fragment {
         cardBuy.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                showPostPaidDialog();
             }
         });
 
@@ -110,7 +110,7 @@ public class DompetFragment extends Fragment {
 
     private void showPrePaidDialog() {
 
-        new MaterialDialog.Builder(getContext())
+        new MaterialDialog.Builder(context)
                 .items(R.array.prepaid)
                 .itemsCallbackSingleChoice(-1, new MaterialDialog.ListCallbackSingleChoice() {
                     @Override
@@ -134,20 +134,20 @@ public class DompetFragment extends Fragment {
 
     private void showPostPaidDialog() {
 
-        new MaterialDialog.Builder(getContext())
+        new MaterialDialog.Builder(context)
                 .items(R.array.postpaid)
                 .itemsCallbackSingleChoice(-1, new MaterialDialog.ListCallbackSingleChoice() {
                     @Override
                     public boolean onSelection(MaterialDialog dialog, View view, int which, CharSequence text) {
                         Intent intent = null;
                         if(which == 0) {
-                            intent = new Intent(getContext(), PaymentProcessActivity.class);
+                            intent = new Intent(context, PaymentProcessActivity.class);
                             intent.putExtra(PaymentProcessActivity.TAG_ACTIVITYTITLE, "PLN Pasca Bayar");
                             intent.putExtra(PaymentProcessActivity.TAG_ACTIVITYPRODUCTCODE, "PLNPASCH");
                             intent.putExtra(PaymentProcessActivity.TAG_ACTIVITYPRODUCTNAME, "PLN PASCA BAYAR");
                             startActivity(intent);
                         } else {
-                            intent = new Intent(getContext(), PaymentActivity.class);
+                            intent = new Intent(context, PaymentActivity.class);
                             String product_title = getResources().getStringArray(R.array.postpaid)[which];
                             intent.putExtra(PaymentActivity.TAG_ACTIVITYTITLE, product_title);
                             startActivity(intent);
@@ -161,5 +161,4 @@ public class DompetFragment extends Fragment {
                 .negativeColorRes(R.color.colorDisable)
                 .show();
     }
-
 }

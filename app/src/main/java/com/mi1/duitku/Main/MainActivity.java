@@ -2,6 +2,7 @@ package com.mi1.duitku.Main;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
@@ -14,22 +15,16 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
 
-import com.brioal.bottomtab.entity.TabEntity;
-import com.brioal.bottomtab.interfaces.OnTabSelectedListener;
-import com.brioal.bottomtab.view.BottomLayout;
+import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
 import com.mi1.duitku.Common.AppGlobal;
 import com.mi1.duitku.LoginActivity;
 import com.mi1.duitku.R;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     private DrawerLayout dlDrawer;
-    private BottomLayout bottomTab;
-    private List<TabEntity> listTabs;
-    public static int cur_tab = 1;
+    private BottomNavigationViewEx bottomTab;
+    private int cur_tab = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,8 +32,33 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        bottomTab = (BottomLayout) findViewById(R.id.main_tab);
-        initBottonLayout();
+        bottomTab = (BottomNavigationViewEx) findViewById(R.id.nav_bottom);
+        bottomTab.setTextVisibility(false);
+        bottomTab.enableShiftingMode(false);
+//        bottomTab.enableAnimation(true);
+        bottomTab.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener(){
+            @Override
+            public boolean onNavigationItemSelected(MenuItem item) {
+                switch (item.getItemId()) {
+                        case R.id.action_news:
+                        selectFragment(1);
+                        break;
+                    case R.id.action_msg:
+                        selectFragment(2);
+                        break;
+                    case R.id.action_pay:
+                        selectFragment(3);
+                        break;
+                    case R.id.action_buy:
+                        selectFragment(4);
+                        break;
+                    case R.id.action_profile:
+                        selectFragment(5);
+                        break;
+                }
+                return true;
+            }
+        });
 
         selectFragment(cur_tab);
 
@@ -67,29 +87,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     }
 
-    private void initBottonLayout() {
-
-        listTabs = new ArrayList<>();
-        listTabs.add(new TabEntity(R.drawable.ic_news, "tab1"));
-        listTabs.add(new TabEntity(R.drawable.ic_alarm, "tab2"));
-        listTabs.add(new TabEntity(R.drawable.ic_pay, "tab3"));
-        listTabs.add(new TabEntity(R.drawable.ic_buy1, "tab4"));
-        listTabs.add(new TabEntity(R.drawable.ic_user, "tab5"));
-
-        bottomTab.setList(listTabs);
-        bottomTab.setSelectedListener(new OnTabSelectedListener() {
-            @Override
-            public void onSelected(int position) {
-                cur_tab = position+1;
-                selectFragment(cur_tab);
-            }
-        });
-    }
-
     private void selectFragment(int index){
 
         Fragment fragment = null;
-
+        cur_tab = index;
         switch (index) {
             case 1:
                 fragment = new Tab1Fragment();
@@ -159,17 +160,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.nav_profile:
                 dlDrawer.closeDrawers();
                 if (cur_tab != 5) {
-                    bottomTab.setCurrentIndex(4);
-                    cur_tab = 5;
-                    selectFragment(cur_tab);
+                    bottomTab.setCurrentItem(4);
                 }
                 break;
             case R.id.nav_home:
                 dlDrawer.closeDrawers();
                 if (cur_tab != 1) {
-                    bottomTab.setCurrentIndex(0);
-                    cur_tab = 1;
-                    selectFragment(cur_tab);
+                    bottomTab.setCurrentItem(0);
                 }
                 break;
             case R.id.nav_about:
