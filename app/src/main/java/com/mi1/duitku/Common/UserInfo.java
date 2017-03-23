@@ -13,6 +13,10 @@ public class UserInfo {
 	public String phoneNumber;
 	public String picUrl;
 
+	public  UserInfo(){
+
+	}
+
 	public UserInfo(String token, String email, String userbalance, String vaNumber, String vaNumberPermata,
 					String statusCode, String statusMessage, String name, String phoneNumber, String picUrl){
 

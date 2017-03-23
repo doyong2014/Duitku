@@ -9,6 +9,7 @@ import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -23,6 +24,7 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.mi1.duitku.Common.AppGlobal;
 import com.mi1.duitku.Common.CommonFunction;
 import com.mi1.duitku.Common.Constant;
+import com.mi1.duitku.Common.UserInfo;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -233,8 +235,8 @@ public class SignupActivity extends AppCompatActivity{
 
                 JSONObject jsonObj = new JSONObject(result);
                 String statusCode = jsonObj.getString(Constant.JSON_STATUS_CODE);
-
                 if (statusCode.equals("00")){
+                    AppGlobal._userInfo = new UserInfo();
                     AppGlobal._userInfo.phoneNumber = jsonObj.getString(Constant.JSON_PHONE_NUM);
                     showDialog();
                 } else {
@@ -245,6 +247,7 @@ public class SignupActivity extends AppCompatActivity{
             } catch (Exception e) {
                 // TODO: handle exception
                 //Log.e("oasis", e.toString());
+                Log.e("error", e.getMessage());
             }
         }
     }
