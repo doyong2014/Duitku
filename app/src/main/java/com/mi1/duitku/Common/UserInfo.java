@@ -31,18 +31,4 @@ public class UserInfo {
 		this.phoneNumber = phoneNumber;
 		this.picUrl = picUrl;
 	}
-
-	public void clear() {
-		this.token = "";
-		this.email = "";
-		this.userbalance = "";
-		this.vaNumber = "";
-		this.vaNumberPermata = "";
-		this.statusCode = "";
-		this.statusMessage = "";
-		this.name = "";
-		this.phoneNumber = "";
-		this.picUrl = "";
-	}
-
 }

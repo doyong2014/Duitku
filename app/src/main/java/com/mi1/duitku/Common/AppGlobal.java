@@ -7,8 +7,10 @@ package com.mi1.duitku.Common;
 public class AppGlobal {
 
     public static UserInfo _userInfo = null;
+    public static UserDetailInfo _userDetailInfo = null;
 
     public static void initData() {
         _userInfo = new UserInfo();
+        _userDetailInfo = new UserDetailInfo();
     }
 }

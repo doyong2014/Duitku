@@ -20,6 +20,7 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.mi1.duitku.Common.AppGlobal;
 import com.mi1.duitku.Common.Constant;
 import com.mi1.duitku.LoginActivity;
+import com.mi1.duitku.Main.MainActivity;
 import com.mi1.duitku.R;
 import com.mi1.duitku.Tab3.Common.AppsflyerUtil;
 import com.mi1.duitku.Tab3.Common.CPPOBProduct;
@@ -191,11 +192,8 @@ public class ConfirmationActivity extends AppCompatActivity {
                 showAlert("Proses gagal", "Transaction processing failed, please try again later.");
                 return;
             } else if(result == "401") {
-                AppGlobal._userInfo.clear();
                 Toast.makeText(ConfirmationActivity.this, "Sesi anda telah habis", Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(ConfirmationActivity.this, LoginActivity.class);
-                startActivity(intent);
-                ConfirmationActivity.this.finish();
+                logout();
                 return;
             }
 
@@ -212,7 +210,7 @@ public class ConfirmationActivity extends AppCompatActivity {
         }
     }
 
-    public void showAlert(String paramString1, String paramString2)
+    private void showAlert(String paramString1, String paramString2)
     {
         new MaterialDialog.Builder(ConfirmationActivity.this)
                 .title(paramString1)
@@ -221,5 +219,14 @@ public class ConfirmationActivity extends AppCompatActivity {
                 .positiveColorRes(R.color.colorPrimary)
                 .show();
 
+    }
+
+    private void logout() {
+        AppGlobal._userInfo = null;
+        AppGlobal._userDetailInfo = null;
+        Intent intent = new Intent(ConfirmationActivity.this, LoginActivity.class);
+        startActivity(intent);
+        ConfirmationActivity.this.finish();
+        MainActivity._instance.finish();
     }
 }

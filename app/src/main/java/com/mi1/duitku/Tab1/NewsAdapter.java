@@ -228,6 +228,7 @@ public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> i
                 .positiveColorRes(R.color.colorPrimary)
                 .negativeText("CANCEL")
                 .negativeColorRes(R.color.colorDisable)
+                .canceledOnTouchOutside(false)
                 .show();
     }
 
@@ -258,6 +259,7 @@ public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> i
                 .positiveColorRes(R.color.colorPrimary)
                 .negativeText("CANCEL")
                 .negativeColorRes(R.color.colorDisable)
+                .canceledOnTouchOutside(false)
                 .show();
     }
 

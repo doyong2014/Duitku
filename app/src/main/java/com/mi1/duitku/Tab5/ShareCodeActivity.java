@@ -27,17 +27,19 @@ public class ShareCodeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_share_code);
 
-        BitmapFactory.Options options = new BitmapFactory.Options();
-        options.inSampleSize = 8;
-        Bitmap blurTemplate = BitmapFactory.decodeResource(getResources(), R.drawable.house, options);
-        ImageView ivBlurPhoto = (ImageView)findViewById(R.id.img_full);
-        ivBlurPhoto.setImageBitmap(blurTemplate);
+        if (AppGlobal._userInfo.picUrl != "") {
+            BitmapFactory.Options options = new BitmapFactory.Options();
+            options.inSampleSize = 8;
+            Bitmap blurTemplate = BitmapFactory.decodeResource(getResources(), R.drawable.house, options);
+            ImageView ivBlurPhoto = (ImageView) findViewById(R.id.img_full);
+            ivBlurPhoto.setImageBitmap(blurTemplate);
 
-        CircularImageView civUserPhoto = (CircularImageView)findViewById(R.id.civ_user_photo);
-        civUserPhoto.setImageResource(R.drawable.house);
+            CircularImageView civUserPhoto = (CircularImageView) findViewById(R.id.civ_user_photo);
+            civUserPhoto.setImageResource(R.drawable.house);
+        }
 
         TextView tvName = (TextView)findViewById(R.id.txt_name);
-        tvName.setText(AppGlobal._userInfo.name);
+        tvName.setText(AppGlobal._userDetailInfo.fullName);
     }
 
     @Override

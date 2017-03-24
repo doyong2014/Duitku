@@ -25,6 +25,7 @@ import com.appsflyer.AppsFlyerLib;
 import com.mi1.duitku.Common.AppGlobal;
 import com.mi1.duitku.Common.Constant;
 import com.mi1.duitku.LoginActivity;
+import com.mi1.duitku.Main.MainActivity;
 import com.mi1.duitku.R;
 import com.mi1.duitku.Tab3.Common.CPaymentInfo;
 
@@ -259,11 +260,8 @@ public class PaymentProcessActivity extends AppCompatActivity {
                 showAlert("Proses gagal", "inquiry failed, please try again later.");
                 return;
             } else if(result == "401") {
-                AppGlobal._userInfo.clear();
                 Toast.makeText(PaymentProcessActivity.this, "Sesi anda telah habis", Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(PaymentProcessActivity.this, LoginActivity.class);
-                startActivity(intent);
-                PaymentProcessActivity.this.finish();
+                logout();
                 return;
             }
 
@@ -307,7 +305,7 @@ public class PaymentProcessActivity extends AppCompatActivity {
         }
     }
 
-    public void showAlert(String paramString1, String paramString2)
+    private void showAlert(String paramString1, String paramString2)
     {
         new MaterialDialog.Builder(PaymentProcessActivity.this)
                 .title(paramString1)
@@ -316,5 +314,14 @@ public class PaymentProcessActivity extends AppCompatActivity {
                 .positiveColorRes(R.color.colorPrimary)
                 .show();
 
+    }
+
+    private void logout() {
+        AppGlobal._userInfo = null;
+        AppGlobal._userDetailInfo = null;
+        Intent intent = new Intent(PaymentProcessActivity.this, LoginActivity.class);
+        startActivity(intent);
+        PaymentProcessActivity.this.finish();
+        MainActivity._instance.finish();
     }
 }

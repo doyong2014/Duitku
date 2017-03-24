@@ -67,10 +67,11 @@
                 android:paddingRight="10dp">
 
                 <TextView
-                    android:id="@+id/txt_name"
+                    android:id="@+id/txt_full_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textSize="14sp"
+                    android:text="Full Name"
                     android:paddingTop="15dp"
                     android:paddingBottom="15dp"
                     android:paddingLeft="5dp"/>
@@ -81,10 +82,11 @@
                     android:background="@color/colorSepLine" />
 
                 <TextView
-                    android:id="@+id/txt_phone"
+                    android:id="@+id/txt_birthday"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textSize="14sp"
+                    android:text="XX-XX-XXXX"
                     android:paddingTop="15dp"
                     android:paddingBottom="15dp"
                     android:paddingLeft="5dp"/>
@@ -109,7 +111,7 @@
                     android:background="@color/colorSepLine" />
 
                 <TextView
-                    android:id="@+id/txt_info"
+                    android:id="@+id/txt_phone"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textSize="14sp"

@@ -125,7 +125,6 @@ public class PromovFragment extends Fragment {
                 conn.setUseCaches(false);
                 conn.setRequestProperty("Accept", "application/json");
                 conn.setRequestMethod("POST");
-                conn.setDoOutput(true);
                 conn.setDoInput(true);
 
                 if (conn.getResponseCode() == HttpURLConnection.HTTP_OK){

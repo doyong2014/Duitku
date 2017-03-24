@@ -22,4 +22,5 @@
     <color name="primaryBlue">#0f579d</color>
     <color name="background_blue">#00b3f1</color>
     <color name="font_blue">#495c97</color>
+    <color name="colorError">#FF0000</color>
 </resources>

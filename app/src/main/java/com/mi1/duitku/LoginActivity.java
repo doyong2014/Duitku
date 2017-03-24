@@ -236,6 +236,7 @@ public class LoginActivity extends AppCompatActivity implements OnClickListener 
                     LoginActivity.this.finish();
 
                 } else if (statusCode.equals("-124")) {
+
                     AppGlobal._userInfo.phoneNumber = jsonObj.getString(Constant.JSON_PHONE_NUM);
                     Intent intent = new Intent(LoginActivity.this, VerifyCodeActivity.class);
                     startActivity(intent);

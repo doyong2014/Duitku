@@ -2,6 +2,7 @@ package com.mi1.duitku.Tab3;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.CardView;
@@ -9,11 +10,27 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.lcodecore.tkrefreshlayout.RefreshListenerAdapter;
+import com.lcodecore.tkrefreshlayout.TwinklingRefreshLayout;
 import com.mi1.duitku.Common.AppGlobal;
 import com.mi1.duitku.Common.CommonFunction;
+import com.mi1.duitku.Common.Constant;
+import com.mi1.duitku.Common.HeaderView;
 import com.mi1.duitku.R;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -21,6 +38,8 @@ import com.mi1.duitku.R;
 public class DompetFragment extends Fragment {
 
     private Context context;
+    private TwinklingRefreshLayout refresh;
+    TextView tvBalance;
 
     public DompetFragment() {
         // Required empty public constructor
@@ -31,10 +50,22 @@ public class DompetFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view =  inflater.inflate(R.layout.fragment_dompet, container, false);
-
         context = getContext();
 
-        TextView tvBalance = (TextView) view.findViewById(R.id.txt_balance);
+        refresh = (TwinklingRefreshLayout) view.findViewById(R.id.refreshLayout);
+        HeaderView headerView = (HeaderView) View.inflate(getActivity(), R.layout.header_refresh, null);
+        refresh.setHeaderView(headerView);
+        refresh.setEnableLoadmore(false);
+
+        refresh.setOnRefreshListener(new RefreshListenerAdapter() {
+
+            @Override
+            public void onRefresh(final TwinklingRefreshLayout refreshLayout) {
+                getBanlace();
+            }
+        });
+
+        tvBalance = (TextView) view.findViewById(R.id.txt_balance);
         tvBalance.setText(CommonFunction.formatNumberingWithoutRP(AppGlobal._userInfo.userbalance));
 
         TextView tvTopup = (TextView) view.findViewById(R.id.txt_topup);
@@ -108,6 +139,98 @@ public class DompetFragment extends Fragment {
         return view;
     }
 
+    private void getBanlace(){
+
+        String[] params = new String[2];
+        params[0] = AppGlobal._userInfo.token;
+        params[1] = Constant.COMMUNITY_CODE;
+        GetBalanceAsync _getBalanceAsync = new GetBalanceAsync();
+        _getBalanceAsync.execute(params);
+    }
+
+    public class GetBalanceAsync extends AsyncTask<String, Integer, String> {
+
+        @Override
+        protected String doInBackground(String... param) {
+
+            String result = null;
+
+            try {
+
+                URL url = new URL(Constant.GET_BALANCE_PAGE);
+
+                JSONObject jsonObject = new JSONObject();
+                try {
+                    jsonObject.put("token", param[0]);
+                    jsonObject.put("community_code", param[1]);
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                conn.setReadTimeout(10000); /* milliseconds */
+                conn.setConnectTimeout(15000); /* milliseconds */
+                conn.setUseCaches(false);
+                conn.setRequestProperty("content-type", "application/json");
+                conn.setRequestProperty("Accept", "application/json");
+                conn.setRequestMethod("POST");
+                conn.setDoOutput(true);
+                conn.setDoInput(true);
+
+                OutputStreamWriter wr = new OutputStreamWriter(conn.getOutputStream(), "UTF-8");
+                wr.write(jsonObject.toString());
+                wr.flush();
+
+                if (conn.getResponseCode() == HttpURLConnection.HTTP_OK){
+                    InputStreamReader tmp = new InputStreamReader(conn.getInputStream(), "UTF-8");
+                    BufferedReader reader = new BufferedReader(tmp);
+                    StringBuilder builder = new StringBuilder();
+                    String str;
+
+                    while((str = reader.readLine()) != null){
+                        builder.append(str+"\n");
+                    }
+
+                    result = builder.toString();
+                }
+
+            } catch (MalformedURLException e){
+                //Log.e("oasis", e.toString());
+            } catch (IOException e) {
+                //Log.e("oasis", e.toString());
+            }
+            return result;
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+
+            refresh.finishRefreshing();
+            refresh.finishLoadmore();
+
+            if (result == null){
+                Toast.makeText(getActivity(), R.string.error_failed_connect, Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            try {
+                JSONObject jsonObj = new JSONObject(result);
+                String statusCode = jsonObj.getString(Constant.JSON_STATUS_CODE);
+                if (statusCode.equals("00")){
+                    AppGlobal._userInfo.userbalance = jsonObj.getString(Constant.JSON_BALANCE);
+                    tvBalance.setText(CommonFunction.formatNumberingWithoutRP(AppGlobal._userInfo.userbalance));
+                } else {
+                    String status = jsonObj.getString(Constant.JSON_STATUS_MESSAGE);
+                    Toast.makeText(context, status, Toast.LENGTH_SHORT).show();
+                }
+            } catch (Exception e) {
+                // TODO: handle exception
+                //Log.e("oasis", e.toString());
+            }
+        }
+    }
+
     private void showPrePaidDialog() {
 
         new MaterialDialog.Builder(context)
@@ -129,6 +252,7 @@ public class DompetFragment extends Fragment {
                 .positiveColorRes(R.color.colorPrimary)
                 .negativeText("CANCEL")
                 .negativeColorRes(R.color.colorDisable)
+                .canceledOnTouchOutside(false)
                 .show();
     }
 
@@ -159,6 +283,7 @@ public class DompetFragment extends Fragment {
                 .positiveColorRes(R.color.colorPrimary)
                 .negativeText("CANCEL")
                 .negativeColorRes(R.color.colorDisable)
+                .canceledOnTouchOutside(false)
                 .show();
     }
 }

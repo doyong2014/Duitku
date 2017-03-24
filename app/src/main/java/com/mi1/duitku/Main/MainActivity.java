@@ -25,12 +25,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private DrawerLayout dlDrawer;
     private BottomNavigationViewEx bottomTab;
     private int cur_tab = 1;
+    public static MainActivity _instance;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        _instance = this;
 
         bottomTab = (BottomNavigationViewEx) findViewById(R.id.nav_bottom);
         bottomTab.setTextVisibility(false);
@@ -189,11 +191,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.nav_logout:
                 dlDrawer.closeDrawers();
-                intent = new Intent(MainActivity.this, LoginActivity.class);
-                startActivity(intent);
-                MainActivity.this.finish();
-                AppGlobal._userInfo.clear();
+                logout();
                 break;
         }
+    }
+
+    private void logout() {
+        AppGlobal._userInfo = null;
+        AppGlobal._userDetailInfo = null;
+        Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+        startActivity(intent);
+        MainActivity._instance.finish();
     }
 }

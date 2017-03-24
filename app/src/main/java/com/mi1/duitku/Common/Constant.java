@@ -18,10 +18,14 @@ public class Constant {
 	public static final String TOPUP_INQUIRY_PAGE = "http://sandbox.duitku.com/webapi/api/topup/request";
 	public static final String CASH_IN_PAGE = "http://sandbox.duitku.com/webapi/api/history/historyCashInPaginationDuitku";
 	public static final String CASH_OUT_PAGE = "http://sandbox.duitku.com/webapi/api/history/historyCashOutPaginationDuitku";
+	public static final String GET_BALANCE_PAGE = "http://sandbox.duitku.com/webapi/api/user/balanceduitku";
+	public static final String GET_PROFILE_PAGE = "http://sandbox.duitku.com/webapi/api/user/";
+	public static final String UPDATE_PROFILE_PAGE = "http://sandbox.duitku.com/webapi/api/user/updateprofileduitku";
 	
 	public static final String JSON_STATUS_MESSAGE = "statusMessage";
 	public static final String JSON_STATUS_CODE = "statusCode";
 	public static final String JSON_PHONE_NUM = "phoneNumber";
+	public static final String JSON_BALANCE = "userBalance";
 
 	public static final String COMMUNITY_CODE = "DK";
 
