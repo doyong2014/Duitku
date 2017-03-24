@@ -13,6 +13,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
 import android.text.InputType;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,10 +27,10 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.mi1.duitku.Common.AppGlobal;
+import com.mi1.duitku.Common.CommonFunction;
 import com.mi1.duitku.Common.Constant;
 import com.mi1.duitku.Common.UserDetailInfo;
 import com.mi1.duitku.Common.UserInfo;
-import com.mi1.duitku.HomeActivity;
 import com.mi1.duitku.LoginActivity;
 import com.mi1.duitku.R;
 import com.mi1.duitku.Tab5.ShareCodeActivity;
@@ -39,12 +40,24 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
+import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.net.UnknownHostException;
+
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
+
+import static android.app.Activity.RESULT_OK;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -58,6 +71,7 @@ public class Tab5Fragment extends Fragment {
     private TextView tvFullName;
     private TextView tvBirthday;
     private String fullName, birthday, email, phone;
+    private Bitmap bmUserPhoto;
 
     public Tab5Fragment() {
         // Required empty public constructor
@@ -73,8 +87,17 @@ public class Tab5Fragment extends Fragment {
         progress = new ProgressDialog(_context);
         progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
 
-        getProfile();
+        if (!AppGlobal._userDetailInfo.isSync)
+            getProfile();
 
+        fullName = AppGlobal._userDetailInfo.fullName;
+        if (fullName == null){
+            fullName = "Full Name";
+        }
+        birthday = CommonFunction.getFormatedDate(AppGlobal._userDetailInfo.birthday);
+        if (birthday == null){
+            birthday = "MM/DD/YYYY";
+        }
         email = AppGlobal._userInfo.email;
         phone = AppGlobal._userInfo.phoneNumber;
 
@@ -82,18 +105,29 @@ public class Tab5Fragment extends Fragment {
         AppCompatActivity activity = (AppCompatActivity) getActivity();
         activity.setSupportActionBar(toolbar);
 
-        if (AppGlobal._userInfo.picUrl != "") {
+        ImageView ivBlurPhoto = (ImageView) view.findViewById(R.id.img_full);
+        CircularImageView civUserPhoto = (CircularImageView) view.findViewById(R.id.civ_user_photo);
+
+        if (!AppGlobal._userInfo.picUrl.isEmpty()) {
             BitmapFactory.Options options = new BitmapFactory.Options();
             options.inSampleSize = 8;
             Bitmap blurTemplate = BitmapFactory.decodeResource(getResources(), R.drawable.house, options);
-            ImageView ivBlurPhoto = (ImageView) view.findViewById(R.id.img_full);
-            ivBlurPhoto.setImageBitmap(blurTemplate);
 
-            CircularImageView civUserPhoto = (CircularImageView) view.findViewById(R.id.civ_user_photo);
+            ivBlurPhoto.setImageBitmap(blurTemplate);
             civUserPhoto.setImageResource(R.drawable.house);
         }
 
+        civUserPhoto.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Intent.ACTION_PICK);
+                intent.setType("image/*");
+                startActivityForResult(intent, 105);
+            }
+        });
+
         tvFullName = (TextView)view.findViewById(R.id.txt_full_name);
+        tvFullName.setText(fullName);
         tvFullName.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -102,6 +136,7 @@ public class Tab5Fragment extends Fragment {
         });
 
         tvBirthday = (TextView)view.findViewById(R.id.txt_birthday);
+        tvBirthday.setText(birthday);
         tvBirthday.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -110,7 +145,7 @@ public class Tab5Fragment extends Fragment {
         });
 
         tvEmail = (TextView)view.findViewById(R.id.txt_email);
-        tvEmail.setText(AppGlobal._userInfo.email);
+        tvEmail.setText(email);
         tvEmail.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -119,7 +154,7 @@ public class Tab5Fragment extends Fragment {
         });
 
         tvPhone = (TextView)view.findViewById(R.id.txt_phone);
-        tvPhone.setText(AppGlobal._userInfo.phoneNumber);
+        tvPhone.setText(phone);
         tvPhone.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -150,13 +185,35 @@ public class Tab5Fragment extends Fragment {
     private void dispUserDetailInfo() {
 
         fullName = AppGlobal._userDetailInfo.fullName;
-        birthday = AppGlobal._userDetailInfo.birthday;
-
-        if (fullName != "") {
-            tvFullName.setText(fullName);
+        if (fullName.isEmpty()){
+            fullName = "Full Name";
         }
-        if (birthday != "") {
-            tvBirthday.setText(birthday);
+
+        birthday = CommonFunction.getFormatedDate(AppGlobal._userDetailInfo.birthday);
+        if (birthday.isEmpty()){
+            birthday = "MM/DD/YYYY";
+        }
+        tvFullName.setText(fullName);
+        tvBirthday.setText(birthday);
+
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == 105 && resultCode == RESULT_OK) {
+
+            String mImgURI = CommonFunction.getFilePathFromUri(_context, data.getData());
+//            BitmapFactory.Options options = new BitmapFactory.Options();
+//            options.inSampleSize = 4;
+            bmUserPhoto = BitmapFactory.decodeFile(mImgURI);
+
+            String[] params = new String[2];
+            params[0] = AppGlobal._userInfo.token;
+            params[1] = Constant.PICTURE_TYPE.PROFILE;
+            UploadImageAsync _uploadImageAsync = new UploadImageAsync();
+            _uploadImageAsync.execute(params);
         }
     }
 
@@ -226,6 +283,7 @@ public class Tab5Fragment extends Fragment {
             try {
                 Gson gson = new GsonBuilder().create();
                 AppGlobal._userDetailInfo = gson.fromJson(result, UserDetailInfo.class);
+                AppGlobal._userDetailInfo.isSync = true;
                 dispUserDetailInfo();
             } catch (Exception e) {
                 // TODO: handle exception
@@ -277,16 +335,18 @@ public class Tab5Fragment extends Fragment {
         LayoutInflater inflater = this.getLayoutInflater(savedInstanceState);
         View dialogView = inflater.inflate(R.layout.dialog_birthday, null);
         final DatePicker dateBirthday = (DatePicker)dialogView.findViewById(R.id.dp_birthday);
+        String[] birday = birthday.split("/");
 
+        dateBirthday.updateDate(Integer.valueOf(birday[2]), Integer.valueOf(birday[0])-1, Integer.valueOf(birday[1]));
         new MaterialDialog.Builder(_context)
                 .title("Input Birthday")
-                .customView(R.layout.dialog_birthday, false)
+                .customView(dialogView, false)
                 .positiveText("OK")
                 .positiveColorRes(R.color.colorPrimary)
                 .onPositive(new MaterialDialog.SingleButtonCallback() {
                     @Override
                     public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                        birthday = (dateBirthday.getMonth()+1) + "-" + dateBirthday.getDayOfMonth() +"-"+ dateBirthday.getYear();
+                        birthday = (dateBirthday.getMonth()+1) + "/" + dateBirthday.getDayOfMonth() +"/"+ dateBirthday.getYear();
                         updateProfile();
                     }
                 })
@@ -448,12 +508,9 @@ public class Tab5Fragment extends Fragment {
     private void dispUpdateInfo() {
         AppGlobal._userDetailInfo.fullName = fullName;
         AppGlobal._userDetailInfo.birthday = birthday;
-        if(fullName != "") {
-            tvFullName.setText(fullName);
-        }
-        if (birthday != "") {
-            tvBirthday.setText(birthday);
-        }
+
+        tvFullName.setText(fullName);
+        tvBirthday.setText(birthday);
         tvEmail.setText(AppGlobal._userInfo.email);
         tvPhone.setText(AppGlobal._userInfo.phoneNumber);
     }
@@ -464,5 +521,95 @@ public class Tab5Fragment extends Fragment {
         Intent intent = new Intent(_context, LoginActivity.class);
         startActivity(intent);
         MainActivity._instance.finish();
+    }
+
+    public class UploadImageAsync extends AsyncTask<String, Integer, String> {
+
+        @Override
+        protected void onPreExecute() {
+            // TODO Auto-generated method stub
+            progress.setMessage(getString(R.string.wait));
+            progress.show();
+            super.onPreExecute();
+        }
+
+        @Override
+        protected String doInBackground(String... param) {
+
+            String result = null;
+
+            try {
+
+                String url = Constant.UPLOAD_IMAGE_PAGE+param[0]+"/"+param[1];
+
+                ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                bmUserPhoto.compress(Bitmap.CompressFormat.JPEG, 100, stream);
+                byte[] byteArray = stream.toByteArray();
+
+                //there are some my custom fields form
+                RequestBody requestBody = new MultipartBody.Builder()
+                        .setType(MultipartBody.FORM)
+                        .addFormDataPart("photo", "tmp_photo_" + System.currentTimeMillis(), RequestBody.create(MediaType.parse("image/jpeg"), byteArray))
+                        .build();
+
+                Request request = new Request.Builder()
+                        .url(url)
+                        .post(requestBody)
+                        .build();
+
+
+                final MediaType MEDIA_TYPE_JPEG = MediaType.parse("image/jpeg");
+
+                OkHttpClient client = new OkHttpClient();
+                Response response = client.newCall(request).execute();
+
+                if(response.code() == HttpURLConnection.HTTP_OK){
+                    result = response.body().toString();
+                }
+                else if(response.code() == 401) {
+                    return "401";
+                }
+
+            } catch (MalformedURLException e) {
+//                Log.e("oasis", e.toString());
+            } catch (Exception e) {
+//                Log.e("oasis", e.toString());
+            }
+
+            return result;
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+
+            progress.dismiss();
+
+            if (result == null){
+                Toast.makeText(getActivity(), R.string.error_failed_connect, Toast.LENGTH_SHORT).show();
+                return;
+            } else if(result == "401") {
+                Toast.makeText(_context, "Sesi anda telah habis", Toast.LENGTH_SHORT).show();
+                logout();
+                return;
+            }
+
+            try {
+
+                JSONObject jsonObj = new JSONObject(result);
+                String statusCode = jsonObj.getString(Constant.JSON_STATUS_CODE);
+
+                if (statusCode.equals("00")){
+                    //AppGlobal._userInfo.picUrl = gson.fromJson(result, UserInfo.class);
+                    //dispUpdateInfo();
+                } else {
+                    String status = jsonObj.getString(Constant.JSON_STATUS_MESSAGE);
+                    Toast.makeText(_context, status, Toast.LENGTH_SHORT).show();
+                }
+
+            } catch (Exception e) {
+                // TODO: handle exception
+                //Log.e("oasis", e.toString());
+            }
+        }
     }
 }

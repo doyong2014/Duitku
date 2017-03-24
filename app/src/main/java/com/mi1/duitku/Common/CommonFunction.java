@@ -1,5 +1,10 @@
 package com.mi1.duitku.Common;
 
+import android.content.Context;
+import android.database.Cursor;
+import android.net.Uri;
+import android.provider.MediaStore;
+
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -126,6 +131,7 @@ public class CommonFunction {
     public static String getFormatedDate(String date) {
 
         String retDate = "";
+        if (date == null) return retDate;
         SimpleDateFormat df = new SimpleDateFormat("MM/dd/yyyy hh:mm:ss a", Locale.US);
         try {
             Date newDate = df.parse(date);
@@ -135,5 +141,20 @@ public class CommonFunction {
             e.printStackTrace();
         }
         return  retDate;
+    }
+
+    public static String getFilePathFromUri(Context context, Uri uri) {
+
+        String filePath = "";
+
+        String[] projection = { MediaStore.Images.Media.DATA };
+        Cursor cursor = context.getContentResolver().query(uri, projection, null, null, null);
+        if(cursor.moveToFirst()){
+            int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+            filePath = cursor.getString(column_index);
+        }
+        cursor.close();
+
+        return filePath;
     }
 }

@@ -180,6 +180,7 @@ public class NewsFragment extends Fragment{
                 Collections.addAll(Tab1Global._newsData, newsData.posts);
 
                 adapter.notifyDataSetChanged();
+                adapter.init_slider();
             } catch (Exception e) {
                 // TODO: handle exception
                 //Log.e("oasis", e.toString());

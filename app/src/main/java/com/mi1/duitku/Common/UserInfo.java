@@ -16,19 +16,4 @@ public class UserInfo {
 	public  UserInfo(){
 
 	}
-
-	public UserInfo(String token, String email, String userbalance, String vaNumber, String vaNumberPermata,
-					String statusCode, String statusMessage, String name, String phoneNumber, String picUrl){
-
-		this.token = token;
-		this.email = email;
-		this.userbalance = userbalance;
-		this.vaNumber = vaNumber;
-		this.vaNumberPermata = vaNumberPermata;
-		this.statusCode = statusCode;
-		this.statusMessage = statusMessage;
-		this.name = name;
-		this.phoneNumber = phoneNumber;
-		this.picUrl = picUrl;
-	}
 }

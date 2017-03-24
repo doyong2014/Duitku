@@ -20,145 +20,151 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <RelativeLayout
+    <android.support.v4.widget.NestedScrollView
+        android:id="@+id/scroll"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior" >
 
-        <ImageView
-            android:id="@+id/img_full"
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="230dp"
-            android:scaleType="centerCrop"
-            android:layout_alignParentTop="true"/>
+            android:layout_height="match_parent">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="230dp"
-            android:background="#80FFFFFF"
-            android:layout_alignParentTop="true"
-            android:gravity="center">
-
-            <com.pkmmte.view.CircularImageView
-                android:id="@+id/civ_user_photo"
-                android:layout_width="130dp"
-                android:layout_height="130dp"
-                android:src="@drawable/default_round_head"
-                android:scaleType="center"
-                app:border="false" />
-
-        </LinearLayout>
-
-        <android.support.v7.widget.CardView
-            android:id="@+id/card_info"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            card_view:cardUseCompatPadding="true"
-            android:layout_below="@id/img_full"
-            android:layout_marginTop="-25dp"
-            android:layout_marginLeft="5dp"
-            android:layout_marginRight="5dp"
-            >
+            <ImageView
+                android:id="@+id/img_full"
+                android:layout_width="match_parent"
+                android:layout_height="230dp"
+                android:scaleType="centerCrop"
+                android:layout_alignParentTop="true"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:paddingLeft="10dp"
-                android:paddingRight="10dp">
+                android:layout_height="230dp"
+                android:background="#80FFFFFF"
+                android:layout_alignParentTop="true"
+                android:gravity="center">
 
-                <TextView
-                    android:id="@+id/txt_full_name"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textSize="14sp"
-                    android:text="Full Name"
-                    android:paddingTop="15dp"
-                    android:paddingBottom="15dp"
-                    android:paddingLeft="5dp"/>
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="0.5dp"
-                    android:background="@color/colorSepLine" />
-
-                <TextView
-                    android:id="@+id/txt_birthday"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textSize="14sp"
-                    android:text="XX-XX-XXXX"
-                    android:paddingTop="15dp"
-                    android:paddingBottom="15dp"
-                    android:paddingLeft="5dp"/>
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="0.5dp"
-                    android:background="@color/colorSepLine" />
-
-                <TextView
-                    android:id="@+id/txt_email"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textSize="14sp"
-                    android:paddingTop="15dp"
-                    android:paddingBottom="15dp"
-                    android:paddingLeft="5dp"/>
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="0.5dp"
-                    android:background="@color/colorSepLine" />
-
-                <TextView
-                    android:id="@+id/txt_phone"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textSize="14sp"
-                    android:paddingTop="15dp"
-                    android:paddingBottom="15dp"
-                    android:paddingLeft="5dp"/>
+                <com.pkmmte.view.CircularImageView
+                    android:id="@+id/civ_user_photo"
+                    android:layout_width="130dp"
+                    android:layout_height="130dp"
+                    android:src="@drawable/default_round_head"
+                    android:scaleType="center"
+                    app:border="false" />
 
             </LinearLayout>
 
-        </android.support.v7.widget.CardView>
-
-        <android.support.v7.widget.CardView
-            android:id="@+id/card_share_code"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            card_view:cardUseCompatPadding="true"
-            android:layout_below="@id/card_info"
-            android:layout_marginTop="10dp"
-            android:layout_marginLeft="5dp"
-            android:layout_marginRight="5dp"
-            >
-
-            <LinearLayout
+            <android.support.v7.widget.CardView
+                android:id="@+id/card_info"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center_vertical"
-                android:orientation="horizontal"
-                android:padding="10dp">
+                card_view:cardUseCompatPadding="true"
+                android:layout_below="@id/img_full"
+                android:layout_marginTop="-25dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                >
 
-                <ImageView
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:src="@drawable/ic_code"
-                    android:scaleType="center" />
-
-                <TextView
-                    android:id="@+id/txt_transfer"
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Share code"
-                    android:textSize="14sp"
-                    android:layout_marginLeft="5dp"/>
+                    android:orientation="vertical"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp">
 
-            </LinearLayout>
+                    <TextView
+                        android:id="@+id/txt_full_name"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="14sp"
+                        android:paddingTop="15dp"
+                        android:paddingBottom="15dp"
+                        android:paddingLeft="5dp"/>
 
-        </android.support.v7.widget.CardView>
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="0.5dp"
+                        android:background="@color/colorSepLine" />
 
-    </RelativeLayout>
+                    <TextView
+                        android:id="@+id/txt_birthday"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="14sp"
+                        android:paddingTop="15dp"
+                        android:paddingBottom="15dp"
+                        android:paddingLeft="5dp"/>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="0.5dp"
+                        android:background="@color/colorSepLine" />
+
+                    <TextView
+                        android:id="@+id/txt_email"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="14sp"
+                        android:paddingTop="15dp"
+                        android:paddingBottom="15dp"
+                        android:paddingLeft="5dp"/>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="0.5dp"
+                        android:background="@color/colorSepLine" />
+
+                    <TextView
+                        android:id="@+id/txt_phone"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="14sp"
+                        android:paddingTop="15dp"
+                        android:paddingBottom="15dp"
+                        android:paddingLeft="5dp"/>
+
+                </LinearLayout>
+
+            </android.support.v7.widget.CardView>
+
+            <android.support.v7.widget.CardView
+                android:id="@+id/card_share_code"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                card_view:cardUseCompatPadding="true"
+                android:layout_below="@id/card_info"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                >
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:padding="10dp">
+
+                    <ImageView
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:src="@drawable/ic_code"
+                        android:scaleType="center" />
+
+                    <TextView
+                        android:id="@+id/txt_transfer"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Share code"
+                        android:textSize="14sp"
+                        android:layout_marginLeft="5dp"/>
+
+                </LinearLayout>
+
+            </android.support.v7.widget.CardView>
+
+        </RelativeLayout>
+
+    </android.support.v4.widget.NestedScrollView>
 
 </LinearLayout>
