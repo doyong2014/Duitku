@@ -131,7 +131,7 @@ public class CommonFunction {
     public static String getFormatedDate(String date) {
 
         String retDate = "";
-        if (date == null) return retDate;
+        if (date == null) return null;
         SimpleDateFormat df = new SimpleDateFormat("MM/dd/yyyy hh:mm:ss a", Locale.US);
         try {
             Date newDate = df.parse(date);

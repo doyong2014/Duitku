@@ -13,7 +13,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
 import android.text.InputType;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -44,11 +43,9 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
-import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.net.UnknownHostException;
 
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
@@ -91,13 +88,8 @@ public class Tab5Fragment extends Fragment {
             getProfile();
 
         fullName = AppGlobal._userDetailInfo.fullName;
-        if (fullName == null){
-            fullName = "Full Name";
-        }
         birthday = CommonFunction.getFormatedDate(AppGlobal._userDetailInfo.birthday);
-        if (birthday == null){
-            birthday = "MM/DD/YYYY";
-        }
+
         email = AppGlobal._userInfo.email;
         phone = AppGlobal._userInfo.phoneNumber;
 

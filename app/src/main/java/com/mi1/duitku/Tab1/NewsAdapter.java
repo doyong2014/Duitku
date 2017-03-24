@@ -33,7 +33,7 @@ import java.util.HashMap;
  * Created by owner on 3/7/2017.
  */
 
-public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements BaseSliderView.OnSliderClickListener {
+public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
 
     Context context;
     private static final int TYPE_HEADER = 0;
@@ -50,7 +50,9 @@ public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> i
         if(viewType == TYPE_HEADER) {
             View v = LayoutInflater.from(context).inflate(R.layout.dashboard, parent, false);
             hvHolder = new HeaderViewHolder (v);
-//            init_slider(view);
+            if (Tab1Global._newsData.size() >= 5) {
+                init_slider();
+            }
             return hvHolder;
         } else if(viewType == TYPE_ITEM) {
             View v = LayoutInflater.from(context).inflate(R.layout.list_news, parent, false);
@@ -117,26 +119,26 @@ public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> i
 
     public void init_slider() {
 
-        HashMap<String,String> url_maps = new HashMap<String, String>();
-        for(int i=0; i<5 ; i++) {
-            url_maps.put(String.valueOf(i), Tab1Global._newsData.get(i).thumbnail_images.thumbnail.url);
-        }
+        hvHolder.slider.removeAllSliders();
 
-        for(String name : url_maps.keySet()){
+        for(int i=0; i<5 ; i++) {
             TextSliderView textSliderView = new TextSliderView(context);
 //            // initialize a SliderLayout
             textSliderView
-                    .image(url_maps.get(name))
+                    .image(Tab1Global._newsData.get(i).thumbnail_images.thumbnail.url)
                     .setScaleType(BaseSliderView.ScaleType.CenterCrop)
-                    .setOnSliderClickListener(this);
+                    .setOnSliderClickListener(new BaseSliderView.OnSliderClickListener() {
+                        @Override
+                        public void onSliderClick(BaseSliderView slider) {
+                            Intent intent = new Intent(context, ContentsActivity.class);
+                            intent.putExtra("tab", 1);
+                            intent.putExtra("position", hvHolder.slider.getCurrentPosition());
+                            context.startActivity(intent);
+                        }
+                    });
 
             hvHolder.slider.addSlider(textSliderView);
         }
-
-        hvHolder.slider.setPresetIndicator(SliderLayout.PresetIndicators.Center_Bottom);
-//        hvHolder.slider.setCustomAnimation(new DescriptionAnimation());
-        hvHolder.slider.setDuration(5000);
-
     }
 
     @Override
@@ -156,14 +158,6 @@ public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> i
         return Tab1Global._newsData.size()+1;
     }
 
-    @Override
-    public void onSliderClick(BaseSliderView slider) {
-        Intent intent = new Intent(context, ContentsActivity.class);
-        intent.putExtra("tab", 1);
-        intent.putExtra("position", slider.getDescription());
-        context.startActivity(intent);
-    }
-
     class HeaderViewHolder extends RecyclerView.ViewHolder {
         SliderLayout slider;
         TextView tvBalance;
@@ -175,6 +169,10 @@ public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> i
         public HeaderViewHolder (View itemView) {
             super (itemView);
             slider = (SliderLayout)itemView.findViewById(R.id.slider);
+            slider.setPresetIndicator(SliderLayout.PresetIndicators.Center_Bottom);
+//            slider.setCustomAnimation(new DescriptionAnimation());
+            slider.setDuration(4000);
+
             tvBalance = (TextView)itemView.findViewById(R.id.txt_balance);
             tvTopUp = (TextView)itemView.findViewById(R.id.txt_topup);
             cardPayment = (CardView) itemView.findViewById(R.id.card_payment);
