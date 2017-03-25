@@ -45,7 +45,6 @@ public class CashInFragment extends Fragment {
     private TwinklingRefreshLayout refresh;
     private RecyclerView recycler;
     private CashInAdapter adapter;
-    private ArrayList<CashInfo> cashInfos = new ArrayList<>();
     private Context _context;
 
     public CashInFragment() {

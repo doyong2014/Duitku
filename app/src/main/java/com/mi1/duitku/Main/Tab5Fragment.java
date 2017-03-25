@@ -67,7 +67,7 @@ public class Tab5Fragment extends Fragment {
     private TextView tvPhone;
     private TextView tvFullName;
     private TextView tvBirthday;
-    private String fullName, birthday, email, phone;
+    private String fullName="", birthday="", email="", phone="";
     private Bitmap bmUserPhoto;
 
     public Tab5Fragment() {
@@ -87,8 +87,18 @@ public class Tab5Fragment extends Fragment {
         if (!AppGlobal._userDetailInfo.isSync)
             getProfile();
 
-        fullName = AppGlobal._userDetailInfo.fullName;
-        birthday = CommonFunction.getFormatedDate(AppGlobal._userDetailInfo.birthday);
+        if(AppGlobal._userDetailInfo.fullName != null) {
+            fullName = AppGlobal._userDetailInfo.fullName;
+        }
+
+        if (AppGlobal._userDetailInfo.birthday != null) {
+            int idx = AppGlobal._userDetailInfo.birthday.indexOf(" ");
+            if (idx != -1) {
+                birthday = AppGlobal._userDetailInfo.birthday.substring(0, idx);
+            } else {
+                birthday = AppGlobal._userDetailInfo.birthday;
+            }
+        }
 
         email = AppGlobal._userInfo.email;
         phone = AppGlobal._userInfo.phoneNumber;
@@ -177,14 +187,7 @@ public class Tab5Fragment extends Fragment {
     private void dispUserDetailInfo() {
 
         fullName = AppGlobal._userDetailInfo.fullName;
-        if (fullName.isEmpty()){
-            fullName = "Full Name";
-        }
-
         birthday = CommonFunction.getFormatedDate(AppGlobal._userDetailInfo.birthday);
-        if (birthday.isEmpty()){
-            birthday = "MM/DD/YYYY";
-        }
         tvFullName.setText(fullName);
         tvBirthday.setText(birthday);
 
@@ -327,9 +330,12 @@ public class Tab5Fragment extends Fragment {
         LayoutInflater inflater = this.getLayoutInflater(savedInstanceState);
         View dialogView = inflater.inflate(R.layout.dialog_birthday, null);
         final DatePicker dateBirthday = (DatePicker)dialogView.findViewById(R.id.dp_birthday);
-        String[] birday = birthday.split("/");
 
-        dateBirthday.updateDate(Integer.valueOf(birday[2]), Integer.valueOf(birday[0])-1, Integer.valueOf(birday[1]));
+        if (!birthday.isEmpty()) {
+            String[] birday = birthday.split("/");
+            dateBirthday.updateDate(Integer.valueOf(birday[2]), Integer.valueOf(birday[0]) - 1, Integer.valueOf(birday[1]));
+        }
+
         new MaterialDialog.Builder(_context)
                 .title("Input Birthday")
                 .customView(dialogView, false)

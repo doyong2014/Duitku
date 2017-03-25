@@ -179,7 +179,6 @@ public class LoginActivity extends AppCompatActivity implements OnClickListener 
                 HttpURLConnection conn = (HttpURLConnection) url.openConnection();
                 conn.setReadTimeout(10000); /* milliseconds */
                 conn.setConnectTimeout(15000); /* milliseconds */
-                conn.setUseCaches(false);
                 conn.setRequestProperty("content-type", "application/json");
                 conn.setRequestProperty("Accept", "application/json");
                 conn.setRequestMethod("POST");

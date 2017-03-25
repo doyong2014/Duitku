@@ -46,7 +46,6 @@ public class CashOutFragment extends Fragment {
     private TwinklingRefreshLayout refresh;
     private RecyclerView recycler;
     private CashOutAdapter adapter;
-    private ArrayList<CashInfo.TransactionList> cashInfos = new ArrayList<>();
     private Context _context;
 
     public CashOutFragment() {
