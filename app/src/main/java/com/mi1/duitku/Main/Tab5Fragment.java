@@ -1,14 +1,20 @@
 package com.mi1.duitku.Main;
 
+import android.Manifest;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.PermissionChecker;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
@@ -72,6 +78,7 @@ public class Tab5Fragment extends Fragment {
     private TextView tvBirthday;
     private String fullName="", birthday="", email="", phone="";
     private Bitmap bmUserPhoto;
+    final int MY_PERMISSIONS_REQUEST_CAMERA = 1;
 
     public Tab5Fragment() {
         // Required empty public constructor
@@ -125,11 +132,18 @@ public class Tab5Fragment extends Fragment {
         civUserPhoto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(Intent.ACTION_PICK);
-                intent.setType("image/*");
-                startActivityForResult(intent, 105);
+                if (!checkpermission())
+                    ActivityCompat.requestPermissions(getActivity(),new String[]{Manifest.permission.CAMERA, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE}, MY_PERMISSIONS_REQUEST_CAMERA);
+                else {
+                    Intent intent = new Intent(Intent.ACTION_PICK);
+                    intent.setType("image/*");
+                    startActivityForResult(intent, 105);
+                }
             }
         });
+
+        if (!checkpermission())
+            ActivityCompat.requestPermissions(getActivity(),new String[]{Manifest.permission.CAMERA, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE}, MY_PERMISSIONS_REQUEST_CAMERA);
 
         tvFullName = (TextView)view.findViewById(R.id.txt_full_name);
         tvFullName.setText(fullName);
@@ -192,6 +206,60 @@ public class Tab5Fragment extends Fragment {
         });
 
         return view;
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode,
+                                           String permissions[], int[] grantResults) {
+        switch (requestCode) {
+            case MY_PERMISSIONS_REQUEST_CAMERA: {
+                // If request is cancelled, the result arrays are empty.
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    //openCamera();
+                    // permission was granted, yay! Do the
+                    // contacts-related task you need to do.
+
+                } else {
+//                    ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.CAMERA, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE}, MY_PERMISSIONS_REQUEST_CAMERA);
+                    //finish();
+                    // permission denied, boo! Disable the
+                    // functionality that depends on this permission.
+                }
+                return;
+            }
+
+            // other 'case' lines to check for other
+            // permissions this app might request
+        }
+    }
+
+    private boolean checkpermission() {
+        int targetSdkVersion = 0;
+        try {
+            final PackageInfo info = getActivity().getApplicationContext().getPackageManager().getPackageInfo(
+                    getActivity().getApplicationContext().getPackageName(), 0);
+            targetSdkVersion = info.applicationInfo.targetSdkVersion;
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        // For Android < Android M, self permissions are always granted.
+        boolean result = true;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+
+            if (targetSdkVersion >= Build.VERSION_CODES.M) {
+                // targetSdkVersion >= Android M, we can
+                // use Context#checkSelfPermission
+                result = getActivity().getApplicationContext().checkSelfPermission(Manifest.permission.CAMERA)
+                        == PackageManager.PERMISSION_GRANTED;
+            } else {
+                // targetSdkVersion < Android M, we have to use PermissionChecker
+                result = PermissionChecker.checkSelfPermission(getActivity().getApplicationContext(), Manifest.permission.CAMERA)
+                        == PermissionChecker.PERMISSION_GRANTED;
+            }
+        }
+        return result;
     }
 
     private void getProfile() {
