@@ -39,9 +39,9 @@ import com.mi1.duitku.Common.UserDetailInfo;
 import com.mi1.duitku.Common.UserInfo;
 import com.mi1.duitku.LoginActivity;
 import com.mi1.duitku.R;
+import com.mi1.duitku.Tab5.BlurTransformation;
 import com.mi1.duitku.Tab5.ChangePasswordActivity;
 import com.mi1.duitku.Tab5.ShareCodeActivity;
-import com.pkmmte.view.CircularImageView;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONException;
@@ -56,6 +56,7 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 
+import de.hdodenhof.circleimageview.CircleImageView;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.OkHttpClient;
@@ -118,15 +119,11 @@ public class Tab5Fragment extends Fragment {
         activity.setSupportActionBar(toolbar);
 
         ImageView ivBlurPhoto = (ImageView) view.findViewById(R.id.img_full);
-        CircularImageView civUserPhoto = (CircularImageView) view.findViewById(R.id.civ_user_photo);
+        CircleImageView civUserPhoto = (CircleImageView) view.findViewById(R.id.civ_user_photo);
 
         if (!AppGlobal._userInfo.picUrl.isEmpty()) {
-            BitmapFactory.Options options = new BitmapFactory.Options();
-            options.inSampleSize = 8;
-            Bitmap blurTemplate = BitmapFactory.decodeResource(getResources(), R.drawable.house, options);
-
-            ivBlurPhoto.setImageBitmap(blurTemplate);
-            Picasso.with(_context).load(AppGlobal._userInfo.picUrl).into(civUserPhoto);
+            Picasso.with(_context).load(AppGlobal._userInfo.picUrl.toLowerCase()).fit().transform(new BlurTransformation(_context)).into(ivBlurPhoto);
+            Picasso.with(_context).load(AppGlobal._userInfo.picUrl.toLowerCase()).fit().into(civUserPhoto);
         }
 
         civUserPhoto.setOnClickListener(new View.OnClickListener() {

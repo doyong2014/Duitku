@@ -3,22 +3,19 @@ package com.mi1.duitku.Tab5;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
-import android.support.design.widget.AppBarLayout;
-import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.mi1.duitku.Common.AppGlobal;
 import com.mi1.duitku.R;
-import com.pkmmte.view.CircularImageView;
+import com.squareup.picasso.Picasso;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class ShareCodeActivity extends AppCompatActivity {
     @Override
@@ -27,15 +24,12 @@ public class ShareCodeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_share_code);
 
-        if (AppGlobal._userInfo.picUrl != "") {
-            BitmapFactory.Options options = new BitmapFactory.Options();
-            options.inSampleSize = 8;
-            Bitmap blurTemplate = BitmapFactory.decodeResource(getResources(), R.drawable.house, options);
-            ImageView ivBlurPhoto = (ImageView) findViewById(R.id.img_full);
-            ivBlurPhoto.setImageBitmap(blurTemplate);
+        ImageView ivBlurPhoto = (ImageView) findViewById(R.id.img_full);
+        CircleImageView civUserPhoto = (CircleImageView) findViewById(R.id.civ_user_photo);
 
-            CircularImageView civUserPhoto = (CircularImageView) findViewById(R.id.civ_user_photo);
-            civUserPhoto.setImageResource(R.drawable.house);
+        if (!AppGlobal._userInfo.picUrl.isEmpty()) {
+            Picasso.with(this).load(AppGlobal._userInfo.picUrl.toLowerCase()).fit().transform(new BlurTransformation(this)).into(ivBlurPhoto);
+            Picasso.with(this).load(AppGlobal._userInfo.picUrl.toLowerCase()).fit().into(civUserPhoto);
         }
 
         TextView tvName = (TextView)findViewById(R.id.txt_name);

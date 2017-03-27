@@ -24,12 +24,13 @@
         android:weightSum="100"
         >
 
-        <com.pkmmte.view.CircularImageView
+        <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/civ_user_photo"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:src="@drawable/default_round_head"
-            app:border="false"
+            app:civ_border_width="1dp"
+            app:civ_border_color="#FF000000"
             />
 
         <TextView

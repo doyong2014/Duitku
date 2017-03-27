@@ -35,10 +35,6 @@ public class Tab1Fragment extends Fragment {
         // Inflate the layout for this fragment
         View view =  inflater.inflate(R.layout.fragment_tab, container, false);
 
-        if (Tab1Global._newsData == null | Tab1Global._newsInfo == null) {
-            Tab1Global.initData();
-        }
-
         Toolbar toolbar = (Toolbar) view.findViewById(R.id.toolbar);
         AppCompatActivity activity = (AppCompatActivity) getActivity();
         activity.setSupportActionBar(toolbar);
