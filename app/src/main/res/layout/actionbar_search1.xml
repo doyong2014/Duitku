@@ -12,7 +12,6 @@
         android:layout_marginLeft="2dp"
         android:hint="Search topic"
         android:textSize="16sp"
-        android:background="@null"
         android:maxLines="1"
         android:singleLine="true"/>
 

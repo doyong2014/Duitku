@@ -191,8 +191,8 @@ public class SearchActivity extends AppCompatActivity {
         actionBar.setDisplayShowCustomEnabled(true);
         actionBar.setDisplayShowTitleEnabled(false);
         actionBar.setTitle(keywords);
-//        actionBar.setBackgroundDrawable(new ColorDrawable(Color.argb(255,255,255,255)));
-        actionBar.setBackgroundDrawable(ContextCompat.getDrawable(this, R.drawable.actionbar_bg));
+        actionBar.setBackgroundDrawable(new ColorDrawable(Color.argb(255,255,255,255)));
+        actionBar.setHomeAsUpIndicator(R.drawable.ic_arrow_back);
         View mCustomView = LayoutInflater.from(this).inflate(R.layout.actionbar_search1, null);
         etKeyword = (EditText)mCustomView.findViewById(R.id.edt_keywords);
         actionBar.setCustomView(mCustomView);

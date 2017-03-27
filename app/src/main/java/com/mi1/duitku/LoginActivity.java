@@ -164,13 +164,13 @@ public class LoginActivity extends AppCompatActivity implements OnClickListener 
 
                 JSONObject jsonObject = new JSONObject();
                 try {
-                    jsonObject.put("username", param[0]);
-                    jsonObject.put("password", param[1]);
-                    jsonObject.put("community_code", param[2]);
-
-//                    jsonObject.put("username", "timur@chakratechnology.com");
-//                    jsonObject.put("password", CommonFunction.md5("kcm12345"));
+//                    jsonObject.put("username", param[0]);
+//                    jsonObject.put("password", param[1]);
 //                    jsonObject.put("community_code", param[2]);
+
+                    jsonObject.put("username", "timur@chakratechnology.com");
+                    jsonObject.put("password", CommonFunction.md5("kcm12345"));
+                    jsonObject.put("community_code", param[2]);
 
                 } catch (JSONException e) {
                     e.printStackTrace();
