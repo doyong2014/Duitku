@@ -1,5 +1,6 @@
 package com.mi1.duitku.Main;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.BottomNavigationView;
@@ -13,18 +14,26 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
 import com.mi1.duitku.Common.AppGlobal;
 import com.mi1.duitku.LoginActivity;
 import com.mi1.duitku.R;
+import com.mi1.duitku.Tab1.SearchActivity;
+import com.mi1.duitku.Tab5.AboutUsActivity;
+import com.mi1.duitku.Tab5.ContactUsActivity;
+import com.mi1.duitku.Tab5.HelpActivity;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     private DrawerLayout dlDrawer;
     private BottomNavigationViewEx bottomTab;
     private int cur_tab = 1;
+    private EditText etKeywords;
     public static MainActivity _instance;
 
     @Override
@@ -116,6 +125,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         ft.commit();
     }
 
+    private void hideKeyboard(){
+        View view = this.getCurrentFocus();
+        if (view != null) {
+            InputMethodManager inputManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+            inputManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        }
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -128,6 +145,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             actionBar.setDisplayShowCustomEnabled(true);
             actionBar.setDisplayShowTitleEnabled(false);
             View mCustomView = LayoutInflater.from(this).inflate(R.layout.actionbar_search, null);
+            etKeywords = (EditText) mCustomView.findViewById(R.id.edt_keywords);
+            ImageView ivSearch = (ImageView) mCustomView.findViewById(R.id.img_search);
+            ivSearch.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    hideKeyboard();
+                    Intent intent = new Intent(MainActivity.this, SearchActivity.class);
+                    intent.putExtra("curTab", cur_tab);
+                    intent.putExtra("keywords", etKeywords.getText().toString());
+                    startActivity(intent);
+                }
+            });
             actionBar.setCustomView(mCustomView);
         }
 
@@ -203,4 +232,5 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         startActivity(intent);
         MainActivity._instance.finish();
     }
+
 }

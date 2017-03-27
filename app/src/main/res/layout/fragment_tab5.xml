@@ -72,60 +72,180 @@
                     android:paddingLeft="10dp"
                     android:paddingRight="10dp">
 
-                    <TextView
-                        android:id="@+id/txt_full_name"
+                    <LinearLayout
+                        android:id="@+id/ll_username"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:textSize="14sp"
+                        android:orientation="horizontal"
                         android:paddingTop="15dp"
-                        android:hint="Full Name"
                         android:paddingBottom="15dp"
-                        android:paddingLeft="5dp"/>
+                        android:paddingLeft="5dp"
+                        android:weightSum="100" >
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_weight="30"
+                            android:layout_height="wrap_content"
+                            android:text="Nama"
+                            android:textColor="@color/colorDisable"
+                            android:textSize="13sp" />
+
+                        <TextView
+                            android:id="@+id/txt_full_name"
+                            android:layout_width="0dp"
+                            android:layout_weight="70"
+                            android:layout_height="wrap_content"
+                            android:textSize="13sp"
+                            />
+
+                    </LinearLayout>
 
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="0.5dp"
                         android:background="@color/colorSepLine" />
 
-                    <TextView
-                        android:id="@+id/txt_birthday"
+                    <LinearLayout
+                        android:id="@+id/ll_birthday"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:textSize="14sp"
+                        android:orientation="horizontal"
                         android:paddingTop="15dp"
-                        android:hint="MM/DD/YYYY"
                         android:paddingBottom="15dp"
-                        android:paddingLeft="5dp"/>
+                        android:paddingLeft="5dp"
+                        android:weightSum="100" >
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_weight="30"
+                            android:layout_height="wrap_content"
+                            android:text="Tgl Lahir"
+                            android:textColor="@color/colorDisable"
+                            android:textSize="13sp" />
+
+                        <TextView
+                            android:id="@+id/txt_birthday"
+                            android:layout_width="0dp"
+                            android:layout_weight="70"
+                            android:layout_height="wrap_content"
+                            android:textSize="13sp"
+                            />
+
+                    </LinearLayout>
 
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="0.5dp"
                         android:background="@color/colorSepLine" />
 
-                    <TextView
-                        android:id="@+id/txt_email"
+                    <LinearLayout
+                        android:id="@+id/ll_email"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:textSize="14sp"
-                        android:hint="Email"
+                        android:orientation="horizontal"
                         android:paddingTop="15dp"
                         android:paddingBottom="15dp"
-                        android:paddingLeft="5dp"/>
+                        android:paddingLeft="5dp"
+                        android:weightSum="100" >
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_weight="30"
+                            android:layout_height="wrap_content"
+                            android:text="Email"
+                            android:textColor="@color/colorDisable"
+                            android:textSize="13sp" />
+
+                        <TextView
+                            android:id="@+id/txt_email"
+                            android:layout_width="0dp"
+                            android:layout_weight="70"
+                            android:layout_height="wrap_content"
+                            android:maxLines="1"
+                            android:textSize="13sp"
+                            />
+
+                    </LinearLayout>
 
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="0.5dp"
                         android:background="@color/colorSepLine" />
 
-                    <TextView
-                        android:id="@+id/txt_phone"
+                    <LinearLayout
+                        android:id="@+id/ll_password"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="Phone number"
-                        android:textSize="14sp"
+                        android:orientation="horizontal"
                         android:paddingTop="15dp"
                         android:paddingBottom="15dp"
-                        android:paddingLeft="5dp"/>
+                        android:paddingLeft="5dp"
+                        android:weightSum="100" >
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_weight="30"
+                            android:layout_height="wrap_content"
+                            android:text="Password"
+                            android:textColor="@color/colorDisable"
+                            android:textSize="13sp" />
+
+                        <TextView
+                            android:id="@+id/txt_password"
+                            android:layout_width="0dp"
+                            android:layout_weight="60"
+                            android:layout_height="wrap_content"
+                            android:inputType="textPassword"
+                            android:textSize="13sp"
+                            />
+
+                        <RelativeLayout
+                            android:layout_width="0dp"
+                            android:layout_weight="10"
+                            android:layout_height="match_parent">
+
+                            <ImageView
+                                android:layout_width="15dp"
+                                android:layout_height="15dp"
+                                android:layout_centerInParent="true"
+                                android:src="@drawable/ic_forward"
+                                />
+                        </RelativeLayout>
+
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="0.5dp"
+                        android:background="@color/colorSepLine" />
+
+                    <LinearLayout
+                        android:id="@+id/ll_phone"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:paddingTop="15dp"
+                        android:paddingBottom="15dp"
+                        android:paddingLeft="5dp"
+                        android:weightSum="100" >
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_weight="30"
+                            android:layout_height="wrap_content"
+                            android:text="No. HP"
+                            android:textColor="@color/colorDisable"
+                            android:textSize="13sp" />
+
+                        <TextView
+                            android:id="@+id/txt_phone"
+                            android:layout_width="0dp"
+                            android:layout_weight="70"
+                            android:layout_height="wrap_content"
+                            android:textSize="13sp"
+                            />
+
+                    </LinearLayout>
 
                 </LinearLayout>
 
@@ -160,7 +280,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="Share code"
-                        android:textSize="14sp"
+                        android:textSize="13sp"
                         android:layout_marginLeft="5dp"/>
 
                 </LinearLayout>

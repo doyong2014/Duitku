@@ -17,7 +17,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.mi1.duitku.Main.HelpContentsActivity;
 import com.mi1.duitku.R;
 import com.mi1.duitku.Tab1.Common.DataModel;
 import com.mi1.duitku.Tab1.Common.Tab1Global;
@@ -52,9 +51,12 @@ public class ContentsActivity extends AppCompatActivity {
         }else if(tab == 2) {
             item = Tab1Global._promovData.get(position);
             title = "PROMOV";
-        }else {
+        }else if(tab == 3) {
             item = Tab1Global._eventsData.get(position);
             title = "EVENTS";
+        }else if(tab == 4) {
+            item = Tab1Global._searchData.get(position);
+            title = "NEWS";
         }
 
         Picasso.with(this).load(item.thumbnail_images.medium.url).into(ivThumb);

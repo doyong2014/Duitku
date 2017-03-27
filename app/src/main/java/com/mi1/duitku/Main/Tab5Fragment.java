@@ -18,6 +18,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.DatePicker;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -32,8 +33,10 @@ import com.mi1.duitku.Common.UserDetailInfo;
 import com.mi1.duitku.Common.UserInfo;
 import com.mi1.duitku.LoginActivity;
 import com.mi1.duitku.R;
+import com.mi1.duitku.Tab5.ChangePasswordActivity;
 import com.mi1.duitku.Tab5.ShareCodeActivity;
 import com.pkmmte.view.CircularImageView;
+import com.squareup.picasso.Picasso;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -116,7 +119,7 @@ public class Tab5Fragment extends Fragment {
             Bitmap blurTemplate = BitmapFactory.decodeResource(getResources(), R.drawable.house, options);
 
             ivBlurPhoto.setImageBitmap(blurTemplate);
-            civUserPhoto.setImageResource(R.drawable.house);
+            Picasso.with(_context).load(AppGlobal._userInfo.picUrl).into(civUserPhoto);
         }
 
         civUserPhoto.setOnClickListener(new View.OnClickListener() {
@@ -130,7 +133,8 @@ public class Tab5Fragment extends Fragment {
 
         tvFullName = (TextView)view.findViewById(R.id.txt_full_name);
         tvFullName.setText(fullName);
-        tvFullName.setOnClickListener(new View.OnClickListener() {
+        LinearLayout layoutUserName = (LinearLayout)view.findViewById(R.id.ll_username);
+        layoutUserName.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 setFullName();
@@ -139,7 +143,8 @@ public class Tab5Fragment extends Fragment {
 
         tvBirthday = (TextView)view.findViewById(R.id.txt_birthday);
         tvBirthday.setText(birthday);
-        tvBirthday.setOnClickListener(new View.OnClickListener() {
+        LinearLayout layoutBirthday = (LinearLayout)view.findViewById(R.id.ll_birthday);
+        layoutBirthday.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 setBirthday(savedInstanceState);
@@ -148,16 +153,29 @@ public class Tab5Fragment extends Fragment {
 
         tvEmail = (TextView)view.findViewById(R.id.txt_email);
         tvEmail.setText(email);
-        tvEmail.setOnClickListener(new View.OnClickListener() {
+        LinearLayout layoutEmail = (LinearLayout)view.findViewById(R.id.ll_email);
+        layoutEmail.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 setEmailAddr();
             }
         });
 
+        TextView tvPassword = (TextView)view.findViewById(R.id.txt_password);
+        tvPassword.setText(AppGlobal._userInfo.password);
+        LinearLayout layoutPassword = (LinearLayout)view.findViewById(R.id.ll_password);
+        layoutPassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(_context, ChangePasswordActivity.class);
+                startActivity(intent);
+            }
+        });
+
         tvPhone = (TextView)view.findViewById(R.id.txt_phone);
         tvPhone.setText(phone);
-        tvPhone.setOnClickListener(new View.OnClickListener() {
+        LinearLayout layoutPhone = (LinearLayout)view.findViewById(R.id.ll_phone);
+        layoutPhone.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 setPhoneNumber();

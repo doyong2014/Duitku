@@ -19,6 +19,8 @@ public class Tab1Global {
     public static ArrayList<DataModel.Post> _eventsData = null;
     public static DataInfo _eventsInfo = null;
 
+    public static ArrayList<DataModel.Post> _searchData = null;
+
     public static void initData(){
 
         _newsData = new ArrayList<DataModel.Post>();
@@ -29,6 +31,8 @@ public class Tab1Global {
 
         _eventsData = new ArrayList<DataModel.Post>();
         _eventsInfo = new DataInfo();
+
+        _searchData = new ArrayList<DataModel.Post>();
     }
 
 }

@@ -1,29 +1,27 @@
-package com.mi1.duitku;
+package com.mi1.duitku.Tab5;
 
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
+import com.afollestad.materialdialogs.DialogAction;
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.mi1.duitku.Common.AppGlobal;
 import com.mi1.duitku.Common.CommonFunction;
 import com.mi1.duitku.Common.Constant;
-import com.mi1.duitku.Common.UserInfo;
-import com.mi1.duitku.Main.MainActivity;
+import com.mi1.duitku.R;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -36,13 +34,15 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-public class LoginActivity extends AppCompatActivity implements OnClickListener {
+public class ChangePasswordActivity extends AppCompatActivity {
 
-    private String userName;
-    private String password;
+    private String oldPassword;
+    private String newPassword;
+    private String confirmPassword;
 
-    private EditText etUserName;
-    private EditText etPassword;
+    private EditText etOldPassword;
+    private EditText etNewPassword;
+    private EditText etConfirmPassword;
     private TextView tvError;
     private ProgressDialog progress;
 
@@ -50,21 +50,23 @@ public class LoginActivity extends AppCompatActivity implements OnClickListener 
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
+        setContentView(R.layout.activity_change_password);
 
-        TextView getPassword = (TextView)findViewById(R.id.txt_forget_password);
-        getPassword.setOnClickListener(this);
-
-        TextView newAccount = (TextView)findViewById(R.id.txt_no_account);
-        newAccount.setOnClickListener(this);
-
-        Button btnLogin = (Button)findViewById(R.id.btn_login);
-        btnLogin.setOnClickListener(this);
+        Button btnSave = (Button)findViewById(R.id.btn_save);
+        btnSave.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (validate()){
+                    changePassword();
+                }
+            }
+        });
 
         tvError = (TextView)findViewById(R.id.txt_login_error);
 
-        etUserName = (EditText)findViewById(R.id.edt_login_email);
-        etPassword = (EditText)findViewById(R.id.edt_login_password);
+        etOldPassword = (EditText)findViewById(R.id.edt_old_pwd);
+        etNewPassword = (EditText)findViewById(R.id.edt_new_pwd);
+        etConfirmPassword = (EditText)findViewById(R.id.edt_confirm_pwd);
 
         progress = new ProgressDialog(this);
         progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
@@ -79,58 +81,47 @@ public class LoginActivity extends AppCompatActivity implements OnClickListener 
         }
     }
 
-    private void login(){
+    private void changePassword(){
 
-        String[] params = new String[3];
-        params[0] = userName;
-        params[1] = CommonFunction.md5(password);
-        params[2] = Constant.COMMUNITY_CODE;
-        LoginAsync _loginAsync = new LoginAsync();
-        _loginAsync.execute(params);
+        String[] params = new String[6];
+        params[0] = AppGlobal._userInfo.token;
+        params[1] = CommonFunction.md5(oldPassword);
+        params[2] = CommonFunction.md5(newPassword);
+        params[3] = CommonFunction.md5(confirmPassword);
+        params[4] = AppGlobal._userInfo.phoneNumber;
+        params[5] = Constant.COMMUNITY_CODE;
+        ChangePasswordAsync _changePasswordAsync = new ChangePasswordAsync();
+        _changePasswordAsync.execute(params);
     }
 
-    @Override
-    public void onClick(View v) {
-
-        Intent intent = null;
-
-        switch(v.getId()){
-
-            case R.id.btn_login:
-
-                if (validateLogin()) {
-                    login();
-                }
-                break;
-
-            case R.id.txt_forget_password:
-                etPassword.setText("");
-                intent = new Intent(LoginActivity.this, RecoveryPasswordActivity.class);
-                startActivity(intent);
-                break;
-
-            case R.id.txt_no_account:
-                intent = new Intent(LoginActivity.this, SignupActivity.class);
-                startActivity(intent);
-                break;
-        }
-    }
-
-    private boolean validateLogin(){
+    private boolean validate(){
 
         tvError.setVisibility(View.INVISIBLE);
-        userName = etUserName.getText().toString();
-        password = etPassword.getText().toString();
+        oldPassword = etOldPassword.getText().toString();
+        newPassword = etNewPassword.getText().toString();
+        confirmPassword = etConfirmPassword.getText().toString();
 
-        if (userName.isEmpty()){
-            etUserName.setError(getString(R.string.error_null_email));
-            etUserName.requestFocus();
+        if (oldPassword.isEmpty()){
+            etOldPassword.setError(getString(R.string.error_null_password));
+            etOldPassword.requestFocus();
             return false;
         }
 
-        if (password.isEmpty()){
-            etPassword.setError(getString(R.string.error_null_password));
-            etPassword.requestFocus();
+        if (newPassword.isEmpty()){
+            etNewPassword.setError(getString(R.string.error_null_password));
+            etNewPassword.requestFocus();
+            return false;
+        }
+
+
+        if (confirmPassword.isEmpty()){
+            etConfirmPassword.setError(getString(R.string.error_null_password));
+            etConfirmPassword.requestFocus();
+            return false;
+        }
+
+        if (!newPassword.equals(confirmPassword)){
+            dispError(getString(R.string.error_dismatch_password));
             return false;
         }
 
@@ -143,7 +134,7 @@ public class LoginActivity extends AppCompatActivity implements OnClickListener 
         tvError.setVisibility(View.VISIBLE);
     }
 
-    public class LoginAsync extends AsyncTask<String, Integer, String> {
+    public class ChangePasswordAsync extends AsyncTask<String, Integer, String> {
 
         @Override
         protected void onPreExecute() {
@@ -160,17 +151,16 @@ public class LoginActivity extends AppCompatActivity implements OnClickListener 
 
             try {
 
-                URL url = new URL(Constant.LOGIN_PAGE);
+                URL url = new URL(Constant.CHANGE_PASSWORD_PAGE);
 
                 JSONObject jsonObject = new JSONObject();
                 try {
-                    jsonObject.put("username", param[0]);
-                    jsonObject.put("password", param[1]);
-                    jsonObject.put("community_code", param[2]);
-
-//                    jsonObject.put("username", "timur@chakratechnology.com");
-//                    jsonObject.put("password", CommonFunction.md5("kcm12345"));
-//                    jsonObject.put("community_code", param[2]);
+                    jsonObject.put("token", param[0]);
+                    jsonObject.put("oldPassword", param[1]);
+                    jsonObject.put("newPassword", param[2]);
+                    jsonObject.put("confirmPassword", param[3]);
+                    jsonObject.put("phoneNumber", param[4]);
+                    jsonObject.put("community_code", param[5]);
 
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -226,21 +216,7 @@ public class LoginActivity extends AppCompatActivity implements OnClickListener 
                 String statusCode = jsonObj.getString(Constant.JSON_STATUS_CODE);
 
                 if (statusCode.equals("00")){
-
-                    Gson gson = new GsonBuilder().create();
-                    AppGlobal._userInfo = gson.fromJson(result, UserInfo.class);
-                    AppGlobal._userInfo.password = password;
-                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                    startActivity(intent);
-                    HomeActivity._instance.finish();
-                    LoginActivity.this.finish();
-
-                } else if (statusCode.equals("-124")) {
-
-                    AppGlobal._userInfo.phoneNumber = jsonObj.getString(Constant.JSON_PHONE_NUM);
-                    Intent intent = new Intent(LoginActivity.this, VerifyCodeActivity.class);
-                    startActivity(intent);
-
+                    showDialog();
                 } else {
                     String status = jsonObj.getString(Constant.JSON_STATUS_MESSAGE);
                     dispError(status);
@@ -254,6 +230,22 @@ public class LoginActivity extends AppCompatActivity implements OnClickListener 
         }
     }
 
+    private void showDialog() {
+
+        MaterialDialog mDialog = new MaterialDialog.Builder(this)
+                .content(getString(R.string.alert_change_password))
+                .positiveText("OK")
+                .cancelable(false)
+                .onPositive(new MaterialDialog.SingleButtonCallback() {
+                    @Override
+                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                        ChangePasswordActivity.this.finish();
+                    }
+                }).build();
+
+        mDialog.show();
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -264,8 +256,7 @@ public class LoginActivity extends AppCompatActivity implements OnClickListener 
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setBackgroundDrawable(ContextCompat.getDrawable(this, R.drawable.actionbar_bg));
 
-        getMenuInflater().inflate(R.menu.menu_login, menu);
-
+        getMenuInflater().inflate(R.menu.menu_change_password, menu);
         return true;
     }
 
@@ -274,15 +265,14 @@ public class LoginActivity extends AppCompatActivity implements OnClickListener 
 
         int id = item.getItemId();
 
-        if (id == R.id.action_settings) {
-            if (validateLogin()) {
-                login();
+        if (id == android.R.id.home) {
+            ChangePasswordActivity.this.finish();
+        } else if (id == R.id.action_settings) {
+            if (validate()){
+                changePassword();
             }
-        } else if (id == android.R.id.home) {
-            LoginActivity.this.finish();
         }
 
         return super.onOptionsItemSelected(item);
     }
 }
-
