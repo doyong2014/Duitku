@@ -56,6 +56,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private BottomNavigationViewEx bottomTab;
     private int cur_tab = 1;
     private EditText etKeywords;
+    public CircleImageView civUserPhoto;
     private ProgressDialog progress;
     public static MainActivity _instance;
 
@@ -74,7 +75,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
 
         if (Tab3Global._cashInData == null || Tab3Global._cashInInfo == null){
-            Tab3Global.initCash();
+            Tab3Global.initData();
         }
 
         if (Tab3Global._productPayment == null || Tab3Global._productPurchase == null) {
@@ -113,7 +114,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         dlDrawer = (DrawerLayout) findViewById(R.id.drawer_layout);
 
-        CircleImageView civUserPhoto = (CircleImageView) findViewById(R.id.civ_user_photo);
+        civUserPhoto = (CircleImageView) findViewById(R.id.civ_user_photo);
 
         if (!AppGlobal._userInfo.picUrl.isEmpty()) {
             Picasso.with(this).load(AppGlobal._userInfo.picUrl.toLowerCase()).fit().into(civUserPhoto);
@@ -195,9 +196,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 @Override
                 public void onClick(View v) {
                     hideKeyboard();
+                    String keyword = etKeywords.getText().toString();
+                    etKeywords.setText("");
                     Intent intent = new Intent(MainActivity.this, SearchActivity.class);
                     intent.putExtra("curTab", cur_tab);
-                    intent.putExtra("keywords", etKeywords.getText().toString());
+                    intent.putExtra("keywords", keyword);
                     startActivity(intent);
                 }
             });
@@ -374,5 +377,4 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         startActivity(intent);
         MainActivity._instance.finish();
     }
-
 }

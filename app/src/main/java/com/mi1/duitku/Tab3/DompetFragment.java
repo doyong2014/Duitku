@@ -115,7 +115,7 @@ public class DompetFragment extends Fragment {
         cardPayment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showPrePaidDialog();
+                showPostPaidDialog();
             }
         });
 
@@ -123,7 +123,7 @@ public class DompetFragment extends Fragment {
         cardBuy.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showPostPaidDialog();
+                showPrePaidDialog();
             }
         });
 

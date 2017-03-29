@@ -42,6 +42,8 @@ import com.mi1.duitku.R;
 import com.mi1.duitku.Tab5.BlurTransformation;
 import com.mi1.duitku.Tab5.ChangePasswordActivity;
 import com.mi1.duitku.Tab5.ShareCodeActivity;
+import com.squareup.picasso.MemoryPolicy;
+import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONException;
@@ -65,6 +67,7 @@ import okhttp3.RequestBody;
 import okhttp3.Response;
 
 import static android.app.Activity.RESULT_OK;
+import static com.squareup.picasso.NetworkPolicy.NO_CACHE;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -77,6 +80,8 @@ public class Tab5Fragment extends Fragment {
     private TextView tvPhone;
     private TextView tvFullName;
     private TextView tvBirthday;
+    private ImageView ivBlurPhoto;
+    private CircleImageView civUserPhoto;
     private String fullName="", birthday="", email="", phone="";
     private Bitmap bmUserPhoto;
     final int MY_PERMISSIONS_REQUEST_CAMERA = 1;
@@ -118,8 +123,8 @@ public class Tab5Fragment extends Fragment {
         AppCompatActivity activity = (AppCompatActivity) getActivity();
         activity.setSupportActionBar(toolbar);
 
-        ImageView ivBlurPhoto = (ImageView) view.findViewById(R.id.img_full);
-        CircleImageView civUserPhoto = (CircleImageView) view.findViewById(R.id.civ_user_photo);
+        ivBlurPhoto = (ImageView) view.findViewById(R.id.img_full);
+        civUserPhoto = (CircleImageView) view.findViewById(R.id.civ_user_photo);
 
         if (!AppGlobal._userInfo.picUrl.isEmpty()) {
             Picasso.with(_context).load(AppGlobal._userInfo.picUrl.toLowerCase()).fit().transform(new BlurTransformation(_context)).into(ivBlurPhoto);
@@ -674,23 +679,29 @@ public class Tab5Fragment extends Fragment {
                 return;
             }
 
-            try {
+//            try {
+//
+//                JSONObject jsonObj = new JSONObject(result);
+//                String statusCode = jsonObj.getString(Constant.JSON_STATUS_CODE);
+//
+//                if (statusCode.equals("00")){
+//                    showUserPic();
+//                } else {
+//                    String status = jsonObj.getString(Constant.JSON_STATUS_MESSAGE);
+//                    Toast.makeText(_context, status, Toast.LENGTH_SHORT).show();
+//                }
+//
+//            } catch (Exception e) {
+//                // TODO: handle exception
+//                //Log.e("oasis", e.toString());
+//            }
 
-                JSONObject jsonObj = new JSONObject(result);
-                String statusCode = jsonObj.getString(Constant.JSON_STATUS_CODE);
-
-                if (statusCode.equals("00")){
-                    //AppGlobal._userInfo.picUrl = gson.fromJson(result, UserInfo.class);
-                    //dispUpdateInfo();
-                } else {
-                    String status = jsonObj.getString(Constant.JSON_STATUS_MESSAGE);
-                    Toast.makeText(_context, status, Toast.LENGTH_SHORT).show();
-                }
-
-            } catch (Exception e) {
-                // TODO: handle exception
-                //Log.e("oasis", e.toString());
-            }
+            Picasso.with(_context).load(AppGlobal._userInfo.picUrl.toLowerCase()).memoryPolicy(MemoryPolicy.NO_CACHE )
+                    .fit().transform(new BlurTransformation(_context)).into(ivBlurPhoto);
+            Picasso.with(_context).load(AppGlobal._userInfo.picUrl.toLowerCase()).memoryPolicy(MemoryPolicy.NO_CACHE )
+                    .networkPolicy(NetworkPolicy.NO_CACHE).fit().into(civUserPhoto);
+            Picasso.with(MainActivity._instance).load(AppGlobal._userInfo.picUrl.toLowerCase()).memoryPolicy(MemoryPolicy.NO_CACHE )
+                    .networkPolicy(NetworkPolicy.NO_CACHE).fit().into(MainActivity._instance.civUserPhoto);
         }
     }
 }

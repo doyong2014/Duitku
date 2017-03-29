@@ -87,6 +87,7 @@ public class SearchActivity extends AppCompatActivity {
     private void retrieveResult(){
 
         searchList.clear();
+        Tab1Global._searchData.clear();
         String[] params = new String[1];
         params[0] = Constant.SEARCH_NEWS_PAGE + keywords;
         searchAsync _getNewsAsync = new searchAsync();

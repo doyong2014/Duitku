@@ -52,6 +52,10 @@ public class LoginActivity extends AppCompatActivity implements OnClickListener 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        if (AppGlobal._userInfo == null){
+            AppGlobal.initData();
+        }
+
         TextView getPassword = (TextView)findViewById(R.id.txt_forget_password);
         getPassword.setOnClickListener(this);
 

@@ -78,13 +78,13 @@ public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
             headerHolder.cardPayment.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    showPrePaidDialog();
+                    showPostPaidDialog();
                 }
             });
             headerHolder.cardBuy.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    showPostPaidDialog();
+                    showPrePaidDialog();
                 }
             });
             headerHolder.cardTransfer.setOnClickListener(new View.OnClickListener() {
@@ -125,7 +125,7 @@ public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
             TextSliderView textSliderView = new TextSliderView(context);
 //            // initialize a SliderLayout
             textSliderView
-                    .image(Tab1Global._newsData.get(i).thumbnail_images.thumbnail.url)
+                    .image(Tab1Global._newsData.get(i).thumbnail_images.full.url)
                     .setScaleType(BaseSliderView.ScaleType.CenterCrop)
                     .setOnSliderClickListener(new BaseSliderView.OnSliderClickListener() {
                         @Override
