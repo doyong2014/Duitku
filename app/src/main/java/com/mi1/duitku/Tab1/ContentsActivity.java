@@ -59,7 +59,7 @@ public class ContentsActivity extends AppCompatActivity {
             title = "NEWS";
         }
 
-        Picasso.with(this).load(item.thumbnail_images.full.url).into(ivThumb);
+        Picasso.with(this).load(item.thumbnail_images.full.url).fit().into(ivThumb);
         tvTitle.setText(item.title);
         tvPostTime.setText(item.date);
         tvContents.setText(fromHtml(item.content));

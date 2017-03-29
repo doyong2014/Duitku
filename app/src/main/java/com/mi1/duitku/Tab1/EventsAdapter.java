@@ -43,7 +43,7 @@ public class EventsAdapter extends RecyclerView.Adapter<EventsAdapter.ViewHolder
         if(item.thumbnail_images.thumbnail.url.isEmpty()) {
             holder.ivThumb.setVisibility(View.GONE);
         } else {
-            Picasso.with(context).load(item.thumbnail_images.thumbnail.url).into(holder.ivThumb);
+            Picasso.with(context).load(item.thumbnail_images.medium.url).fit().into(holder.ivThumb);
         }
 
         holder.ivThumb.setOnClickListener(new View.OnClickListener() {
