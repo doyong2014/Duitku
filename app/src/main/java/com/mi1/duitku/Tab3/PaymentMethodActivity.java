@@ -28,6 +28,8 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.mi1.duitku.Common.AppGlobal;
 import com.mi1.duitku.Common.CommonFunction;
 import com.mi1.duitku.Common.Constant;
+import com.mi1.duitku.LoginActivity;
+import com.mi1.duitku.Main.MainActivity;
 import com.mi1.duitku.R;
 import com.mi1.duitku.Tab3.Common.Inquiry;
 import com.mi1.duitku.Tab3.Common.PaymentMethod;
@@ -178,6 +180,8 @@ public class PaymentMethodActivity  extends AppCompatActivity {
                     }
 
                     result = builder.toString();
+                } else {
+                    result = String.valueOf(conn.getResponseCode());
                 }
 
             } catch (MalformedURLException e){
@@ -195,6 +199,10 @@ public class PaymentMethodActivity  extends AppCompatActivity {
 
             if (result == null){
                 Toast.makeText(PaymentMethodActivity.this, R.string.error_failed_connect, Toast.LENGTH_SHORT).show();
+                return;
+            } else if(result.equals("401")) {
+                Toast.makeText(PaymentMethodActivity.this, "Sesi anda telah habis", Toast.LENGTH_SHORT).show();
+                logout();
                 return;
             }
 
@@ -283,6 +291,8 @@ public class PaymentMethodActivity  extends AppCompatActivity {
                     }
 
                     result = builder.toString();
+                } else {
+                    result = String.valueOf(conn.getResponseCode());
                 }
 
             } catch (MalformedURLException e){
@@ -300,6 +310,10 @@ public class PaymentMethodActivity  extends AppCompatActivity {
 
             if (result == null){
                 Toast.makeText(PaymentMethodActivity.this, R.string.error_failed_connect, Toast.LENGTH_SHORT).show();
+                return;
+            } else if(result.equals("401")) {
+                Toast.makeText(PaymentMethodActivity.this, "Sesi anda telah habis", Toast.LENGTH_SHORT).show();
+                logout();
                 return;
             }
 
@@ -401,5 +415,14 @@ public class PaymentMethodActivity  extends AppCompatActivity {
         public void setBank(ArrayList<PaymentMethod> bankInfos){
             this.bankInfos = bankInfos;
         }
+    }
+
+    private void logout() {
+        AppGlobal._userInfo = null;
+        AppGlobal._userDetailInfo = null;
+        Intent intent = new Intent(PaymentMethodActivity.this, LoginActivity.class);
+        startActivity(intent);
+        PaymentMethodActivity.this.finish();
+        MainActivity._instance.finish();
     }
 }

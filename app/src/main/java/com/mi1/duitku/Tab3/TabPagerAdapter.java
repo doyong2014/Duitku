@@ -4,11 +4,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
-
-/**
- * Created by owner on 3/4/2017.
- */
-
 public class TabPagerAdapter extends FragmentStatePagerAdapter {
 
     // Count number of tabs

@@ -164,6 +164,8 @@ public class CashOutFragment extends Fragment {
                     }
 
                     result = builder.toString();
+                } else {
+                    result = String.valueOf(conn.getResponseCode());
                 }
 
             } catch (MalformedURLException e){

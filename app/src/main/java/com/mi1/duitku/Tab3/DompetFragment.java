@@ -19,7 +19,10 @@ import com.mi1.duitku.Common.AppGlobal;
 import com.mi1.duitku.Common.CommonFunction;
 import com.mi1.duitku.Common.Constant;
 import com.mi1.duitku.Common.HeaderView;
+import com.mi1.duitku.LoginActivity;
+import com.mi1.duitku.Main.MainActivity;
 import com.mi1.duitku.R;
+import com.mi1.duitku.Tab5.ChangePasswordActivity;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -37,7 +40,7 @@ import java.net.URL;
  */
 public class DompetFragment extends Fragment {
 
-    private Context context;
+    private Context _context;
     private TwinklingRefreshLayout refresh;
     TextView tvBalance;
 
@@ -50,7 +53,7 @@ public class DompetFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view =  inflater.inflate(R.layout.fragment_dompet, container, false);
-        context = getContext();
+        _context = getContext();
 
         refresh = (TwinklingRefreshLayout) view.findViewById(R.id.refreshLayout);
         HeaderView headerView = (HeaderView) View.inflate(getActivity(), R.layout.header_refresh, null);
@@ -72,8 +75,8 @@ public class DompetFragment extends Fragment {
         tvTopup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent  = new Intent(context, TopUpActivity.class);
-                context.startActivity(intent);
+                Intent intent  = new Intent(_context, TopUpActivity.class);
+                _context.startActivity(intent);
             }
         });
 
@@ -81,8 +84,8 @@ public class DompetFragment extends Fragment {
         tvTopupBank.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent  = new Intent(context, BankTransferActivity.class);
-                context.startActivity(intent);
+                Intent intent  = new Intent(_context, BankTransferActivity.class);
+                _context.startActivity(intent);
             }
         });
 
@@ -106,8 +109,8 @@ public class DompetFragment extends Fragment {
         tvTransfer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent  = new Intent(context, TransferActivity.class);
-                context.startActivity(intent);
+                Intent intent  = new Intent(_context, TransferActivity.class);
+                _context.startActivity(intent);
             }
         });
 
@@ -131,8 +134,8 @@ public class DompetFragment extends Fragment {
         cardTransfer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent  = new Intent(context, TransferActivity.class);
-                context.startActivity(intent);
+                Intent intent  = new Intent(_context, TransferActivity.class);
+                _context.startActivity(intent);
             }
         });
 
@@ -193,6 +196,8 @@ public class DompetFragment extends Fragment {
                     }
 
                     result = builder.toString();
+                } else {
+                    result = String.valueOf(conn.getResponseCode());
                 }
 
             } catch (MalformedURLException e){
@@ -212,6 +217,10 @@ public class DompetFragment extends Fragment {
             if (result == null){
                 Toast.makeText(getActivity(), R.string.error_failed_connect, Toast.LENGTH_SHORT).show();
                 return;
+            }  else if(result.equals("401")) {
+                Toast.makeText(_context, "Sesi anda telah habis", Toast.LENGTH_SHORT).show();
+                logout();
+                return;
             }
 
             try {
@@ -220,9 +229,12 @@ public class DompetFragment extends Fragment {
                 if (statusCode.equals("00")){
                     AppGlobal._userInfo.userbalance = jsonObj.getString(Constant.JSON_BALANCE);
                     tvBalance.setText(CommonFunction.formatNumberingWithoutRP(AppGlobal._userInfo.userbalance));
-                } else {
+                } else if(statusCode.equals("-100")){
+                    Toast.makeText(_context, "Sesi anda telah habis", Toast.LENGTH_SHORT).show();
+                    logout();
+                }else {
                     String status = jsonObj.getString(Constant.JSON_STATUS_MESSAGE);
-                    Toast.makeText(context, status, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(_context, status, Toast.LENGTH_SHORT).show();
                 }
             } catch (Exception e) {
                 // TODO: handle exception
@@ -233,16 +245,16 @@ public class DompetFragment extends Fragment {
 
     private void showPrePaidDialog() {
 
-        new MaterialDialog.Builder(context)
+        new MaterialDialog.Builder(_context)
                 .items(R.array.prepaid)
                 .itemsCallbackSingleChoice(-1, new MaterialDialog.ListCallbackSingleChoice() {
                     @Override
                     public boolean onSelection(MaterialDialog dialog, View view, int which, CharSequence text) {
                         if(which == 0) {
-                            Intent intent = new Intent(context, PurchaseProcessPLNActivity.class);
+                            Intent intent = new Intent(_context, PurchaseProcessPLNActivity.class);
                             startActivity(intent);
                         } else if(which == 1){
-                            Intent intent = new Intent(context, PurchaseActivity.class);
+                            Intent intent = new Intent(_context, PurchaseActivity.class);
                             startActivity(intent);
                         }
                         return true;
@@ -258,20 +270,20 @@ public class DompetFragment extends Fragment {
 
     private void showPostPaidDialog() {
 
-        new MaterialDialog.Builder(context)
+        new MaterialDialog.Builder(_context)
                 .items(R.array.postpaid)
                 .itemsCallbackSingleChoice(-1, new MaterialDialog.ListCallbackSingleChoice() {
                     @Override
                     public boolean onSelection(MaterialDialog dialog, View view, int which, CharSequence text) {
                         Intent intent = null;
                         if(which == 0) {
-                            intent = new Intent(context, PaymentProcessActivity.class);
+                            intent = new Intent(_context, PaymentProcessActivity.class);
                             intent.putExtra(PaymentProcessActivity.TAG_ACTIVITYTITLE, "PLN Pasca Bayar");
                             intent.putExtra(PaymentProcessActivity.TAG_ACTIVITYPRODUCTCODE, "PLNPASCH");
                             intent.putExtra(PaymentProcessActivity.TAG_ACTIVITYPRODUCTNAME, "PLN PASCA BAYAR");
                             startActivity(intent);
                         } else {
-                            intent = new Intent(context, PaymentActivity.class);
+                            intent = new Intent(_context, PaymentActivity.class);
                             String product_title = getResources().getStringArray(R.array.postpaid)[which];
                             intent.putExtra(PaymentActivity.TAG_ACTIVITYTITLE, product_title);
                             startActivity(intent);
@@ -285,5 +297,13 @@ public class DompetFragment extends Fragment {
                 .negativeColorRes(R.color.colorDisable)
                 .canceledOnTouchOutside(false)
                 .show();
+    }
+
+    private void logout() {
+        AppGlobal._userInfo = null;
+        AppGlobal._userDetailInfo = null;
+        Intent intent = new Intent(_context, LoginActivity.class);
+        startActivity(intent);
+        MainActivity._instance.finish();
     }
 }

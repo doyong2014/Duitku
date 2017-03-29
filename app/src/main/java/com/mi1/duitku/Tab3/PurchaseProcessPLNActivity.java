@@ -195,8 +195,8 @@ public class PurchaseProcessPLNActivity extends AppCompatActivity {
                     }
 
                     result = builder.toString();
-                } else if (conn.getResponseCode() == 401) {
-                    return "401";
+                } else {
+                    result = String.valueOf(conn.getResponseCode());
                 }
 
             } catch (MalformedURLException e){
@@ -215,7 +215,7 @@ public class PurchaseProcessPLNActivity extends AppCompatActivity {
             if (result == null){
                 showAlert("Proses gagal", "inquiry failed, please try again later.");
                 return;
-            } else if(result == "401") {
+            } else if(result.equals("401")) {
                 Toast.makeText(PurchaseProcessPLNActivity.this, "Sesi anda telah habis", Toast.LENGTH_SHORT).show();
                 logout();
                 return;

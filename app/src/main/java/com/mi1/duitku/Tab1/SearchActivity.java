@@ -132,6 +132,8 @@ public class SearchActivity extends AppCompatActivity {
                     }
 
                     result = builder.toString();
+                } else {
+                    result = String.valueOf(conn.getResponseCode());
                 }
 
             } catch (MalformedURLException e){
@@ -154,13 +156,6 @@ public class SearchActivity extends AppCompatActivity {
             try {
                 Gson gson = new GsonBuilder().create();
                 DataModel newsData = gson.fromJson(result, DataModel.class);
-
-//                Tab1Global._newsInfo.itemsNum = newsData.category.post_count;
-//                Tab1Global._newsInfo.pagesNum = newsData.pages;
-//
-//                if(Tab1Global._newsInfo.curPage == 1) {
-//                    Tab1Global._newsData.clear();
-//                }
 
                 Collections.addAll(Tab1Global._searchData, newsData.posts);
                 for (int i= 0; i<Tab1Global._searchData.size(); i++) {

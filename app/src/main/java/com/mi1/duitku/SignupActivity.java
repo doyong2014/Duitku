@@ -210,6 +210,8 @@ public class SignupActivity extends AppCompatActivity{
                     }
 
                     result = builder.toString();
+                } else {
+                    result = String.valueOf(conn.getResponseCode());
                 }
 
             } catch (MalformedURLException e){

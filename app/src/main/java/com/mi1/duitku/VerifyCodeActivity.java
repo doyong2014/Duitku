@@ -178,6 +178,8 @@ public class VerifyCodeActivity extends AppCompatActivity {
                     }
 
                     result = builder.toString();
+                } else {
+                    result = String.valueOf(conn.getResponseCode());
                 }
 
             } catch (MalformedURLException e){

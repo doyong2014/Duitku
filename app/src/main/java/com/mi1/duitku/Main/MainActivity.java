@@ -247,6 +247,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     }
 
                     result = builder.toString();
+                } else {
+                    result = String.valueOf(conn.getResponseCode());
                 }
 
             } catch (MalformedURLException e){

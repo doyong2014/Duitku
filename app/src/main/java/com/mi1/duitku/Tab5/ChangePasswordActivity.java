@@ -2,6 +2,7 @@ package com.mi1.duitku.Tab5;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -15,12 +16,15 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.mi1.duitku.Common.AppGlobal;
 import com.mi1.duitku.Common.CommonFunction;
 import com.mi1.duitku.Common.Constant;
+import com.mi1.duitku.LoginActivity;
+import com.mi1.duitku.Main.MainActivity;
 import com.mi1.duitku.R;
 
 import org.json.JSONException;
@@ -190,6 +194,8 @@ public class ChangePasswordActivity extends AppCompatActivity {
                     }
 
                     result = builder.toString();
+                } else {
+                    result = String.valueOf(conn.getResponseCode());
                 }
 
             } catch (MalformedURLException e){
@@ -207,6 +213,10 @@ public class ChangePasswordActivity extends AppCompatActivity {
 
             if (result == null){
                 dispError(getString(R.string.error_failed_connect));
+                return;
+            } else if(result.equals("401")) {
+                Toast.makeText(ChangePasswordActivity.this, "Sesi anda telah habis", Toast.LENGTH_SHORT).show();
+                logout();
                 return;
             }
 
@@ -274,5 +284,14 @@ public class ChangePasswordActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private void logout() {
+        AppGlobal._userInfo = null;
+        AppGlobal._userDetailInfo = null;
+        Intent intent = new Intent(ChangePasswordActivity.this, LoginActivity.class);
+        startActivity(intent);
+        ChangePasswordActivity.this.finish();
+        MainActivity._instance.finish();
     }
 }

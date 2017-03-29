@@ -145,6 +145,8 @@ public class NewsFragment extends Fragment{
                     }
 
                     result = builder.toString();
+                } else {
+                    result = String.valueOf(conn.getResponseCode());
                 }
 
             } catch (MalformedURLException e){

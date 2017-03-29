@@ -337,8 +337,8 @@ public class Tab5Fragment extends Fragment {
 
                     result = builder.toString();
 
-                } else if (conn.getResponseCode() == 401) {
-                    return "401";
+                }  else {
+                    result = String.valueOf(conn.getResponseCode());
                 }
 
             } catch (MalformedURLException e){
@@ -357,7 +357,7 @@ public class Tab5Fragment extends Fragment {
             if (result == null){
                 Toast.makeText(getActivity(), R.string.error_failed_connect, Toast.LENGTH_SHORT).show();
                 return;
-            } else if(result == "401") {
+            } else if(result.equals("401")) {
                 Toast.makeText(_context, "Sesi anda telah habis", Toast.LENGTH_SHORT).show();
                 logout();
                 return;
@@ -544,8 +544,8 @@ public class Tab5Fragment extends Fragment {
                     }
 
                     result = builder.toString();
-                } else if (conn.getResponseCode() == 401) {
-                    return "401";
+                }  else {
+                    result = String.valueOf(conn.getResponseCode());
                 }
 
             } catch (MalformedURLException e){
@@ -564,7 +564,7 @@ public class Tab5Fragment extends Fragment {
             if (result == null){
                 Toast.makeText(getActivity(), R.string.error_failed_connect, Toast.LENGTH_SHORT).show();
                 return;
-            } else if(result == "401") {
+            } else if(result.equals("401")) {
                 Toast.makeText(_context, "Sesi anda telah habis", Toast.LENGTH_SHORT).show();
                 logout();
                 return;
@@ -651,9 +651,8 @@ public class Tab5Fragment extends Fragment {
 
                 if(response.code() == HttpURLConnection.HTTP_OK){
                     result = response.body().toString();
-                }
-                else if(response.code() == 401) {
-                    return "401";
+                } else {
+                    result = String.valueOf(response.code());
                 }
 
             } catch (MalformedURLException e) {
@@ -673,7 +672,7 @@ public class Tab5Fragment extends Fragment {
             if (result == null){
                 Toast.makeText(getActivity(), R.string.error_failed_connect, Toast.LENGTH_SHORT).show();
                 return;
-            } else if(result == "401") {
+            } else if(result.equals("401")) {
                 Toast.makeText(_context, "Sesi anda telah habis", Toast.LENGTH_SHORT).show();
                 logout();
                 return;
@@ -697,9 +696,9 @@ public class Tab5Fragment extends Fragment {
 //            }
 
             Picasso.with(_context).load(AppGlobal._userInfo.picUrl.toLowerCase()).memoryPolicy(MemoryPolicy.NO_CACHE )
-                    .fit().transform(new BlurTransformation(_context)).into(ivBlurPhoto);
-            Picasso.with(_context).load(AppGlobal._userInfo.picUrl.toLowerCase()).memoryPolicy(MemoryPolicy.NO_CACHE )
                     .networkPolicy(NetworkPolicy.NO_CACHE).fit().into(civUserPhoto);
+            Picasso.with(_context).load(AppGlobal._userInfo.picUrl.toLowerCase()).memoryPolicy(MemoryPolicy.NO_CACHE )
+                    .networkPolicy(NetworkPolicy.NO_CACHE).fit().transform(new BlurTransformation(_context)).into(ivBlurPhoto);
             Picasso.with(MainActivity._instance).load(AppGlobal._userInfo.picUrl.toLowerCase()).memoryPolicy(MemoryPolicy.NO_CACHE )
                     .networkPolicy(NetworkPolicy.NO_CACHE).fit().into(MainActivity._instance.civUserPhoto);
         }

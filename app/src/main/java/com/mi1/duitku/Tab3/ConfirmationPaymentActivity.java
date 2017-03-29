@@ -8,10 +8,8 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -170,8 +168,8 @@ public class ConfirmationPaymentActivity extends AppCompatActivity {
                     }
 
                     result = builder.toString();
-                } else if (conn.getResponseCode() == 401) {
-                    return "401";
+                } else {
+                    result = String.valueOf(conn.getResponseCode());
                 }
 
             } catch (MalformedURLException e){
@@ -189,7 +187,7 @@ public class ConfirmationPaymentActivity extends AppCompatActivity {
             if (result == null){
                 showAlert("Proses gagal", "inquiry failed, please try again later.");
                 return;
-            } else if(result == "401") {
+            } else if(result.equals("401")) {
                 Toast.makeText(ConfirmationPaymentActivity.this, "Sesi anda telah habis", Toast.LENGTH_SHORT).show();
                 logout();
                 return;
