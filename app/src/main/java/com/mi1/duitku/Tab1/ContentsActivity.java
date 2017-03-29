@@ -60,9 +60,9 @@ public class ContentsActivity extends AppCompatActivity {
         }
 
         Picasso.with(this).load(item.thumbnail_images.full.url).fit().into(ivThumb);
-        tvTitle.setText(item.title);
+        tvTitle.setText(item.getTitle());
         tvPostTime.setText(item.date);
-        tvContents.setText(fromHtml(item.content));
+        tvContents.setText(fromHtml(item.getContent()));
 
         final CollapsingToolbarLayout collapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
         AppBarLayout appBarLayout = (AppBarLayout) findViewById(R.id.appbar);

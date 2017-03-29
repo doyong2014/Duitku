@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.support.v7.widget.RecyclerView;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -39,7 +40,7 @@ public class PromovAdapter extends RecyclerView.Adapter<PromovAdapter.ViewHolder
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
         DataModel.Post item = Tab1Global._promovData.get(position);
-        holder.tvTitle.setText(item.title);
+        holder.tvTitle.setText(item.getTitle());
         if(item.thumbnail_images.thumbnail.url.isEmpty()) {
             holder.ivThumb.setVisibility(View.GONE);
         } else {

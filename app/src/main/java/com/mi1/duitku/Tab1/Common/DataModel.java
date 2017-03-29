@@ -1,5 +1,8 @@
 package com.mi1.duitku.Tab1.Common;
 
+import android.os.Build;
+import android.text.Html;
+
 /**
  * Created by owner on 3/7/2017.
  */
@@ -44,6 +47,28 @@ public class DataModel {
         public Custom_fields custom_fields;
         public String thumbnail_size;
         public Thumbnail_images thumbnail_images;
+
+        public String getTitle() {
+            if (Build.VERSION.SDK_INT >= 24)
+            {
+                return Html.fromHtml(this.title, Html.FROM_HTML_MODE_LEGACY).toString();
+            }
+            else
+            {
+                return Html.fromHtml(this.title).toString();
+            }
+        }
+
+        public String getContent() {
+            if (Build.VERSION.SDK_INT >= 24)
+            {
+                return Html.fromHtml(this.title, Html.FROM_HTML_MODE_LEGACY).toString();
+            }
+            else
+            {
+                return Html.fromHtml(this.title).toString();
+            }
+        }
 
         public class Category {
             public int id;

@@ -97,7 +97,7 @@ public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
         } else if(holder instanceof GenericViewHolder) {
             DataModel.Post item = Tab1Global._newsData.get(position-1);
             GenericViewHolder genericViewHolder = (GenericViewHolder) holder;
-            genericViewHolder.tvTitle.setText(item.title);
+            genericViewHolder.tvTitle.setText(item.getTitle());
             genericViewHolder.tvPostTime.setText(item.date);
             if(item.thumbnail_images.thumbnail.url.isEmpty()) {
                 genericViewHolder.ivThumbnail.setVisibility(View.GONE);

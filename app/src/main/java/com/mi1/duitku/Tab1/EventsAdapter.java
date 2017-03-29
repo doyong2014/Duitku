@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.support.v7.widget.RecyclerView;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +16,9 @@ import com.mi1.duitku.R;
 import com.mi1.duitku.Tab1.Common.DataModel;
 import com.mi1.duitku.Tab1.Common.Tab1Global;
 import com.squareup.picasso.Picasso;
+
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 
 /**
  * Created by owner on 3/7/2017.
@@ -39,7 +43,7 @@ public class EventsAdapter extends RecyclerView.Adapter<EventsAdapter.ViewHolder
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
         DataModel.Post item = Tab1Global._eventsData.get(position);
-        holder.tvTitle.setText(item.title);
+        holder.tvTitle.setText(item.getTitle());
         if(item.thumbnail_images.thumbnail.url.isEmpty()) {
             holder.ivThumb.setVisibility(View.GONE);
         } else {
