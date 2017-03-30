@@ -158,4 +158,6 @@
     <string name="new_password">Kata Sandi Baru</string>
     <string name="alert_change_password">The Password has been changed successfully.</string>
 
+    <string name="confirm_transfer">Do you really want to transfer?</string>
+
 </resources>

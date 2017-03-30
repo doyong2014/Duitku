@@ -28,11 +28,13 @@ public class Constant {
 	public static final String UPLOAD_IMAGE_PAGE = root_url + "webapi/api/user/uploadprofile/";
 	public static final String CHANGE_PASSWORD_PAGE = root_url + "webapi/api/user/changepasswordduitku";
 	public static final String SEARCH_NEWS_PAGE = "http://renemo.com/komunitas/api/get_search_results/?search=";
+	public static final String GIFT_PAGE = root_url + "webapi/api/Gift";
 	
 	public static final String JSON_STATUS_MESSAGE = "statusMessage";
 	public static final String JSON_STATUS_CODE = "statusCode";
 	public static final String JSON_PHONE_NUM = "phoneNumber";
 	public static final String JSON_BALANCE = "userBalance";
+	public static final String JSON_PIC_URL = "profPicUrl";
 
 	public static final String COMMUNITY_CODE = "DK";
 
@@ -45,6 +47,18 @@ public class Constant {
 		public static final String PROFILE = "PROFILE";
 		public static final String KTP = "KTP";
 		public static final String NPWP = "NPWP";
+	}
+
+	public static class TRANSACTION_TYPE {
+		public static final int TOPUP = 1;
+		public static final int GAME_CASH_EXCHANGE = 2;
+		public static final int GIFT = 3;
+		public static final int TRANSACTION_TRANSFER = 4;
+		public static final int TRANSACTION_ITEM = 5;
+		public static final int GAME_CASH_EXCHANGE_TEMP = 6;
+		public static final int EXTERNAL_SERVICE = 7;
+		public static final int TRANSACTION_WITHDRAW = 8;
+		public static final int TRANSACTION_PPOB = 9;
 	}
 
 }

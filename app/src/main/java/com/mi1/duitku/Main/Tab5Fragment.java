@@ -678,29 +678,28 @@ public class Tab5Fragment extends Fragment {
                 return;
             }
 
-//            try {
-//
-//                JSONObject jsonObj = new JSONObject(result);
-//                String statusCode = jsonObj.getString(Constant.JSON_STATUS_CODE);
-//
-//                if (statusCode.equals("00")){
-//                    showUserPic();
-//                } else {
-//                    String status = jsonObj.getString(Constant.JSON_STATUS_MESSAGE);
-//                    Toast.makeText(_context, status, Toast.LENGTH_SHORT).show();
-//                }
-//
-//            } catch (Exception e) {
-//                // TODO: handle exception
-//                //Log.e("oasis", e.toString());
-//            }
+            try {
 
-            Picasso.with(_context).load(AppGlobal._userInfo.picUrl.toLowerCase()).memoryPolicy(MemoryPolicy.NO_CACHE )
-                    .networkPolicy(NetworkPolicy.NO_CACHE).fit().into(civUserPhoto);
-            Picasso.with(_context).load(AppGlobal._userInfo.picUrl.toLowerCase()).memoryPolicy(MemoryPolicy.NO_CACHE )
-                    .networkPolicy(NetworkPolicy.NO_CACHE).fit().transform(new BlurTransformation(_context)).into(ivBlurPhoto);
-            Picasso.with(MainActivity._instance).load(AppGlobal._userInfo.picUrl.toLowerCase()).memoryPolicy(MemoryPolicy.NO_CACHE )
-                    .networkPolicy(NetworkPolicy.NO_CACHE).fit().into(MainActivity._instance.civUserPhoto);
+                JSONObject jsonObj = new JSONObject(result);
+                String statusCode = jsonObj.getString(Constant.JSON_STATUS_CODE);
+
+                if (statusCode.equals("00")){
+                    AppGlobal._userInfo.picUrl = jsonObj.getString(Constant.JSON_PIC_URL);
+                    Picasso.with(_context).load(AppGlobal._userInfo.picUrl.toLowerCase()).memoryPolicy(MemoryPolicy.NO_CACHE )
+                            .networkPolicy(NetworkPolicy.NO_CACHE).fit().into(civUserPhoto);
+                    Picasso.with(_context).load(AppGlobal._userInfo.picUrl.toLowerCase()).memoryPolicy(MemoryPolicy.NO_CACHE )
+                            .networkPolicy(NetworkPolicy.NO_CACHE).fit().transform(new BlurTransformation(_context)).into(ivBlurPhoto);
+                    Picasso.with(MainActivity._instance).load(AppGlobal._userInfo.picUrl.toLowerCase()).memoryPolicy(MemoryPolicy.NO_CACHE )
+                            .networkPolicy(NetworkPolicy.NO_CACHE).fit().into(MainActivity._instance.civUserPhoto);
+                } else {
+                    String status = jsonObj.getString(Constant.JSON_STATUS_MESSAGE);
+                    Toast.makeText(_context, status, Toast.LENGTH_SHORT).show();
+                }
+
+            } catch (Exception e) {
+                // TODO: handle exception
+                //Log.e("oasis", e.toString());
+            }
         }
     }
 }

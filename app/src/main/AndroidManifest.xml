@@ -138,6 +138,10 @@
         <activity
             android:name=".Tab1.SearchActivity"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".Tab3.DetailTransactionActivity"
+            android:label="Detail Transaksi"
+            android:screenOrientation="portrait" />
 
     </application>
 

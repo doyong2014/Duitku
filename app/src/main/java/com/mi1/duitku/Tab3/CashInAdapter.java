@@ -2,6 +2,7 @@ package com.mi1.duitku.Tab3;
 
 import android.annotation.TargetApi;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
@@ -40,14 +41,17 @@ public class CashInAdapter extends RecyclerView.Adapter<CashInAdapter.ViewHolder
 
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
     @Override
-    public void onBindViewHolder(final ViewHolder holder, int position) {
+    public void onBindViewHolder(final ViewHolder holder, final int position) {
         CashInfo.TransactionList item = Tab3Global._cashInData.get(position);
         holder.tvAmount.setText(CommonFunction.formatNumbering(item.amount));
         holder.tvDate.setText(CommonFunction.getFormatedDate(item.date));
         holder.llCashInfo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showDialog();
+                Intent intent = new Intent(context, DetailTransactionActivity.class);
+                intent.putExtra("index", 0);
+                intent.putExtra("position", position);
+                context.startActivity(intent);
             }
         });
     }
@@ -68,16 +72,5 @@ public class CashInAdapter extends RecyclerView.Adapter<CashInAdapter.ViewHolder
             tvDate = (TextView) v.findViewById(R.id.txt_date);
             llCashInfo = (LinearLayout) v.findViewById(R.id.ll_cash_info);
         }
-    }
-
-    private void showDialog() {
-
-        MaterialDialog mDialog = new MaterialDialog.Builder(context)
-                .content(context.getString(R.string.alert_cash))
-                .positiveText("OK")
-                .cancelable(false)
-                .build();
-
-        mDialog.show();
     }
 }

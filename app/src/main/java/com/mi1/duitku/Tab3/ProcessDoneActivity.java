@@ -47,7 +47,7 @@ public class ProcessDoneActivity extends AppCompatActivity {
         tvSubscriberId.setText(mStrSubscriberId);
 
         TextView tvStatus = (TextView) findViewById(R.id.txt_sent_to);
-        tvStatus.setText(mStrStatusMsg);
+//        tvStatus.setText(mStrStatusMsg);
 
         Button btnFinish = (Button) findViewById(R.id.btn_finish);
         btnFinish.setOnClickListener(new View.OnClickListener() {
