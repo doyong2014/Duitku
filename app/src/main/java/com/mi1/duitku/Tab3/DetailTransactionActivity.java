@@ -66,6 +66,9 @@ public class DetailTransactionActivity extends AppCompatActivity {
         TextView tvDesc = (TextView)findViewById(R.id.txt_description);
         tvDesc.setText(item.descript);
 
+        TextView tvInfo = (TextView)findViewById(R.id.txt_info);
+        tvInfo.setText(item.info);
+
     }
 
     @Override

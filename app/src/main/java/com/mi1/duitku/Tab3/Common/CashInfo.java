@@ -18,6 +18,7 @@ public class CashInfo {
         public String amount;
         public String balance;
         public String date;
+        public String info;
         public boolean dc;
 
     }

@@ -183,7 +183,7 @@
                 android:layout_height="wrap_content"
                 android:paddingTop="15dp"
                 android:paddingLeft="7dp"
-                android:text="@string/alert_cash"
+                android:id="@+id/txt_info"
                 android:textSize="14sp"/>
 
         </LinearLayout>
