@@ -16,6 +16,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -24,6 +25,11 @@ import com.mi1.duitku.Common.CommonFunction;
 import com.mi1.duitku.Common.Constant;
 import com.mi1.duitku.Common.UserInfo;
 import com.mi1.duitku.Main.MainActivity;
+import com.quickblox.auth.session.QBSettings;
+import com.quickblox.core.QBEntityCallback;
+import com.quickblox.core.exception.QBResponseException;
+import com.quickblox.users.QBUsers;
+import com.quickblox.users.model.QBUser;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -236,10 +242,7 @@ public class LoginActivity extends AppCompatActivity implements OnClickListener 
                     Gson gson = new GsonBuilder().create();
                     AppGlobal._userInfo = gson.fromJson(result, UserInfo.class);
                     AppGlobal._userInfo.password = password;
-                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                    startActivity(intent);
-                    HomeActivity._instance.finish();
-                    LoginActivity.this.finish();
+                    loginQB();
 
                 } else if (statusCode.equals("-124")) {
 
@@ -289,6 +292,34 @@ public class LoginActivity extends AppCompatActivity implements OnClickListener 
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private void initQBFramework() {
+        QBSettings.getInstance().init(getApplicationContext(), Constant.QB_APP_ID, Constant.QB_AUTH_KEY, Constant.QB_AUTH_SECRET);
+        QBSettings.getInstance().setAccountKey(Constant.QB_ACCOUNT_KEY);
+    }
+
+    private void loginQB() {
+
+        initQBFramework();
+
+        QBUser qbUser = new QBUser(AppGlobal._userInfo.phoneNumber, Constant.QB_ACCOUNT_PASS);
+
+        QBUsers.signIn(qbUser).performAsync(new QBEntityCallback<QBUser>() {
+            @Override
+            public void onSuccess(QBUser qbUser, Bundle bundle) {
+//                Toast.makeText(getBaseContext(), "Longin Successfully", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                startActivity(intent);
+                HomeActivity._instance.finish();
+                LoginActivity.this.finish();
+            }
+
+            @Override
+            public void onError(QBResponseException e) {
+                Toast.makeText(getBaseContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 }
 

@@ -275,11 +275,11 @@ public class TransferActivity extends AppCompatActivity {
                 }).build();
 
 
-        TextView textView_phoneNumber = (TextView) mDialog.getCustomView().findViewById(R.id.textView_phoneNumber);
-        TextView textView_jumlahDana = (TextView) mDialog.getCustomView().findViewById(R.id.textView4);
+        TextView tvPhoneNumber = (TextView) mDialog.getCustomView().findViewById(R.id.txt_phoneNumber);
+        TextView tvJumlahDana = (TextView) mDialog.getCustomView().findViewById(R.id.txt_amount);
 
-        textView_phoneNumber.setText(email);
-        textView_jumlahDana.setText(amount);
+        tvPhoneNumber.setText(email);
+        tvJumlahDana.setText(amount);
 
         mDialog.show();
     }

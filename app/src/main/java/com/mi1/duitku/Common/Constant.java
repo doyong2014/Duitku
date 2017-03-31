@@ -61,4 +61,10 @@ public class Constant {
 		public static final int TRANSACTION_PPOB = 9;
 	}
 
+	public static final String QB_APP_ID = "55550";
+	public static final String QB_AUTH_KEY = "YNPyyuAOL5V-dKD";
+	public static final String QB_AUTH_SECRET = "LZQXnbtb3FMKkwv";
+	public static final String QB_ACCOUNT_KEY = "qRdk1s73exBkUXFqoEWV";
+	public static final String QB_ACCOUNT_PASS = "12345678";
+
 }

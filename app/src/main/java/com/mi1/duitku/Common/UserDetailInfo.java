@@ -7,7 +7,6 @@ package com.mi1.duitku.Common;
 public class UserDetailInfo {
 
     public UserExternalService userExternalServices[];
-    public String fullName;
     public String birthday;
     public String gender;
     public String addr;

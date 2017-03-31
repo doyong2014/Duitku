@@ -67,7 +67,6 @@ import okhttp3.RequestBody;
 import okhttp3.Response;
 
 import static android.app.Activity.RESULT_OK;
-import static com.squareup.picasso.NetworkPolicy.NO_CACHE;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -103,10 +102,6 @@ public class Tab5Fragment extends Fragment {
         if (!AppGlobal._userDetailInfo.isSync)
             getProfile();
 
-        if(AppGlobal._userDetailInfo.fullName != null) {
-            fullName = AppGlobal._userDetailInfo.fullName;
-        }
-
         if (AppGlobal._userDetailInfo.birthday != null) {
             int idx = AppGlobal._userDetailInfo.birthday.indexOf(" ");
             if (idx != -1) {
@@ -116,6 +111,7 @@ public class Tab5Fragment extends Fragment {
             }
         }
 
+        fullName = AppGlobal._userInfo.fullName;
         email = AppGlobal._userInfo.email;
         phone = AppGlobal._userInfo.phoneNumber;
 
@@ -273,10 +269,7 @@ public class Tab5Fragment extends Fragment {
     }
 
     private void dispUserDetailInfo() {
-
-        fullName = AppGlobal._userDetailInfo.fullName;
         birthday = CommonFunction.getFormatedDate(AppGlobal._userDetailInfo.birthday);
-        tvFullName.setText(fullName);
         tvBirthday.setText(birthday);
 
     }
@@ -578,6 +571,7 @@ public class Tab5Fragment extends Fragment {
                 if (statusCode.equals("00")){
                     Gson gson = new GsonBuilder().create();
                     AppGlobal._userInfo = gson.fromJson(result, UserInfo.class);
+                    AppGlobal._userDetailInfo.birthday = birthday;
                     dispUpdateInfo();
                 } else {
                     String status = jsonObj.getString(Constant.JSON_STATUS_MESSAGE);
@@ -592,10 +586,10 @@ public class Tab5Fragment extends Fragment {
     }
 
     private void dispUpdateInfo() {
-        AppGlobal._userDetailInfo.fullName = fullName;
-        AppGlobal._userDetailInfo.birthday = birthday;
 
-        tvFullName.setText(fullName);
+
+
+        tvFullName.setText(AppGlobal._userInfo.fullName);
         tvBirthday.setText(birthday);
         tvEmail.setText(AppGlobal._userInfo.email);
         tvPhone.setText(AppGlobal._userInfo.phoneNumber);

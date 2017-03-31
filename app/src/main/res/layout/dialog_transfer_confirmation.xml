@@ -13,7 +13,7 @@
         android:textSize="14sp" />
 
     <TextView
-        android:id="@+id/textView_phoneNumber"
+        android:id="@+id/txt_phoneNumber"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
@@ -29,7 +29,7 @@
         android:textSize="14sp" />
 
     <TextView
-        android:id="@+id/textView4"
+        android:id="@+id/txt_amount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"

@@ -41,4 +41,8 @@ dependencies {
     compile 'com.appsflyer:af-android-sdk:4.+@aar'
     compile 'com.github.ittianyu:BottomNavigationViewEx:1.1.6'
     compile 'com.squareup.okhttp3:okhttp:3.4.1'
+
+    compile("com.quickblox:quickblox-android-sdk-core:3.3.0")
+    compile("com.quickblox:quickblox-android-sdk-chat:3.3.0")
+    compile("com.quickblox:quickblox-android-sdk-messages:3.3.0")
 }

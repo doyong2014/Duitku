@@ -9,7 +9,7 @@ public class UserInfo {
 	public String vaNumberPermata;
 	public String statusCode;
 	public String statusMessage;
-	public String name;
+	public String fullName;
 	public String phoneNumber;
 	public String picUrl;
 	public String password;
