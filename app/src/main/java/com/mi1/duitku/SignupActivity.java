@@ -184,7 +184,7 @@ public class SignupActivity extends AppCompatActivity{
                     jsonObject.put("email", param[0]);
                     jsonObject.put("phoneNumber", param[1]);
                     jsonObject.put("password", param[2]);
-                    jsonObject.put("fullName", param[3]);
+                    jsonObject.put("name", param[3]);
                     jsonObject.put("community_code", param[4]);
 
                 } catch (JSONException e) {
@@ -232,9 +232,8 @@ public class SignupActivity extends AppCompatActivity{
         @Override
         protected void onPostExecute(String result) {
 
-            progress.dismiss();
-
             if (result == null){
+                progress.dismiss();
                 dispError(getString(R.string.error_failed_connect));
                 return;
             }
@@ -246,8 +245,8 @@ public class SignupActivity extends AppCompatActivity{
                 if (statusCode.equals("00")){
                     AppGlobal._userInfo = new UserInfo();
                     AppGlobal._userInfo.phoneNumber = jsonObj.getString(Constant.JSON_PHONE_NUM);
-                    showDialog();
                     signUpQB();
+                    showDialog();
 
                 } else {
                     String status = jsonObj.getString(Constant.JSON_STATUS_MESSAGE);
@@ -259,6 +258,8 @@ public class SignupActivity extends AppCompatActivity{
                 //Log.e("oasis", e.toString());
                 Log.e("error", e.getMessage());
             }
+
+            progress.dismiss();
         }
     }
 
@@ -321,13 +322,15 @@ public class SignupActivity extends AppCompatActivity{
 
     private void signUpQB() {
 
+        initQBFramework();
+
         QBUser qbUser = new QBUser(phoneNumber, Constant.QB_ACCOUNT_PASS);
-//                qbUser.setFullName("full name");
-//                qbUser.setEmail("email");
+        qbUser.setFullName(AppGlobal._userInfo.fullName);
+        qbUser.setEmail(AppGlobal._userInfo.email);
         QBUsers.signUp(qbUser).performAsync(new QBEntityCallback<QBUser>() {
             @Override
             public void onSuccess(QBUser qbUser, Bundle bundle) {
-                Toast.makeText(getBaseContext(), "Sign Up Successfully", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(getBaseContext(), "Sign Up Successfully", Toast.LENGTH_SHORT).show();
             }
 
             @Override

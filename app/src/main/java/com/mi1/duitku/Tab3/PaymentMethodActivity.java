@@ -227,7 +227,7 @@ public class PaymentMethodActivity  extends AppCompatActivity {
         {
             JSONObject pg = pgArray.getJSONObject(i);
             PaymentMethod paymentMethod = new PaymentMethod();
-            paymentMethod.setName(pg.getString("fullName"));
+            paymentMethod.setName(pg.getString("name"));
             paymentMethod.setCode(pg.getString("pgCode"));
             paymentMethod.setFee(pg.getString("pgFee"));
 

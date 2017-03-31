@@ -273,10 +273,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 JSONArray objArr = new JSONArray(result);
                 for (int i = 0; i < objArr.length(); i++) {
                     JSONObject obj = objArr.getJSONObject(i);
-                    if (obj.getString("fullName").toString().toUpperCase().equals("PPOB PRA BAYAR")) {
+                    if (obj.getString("name").toString().toUpperCase().equals("PPOB PRA BAYAR")) {
                         Tab3Global._productPurchase = ConvertJsontoCCPOBProductParent(obj);
                     }
-                    else if (obj.getString("fullName").toString().toUpperCase().equals("PPOB PASCA BAYAR")) {
+                    else if (obj.getString("name").toString().toUpperCase().equals("PPOB PASCA BAYAR")) {
                         Tab3Global._productPayment = ConvertJsontoCCPOBProductParent(obj);
                     }
                 }
@@ -289,7 +289,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private CPPOBProductParent ConvertJsontoCCPOBProductParent(JSONObject obj) throws JSONException {
         CPPOBProductParent product = new CPPOBProductParent();
         product.id = obj.getInt("id");
-        product.name = obj.getString("fullName");
+        product.name = obj.getString("name");
         JSONArray childArr = obj.getJSONArray("child");
         if (childArr.length() > 0) {
             for (int i = 0; i < childArr.length(); i++) {
