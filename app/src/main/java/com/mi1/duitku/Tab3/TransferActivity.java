@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.afollestad.materialdialogs.DialogAction;
@@ -84,7 +85,7 @@ public class TransferActivity extends AppCompatActivity {
             return false;
         }
         else if (email.isEmpty()) {
-            etEmail.setError("Alamat e-mail penerima");
+            etEmail.setError("telepon penerima");
             etEmail.requestFocus();
             return false;
         }
@@ -98,7 +99,7 @@ public class TransferActivity extends AppCompatActivity {
         String[] params = new String[5];
         params[0] = AppGlobal._userInfo.token;
         params[1] = amount;
-        params[2] = AppGlobal._userInfo.email;
+        params[2] = "";
         params[3] = email;
         params[4] = Constant.COMMUNITY_CODE;
         GiftAsync _giftAsync = new GiftAsync();
@@ -136,7 +137,7 @@ public class TransferActivity extends AppCompatActivity {
                 try {
                     jsonObject.put("token", param[0]);
                     jsonObject.put("amount", param[1]);
-                    jsonObject.put("email", param[2]);
+                    //jsonObject.put("email", param[2]);
                     jsonObject.put("phoneNumber", param[3]);
                     jsonObject.put("community_code", param[4]);
 
@@ -260,18 +261,25 @@ public class TransferActivity extends AppCompatActivity {
     private void showDialog() {
 
         MaterialDialog mDialog = new MaterialDialog.Builder(this)
-                .content(getString(R.string.confirm_transfer))
-                .positiveText("OK")
-                .positiveColorRes(R.color.colorPrimary)
+                .customView(R.layout.dialog_transfer_confirmation, true)
                 .negativeText("CANCEL")
                 .negativeColorRes(R.color.colorDisable)
                 .canceledOnTouchOutside(false)
-                .onPositive(new MaterialDialog.SingleButtonCallback() {
+                .neutralText("OK")
+                .neutralColorRes(R.color.colorPrimary)
+                .onNeutral(new MaterialDialog.SingleButtonCallback() {
                     @Override
                     public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
                         Gift();
                     }
                 }).build();
+
+
+        TextView textView_phoneNumber = (TextView) mDialog.getCustomView().findViewById(R.id.textView_phoneNumber);
+        TextView textView_jumlahDana = (TextView) mDialog.getCustomView().findViewById(R.id.textView4);
+
+        textView_phoneNumber.setText(email);
+        textView_jumlahDana.setText(amount);
 
         mDialog.show();
     }
