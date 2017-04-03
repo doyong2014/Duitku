@@ -20,6 +20,10 @@ public class HomeActivity extends AppCompatActivity {
 
         _instance = this;
 
+        if (AppGlobal._userInfo == null){
+            AppGlobal.initData();
+        }
+
         Button btnLogin = (Button)findViewById(R.id.btn_home_login);
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override

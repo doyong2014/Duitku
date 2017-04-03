@@ -111,7 +111,7 @@ public class Tab5Fragment extends Fragment {
             }
         }
 
-        fullName = AppGlobal._userInfo.fullName;
+        fullName = AppGlobal._userInfo.name;
         email = AppGlobal._userInfo.email;
         phone = AppGlobal._userInfo.phoneNumber;
 
@@ -589,7 +589,7 @@ public class Tab5Fragment extends Fragment {
 
 
 
-        tvFullName.setText(AppGlobal._userInfo.fullName);
+        tvFullName.setText(AppGlobal._userInfo.name);
         tvBirthday.setText(birthday);
         tvEmail.setText(AppGlobal._userInfo.email);
         tvPhone.setText(AppGlobal._userInfo.phoneNumber);

@@ -93,7 +93,7 @@ public class SignupActivity extends AppCompatActivity{
         password = etPassword.getText().toString();
         emailAddress = etEmailAddress.getText().toString();
         phoneNumber = etPhoneNumber.getText().toString();
-        String confirpassword = etConfirpassword.getText().toString();
+        String confirmpassword = etConfirpassword.getText().toString();
 
         if (userName.isEmpty()){
             etUserName.setError(getString(R.string.error_null_username));
@@ -125,7 +125,7 @@ public class SignupActivity extends AppCompatActivity{
             return false;
         }
 
-        if (password.compareTo(confirpassword) != 0){
+        if (password.compareTo(confirmpassword) != 0){
             etPassword.setError(getString(R.string.error_incorrect_password));
             etPassword.requestFocus();
             return false;
@@ -243,11 +243,7 @@ public class SignupActivity extends AppCompatActivity{
                 JSONObject jsonObj = new JSONObject(result);
                 String statusCode = jsonObj.getString(Constant.JSON_STATUS_CODE);
                 if (statusCode.equals("00")){
-                    AppGlobal._userInfo = new UserInfo();
-                    AppGlobal._userInfo.phoneNumber = jsonObj.getString(Constant.JSON_PHONE_NUM);
                     signUpQB();
-                    showDialog();
-
                 } else {
                     String status = jsonObj.getString(Constant.JSON_STATUS_MESSAGE);
                     dispError(status);
@@ -259,7 +255,9 @@ public class SignupActivity extends AppCompatActivity{
                 Log.e("error", e.getMessage());
             }
 
-            progress.dismiss();
+            if(progress.isShowing()) {
+                progress.dismiss();
+            }
         }
     }
 
@@ -325,12 +323,14 @@ public class SignupActivity extends AppCompatActivity{
         initQBFramework();
 
         QBUser qbUser = new QBUser(phoneNumber, Constant.QB_ACCOUNT_PASS);
-        qbUser.setFullName(AppGlobal._userInfo.fullName);
-        qbUser.setEmail(AppGlobal._userInfo.email);
+        qbUser.setFullName(userName);
+        qbUser.setEmail(emailAddress);
         QBUsers.signUp(qbUser).performAsync(new QBEntityCallback<QBUser>() {
             @Override
             public void onSuccess(QBUser qbUser, Bundle bundle) {
 //                Toast.makeText(getBaseContext(), "Sign Up Successfully", Toast.LENGTH_SHORT).show();
+                progress.dismiss();
+                showDialog();
             }
 
             @Override

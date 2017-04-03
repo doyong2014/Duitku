@@ -31,7 +31,7 @@ public class ShareCodeActivity extends AppCompatActivity {
         }
 
         TextView tvName = (TextView)findViewById(R.id.txt_name);
-        tvName.setText(AppGlobal._userInfo.fullName);
+        tvName.setText(AppGlobal._userInfo.name);
     }
 
     @Override

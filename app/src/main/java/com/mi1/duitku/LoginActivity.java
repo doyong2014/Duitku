@@ -58,10 +58,6 @@ public class LoginActivity extends AppCompatActivity implements OnClickListener 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        if (AppGlobal._userInfo == null){
-            AppGlobal.initData();
-        }
-
         TextView getPassword = (TextView)findViewById(R.id.txt_forget_password);
         getPassword.setOnClickListener(this);
 
@@ -78,7 +74,6 @@ public class LoginActivity extends AppCompatActivity implements OnClickListener 
 
         progress = new ProgressDialog(this);
         progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-
     }
 
     private void hideKeyboard(){
@@ -225,9 +220,8 @@ public class LoginActivity extends AppCompatActivity implements OnClickListener 
         @Override
         protected void onPostExecute(String result) {
 
-            progress.dismiss();
-
             if (result == null){
+                progress.dismiss();
                 dispError(getString(R.string.error_failed_connect));
                 return;
             }
@@ -259,6 +253,10 @@ public class LoginActivity extends AppCompatActivity implements OnClickListener 
             } catch (Exception e) {
                 // TODO: handle exception
                 //Log.e("oasis", e.toString());
+            }
+
+            if(progress.isShowing()) {
+                progress.dismiss();
             }
         }
     }
@@ -309,6 +307,7 @@ public class LoginActivity extends AppCompatActivity implements OnClickListener 
             @Override
             public void onSuccess(QBUser qbUser, Bundle bundle) {
 //                Toast.makeText(getBaseContext(), "Longin Successfully", Toast.LENGTH_SHORT).show();
+                progress.dismiss();
                 Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                 startActivity(intent);
                 HomeActivity._instance.finish();
