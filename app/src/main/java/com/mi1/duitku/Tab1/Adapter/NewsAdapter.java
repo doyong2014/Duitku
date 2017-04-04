@@ -1,4 +1,4 @@
-package com.mi1.duitku.Tab1;
+package com.mi1.duitku.Tab1.Adapter;
 
 import android.content.Context;
 import android.content.Intent;
@@ -19,6 +19,7 @@ import com.mi1.duitku.Common.CommonFunction;
 import com.mi1.duitku.R;
 import com.mi1.duitku.Tab1.Common.DataModel;
 import com.mi1.duitku.Tab1.Common.Tab1Global;
+import com.mi1.duitku.Tab1.ContentsActivity;
 import com.mi1.duitku.Tab3.PaymentActivity;
 import com.mi1.duitku.Tab3.PaymentProcessActivity;
 import com.mi1.duitku.Tab3.PurchaseActivity;

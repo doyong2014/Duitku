@@ -72,7 +72,8 @@ public class SignupActivity extends AppCompatActivity{
         tvError = (TextView)findViewById(R.id.txt_sign_error);
 
         progress = new ProgressDialog(this);
-        progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        progress.setMessage(getString(R.string.wait));
+        progress.setCanceledOnTouchOutside(false);
 
         Button btnSign = (Button)findViewById(R.id.btn_sign);
         btnSign.setOnClickListener(new OnClickListener() {
@@ -165,7 +166,6 @@ public class SignupActivity extends AppCompatActivity{
         @Override
         protected void onPreExecute() {
             // TODO Auto-generated method stub
-            progress.setMessage(getString(R.string.wait));
             progress.show();
             super.onPreExecute();
         }
@@ -245,18 +245,15 @@ public class SignupActivity extends AppCompatActivity{
                 if (statusCode.equals("00")){
                     signUpQB();
                 } else {
+                    progress.dismiss();
                     String status = jsonObj.getString(Constant.JSON_STATUS_MESSAGE);
                     dispError(status);
                 }
 
             } catch (Exception e) {
                 // TODO: handle exception
-                //Log.e("oasis", e.toString());
-                Log.e("error", e.getMessage());
-            }
-
-            if(progress.isShowing()) {
                 progress.dismiss();
+                Log.e("error", e.getMessage());
             }
         }
     }

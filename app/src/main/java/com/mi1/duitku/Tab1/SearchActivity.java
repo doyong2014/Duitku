@@ -65,7 +65,8 @@ public class SearchActivity extends AppCompatActivity {
         }
 
         progress = new ProgressDialog(this);
-        progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        progress.setMessage(getString(R.string.wait));
+        progress.setCanceledOnTouchOutside(false);
 
         retrieveResult();
 
@@ -99,7 +100,6 @@ public class SearchActivity extends AppCompatActivity {
         @Override
         protected void onPreExecute() {
             // TODO Auto-generated method stub
-            progress.setMessage(getString(R.string.wait));
             progress.show();
             super.onPreExecute();
         }

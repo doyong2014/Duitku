@@ -17,9 +17,11 @@ import com.lcodecore.tkrefreshlayout.RefreshListenerAdapter;
 import com.lcodecore.tkrefreshlayout.TwinklingRefreshLayout;
 import com.mi1.duitku.Common.AppGlobal;
 import com.mi1.duitku.Common.Constant;
+import com.mi1.duitku.Common.DividerItemDecoration;
 import com.mi1.duitku.Common.FooterView;
 import com.mi1.duitku.Common.HeaderView;
 import com.mi1.duitku.R;
+import com.mi1.duitku.Tab3.Adapter.CashInAdapter;
 import com.mi1.duitku.Tab3.Common.CashInfo;
 import com.mi1.duitku.Tab3.Common.Tab3Global;
 
@@ -33,7 +35,6 @@ import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.Collections;
 
 /**

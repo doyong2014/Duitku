@@ -57,7 +57,8 @@ public class ConfirmationPaymentActivity extends AppCompatActivity {
         // Inflate the layout for this fragment
 
         progress = new ProgressDialog(this);
-        progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        progress.setMessage(getString(R.string.wait));
+        progress.setCanceledOnTouchOutside(false);
 
         TextView tvSubscriberId = (TextView) findViewById(R.id.txt_subscriber_id);
         TextView tvSubscriberName = (TextView) findViewById(R.id.txt_subscriber_name);
@@ -105,7 +106,6 @@ public class ConfirmationPaymentActivity extends AppCompatActivity {
 
         @Override
         protected void onPreExecute() {
-            progress.setMessage(getString(R.string.wait));
             progress.show();
             super.onPreExecute();
         }

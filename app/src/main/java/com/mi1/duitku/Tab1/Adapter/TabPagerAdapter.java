@@ -1,8 +1,13 @@
-package com.mi1.duitku.Tab4;
+package com.mi1.duitku.Tab1.Adapter;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
+
+import com.mi1.duitku.Tab1.EventsFragment;
+import com.mi1.duitku.Tab1.NewsFragment;
+import com.mi1.duitku.Tab1.PromovFragment;
+
 
 /**
  * Created by owner on 3/4/2017.
@@ -24,11 +29,14 @@ public class TabPagerAdapter extends FragmentStatePagerAdapter {
         // Returning the current tabs
         switch (position) {
             case 0:
-                MerchandiseFragment tabFragment1 = new MerchandiseFragment();
+                NewsFragment tabFragment1 = new NewsFragment();
                 return tabFragment1;
             case 1:
-                WishListFragment tabFragment2 = new WishListFragment();
+                PromovFragment tabFragment2 = new PromovFragment();
                 return tabFragment2;
+            case 2:
+                EventsFragment tabFragment3 = new EventsFragment();
+                return tabFragment3;
             default:
                 return null;
         }

@@ -17,6 +17,7 @@ import com.lcodecore.tkrefreshlayout.RefreshListenerAdapter;
 import com.lcodecore.tkrefreshlayout.TwinklingRefreshLayout;
 import com.mi1.duitku.Common.Constant;
 import com.mi1.duitku.R;
+import com.mi1.duitku.Tab1.Adapter.NewsAdapter;
 import com.mi1.duitku.Tab1.Common.DataModel;
 import com.mi1.duitku.Common.FooterView;
 import com.mi1.duitku.Common.HeaderView;

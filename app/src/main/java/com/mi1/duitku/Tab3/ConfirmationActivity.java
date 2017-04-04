@@ -72,7 +72,8 @@ public class ConfirmationActivity extends AppCompatActivity {
         productName = mCCPOBProduct.productName;
 
         progress = new ProgressDialog(this);
-        progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        progress.setMessage(getString(R.string.wait));
+        progress.setCanceledOnTouchOutside(false);
 
         TextView tvSubscriberId = (TextView) findViewById(R.id.txt_subscriber_id);
         tvSubscriberId.setText(subscriberId);
@@ -122,7 +123,6 @@ public class ConfirmationActivity extends AppCompatActivity {
 
         @Override
         protected void onPreExecute() {
-            progress.setMessage(getString(R.string.wait));
             progress.show();
             super.onPreExecute();
         }

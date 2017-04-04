@@ -12,8 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.mi1.duitku.R;
-import com.mi1.duitku.Tab3.Common.Tab3Global;
-import com.mi1.duitku.Tab3.TabPagerAdapter;
+import com.mi1.duitku.Tab3.Adapter.TabPagerAdapter;
 
 /**
  * A simple {@link Fragment} subclass.

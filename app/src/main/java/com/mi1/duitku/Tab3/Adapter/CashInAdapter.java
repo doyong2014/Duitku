@@ -1,4 +1,4 @@
-package com.mi1.duitku.Tab3;
+package com.mi1.duitku.Tab3.Adapter;
 
 import android.annotation.TargetApi;
 import android.content.Context;
@@ -11,21 +11,21 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.afollestad.materialdialogs.MaterialDialog;
 import com.mi1.duitku.Common.CommonFunction;
 import com.mi1.duitku.R;
 import com.mi1.duitku.Tab3.Common.CashInfo;
 import com.mi1.duitku.Tab3.Common.Tab3Global;
+import com.mi1.duitku.Tab3.DetailTransactionActivity;
 
 /**
  * Created by owner on 3/7/2017.
  */
 
-public class CashOutAdapter extends RecyclerView.Adapter<CashOutAdapter.ViewHolder> {
+public class CashInAdapter extends RecyclerView.Adapter<CashInAdapter.ViewHolder> {
 
     Context context;
 
-    public CashOutAdapter(Context context) {
+    public CashInAdapter(Context context) {
         this.context = context;
     }
 
@@ -39,14 +39,14 @@ public class CashOutAdapter extends RecyclerView.Adapter<CashOutAdapter.ViewHold
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
-        CashInfo.TransactionList item = Tab3Global._cashOutData.get(position);
+        CashInfo.TransactionList item = Tab3Global._cashInData.get(position);
         holder.tvAmount.setText(CommonFunction.formatNumbering(item.amount));
         holder.tvDate.setText(CommonFunction.getFormatedDate(item.date));
         holder.llCashInfo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(context, DetailTransactionActivity.class);
-                intent.putExtra("index", 1);
+                intent.putExtra("index", 0);
                 intent.putExtra("position", position);
                 context.startActivity(intent);
             }
@@ -55,7 +55,7 @@ public class CashOutAdapter extends RecyclerView.Adapter<CashOutAdapter.ViewHold
 
     @Override
     public int getItemCount() {
-        return Tab3Global._cashOutData.size();
+        return Tab3Global._cashInData.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

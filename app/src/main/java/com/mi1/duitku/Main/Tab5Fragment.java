@@ -97,7 +97,8 @@ public class Tab5Fragment extends Fragment {
         _context = getContext();
 
         progress = new ProgressDialog(_context);
-        progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        progress.setMessage(getString(R.string.wait));
+        progress.setCanceledOnTouchOutside(false);
 
         if (!AppGlobal._userDetailInfo.isSync)
             getProfile();
@@ -298,7 +299,6 @@ public class Tab5Fragment extends Fragment {
         @Override
         protected void onPreExecute() {
             // TODO Auto-generated method stub
-            progress.setMessage(getString(R.string.wait));
             progress.show();
             super.onPreExecute();
         }
@@ -482,7 +482,6 @@ public class Tab5Fragment extends Fragment {
         @Override
         protected void onPreExecute() {
             // TODO Auto-generated method stub
-            progress.setMessage(getString(R.string.wait));
             progress.show();
             super.onPreExecute();
         }
@@ -608,7 +607,6 @@ public class Tab5Fragment extends Fragment {
         @Override
         protected void onPreExecute() {
             // TODO Auto-generated method stub
-            progress.setMessage(getString(R.string.wait));
             progress.show();
             super.onPreExecute();
         }

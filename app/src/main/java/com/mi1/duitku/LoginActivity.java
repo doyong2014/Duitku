@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -73,7 +74,8 @@ public class LoginActivity extends AppCompatActivity implements OnClickListener 
         etPassword = (EditText)findViewById(R.id.edt_login_password);
 
         progress = new ProgressDialog(this);
-        progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        progress.setMessage(getString(R.string.wait));
+        progress.setCanceledOnTouchOutside(false);
     }
 
     private void hideKeyboard(){
@@ -153,7 +155,6 @@ public class LoginActivity extends AppCompatActivity implements OnClickListener 
         @Override
         protected void onPreExecute() {
             // TODO Auto-generated method stub
-            progress.setMessage(getString(R.string.wait));
             progress.show();
             super.onPreExecute();
         }
@@ -169,13 +170,13 @@ public class LoginActivity extends AppCompatActivity implements OnClickListener 
 
                 JSONObject jsonObject = new JSONObject();
                 try {
-//                    jsonObject.put("username", param[0]);
-//                    jsonObject.put("password", param[1]);
-//                    jsonObject.put("community_code", param[2]);
-
-                    jsonObject.put("username", "0818718184");
-                    jsonObject.put("password", CommonFunction.md5("ZOP8AUK2"));
+                    jsonObject.put("username", param[0]);
+                    jsonObject.put("password", param[1]);
                     jsonObject.put("community_code", param[2]);
+
+//                    jsonObject.put("username", "081213497969"); //0818718184 //081213497969
+//                    jsonObject.put("password", CommonFunction.md5("TMIA7EPD"));//ZOP8AUK2 //TMIA7EPD
+//                    jsonObject.put("community_code", param[2]);
 
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -239,12 +240,13 @@ public class LoginActivity extends AppCompatActivity implements OnClickListener 
                     loginQB();
 
                 } else if (statusCode.equals("-124")) {
-
+                    progress.dismiss();
                     AppGlobal._userInfo.phoneNumber = jsonObj.getString(Constant.JSON_PHONE_NUM);
                     Intent intent = new Intent(LoginActivity.this, VerifyCodeActivity.class);
                     startActivity(intent);
 
                 } else {
+                    progress.dismiss();
                     String status = jsonObj.getString(Constant.JSON_STATUS_MESSAGE);
                     dispError(status);
                 }
@@ -252,12 +254,10 @@ public class LoginActivity extends AppCompatActivity implements OnClickListener 
 
             } catch (Exception e) {
                 // TODO: handle exception
-                //Log.e("oasis", e.toString());
+                progress.dismiss();
+                Log.e("oasis", e.getMessage());
             }
 
-            if(progress.isShowing()) {
-                progress.dismiss();
-            }
         }
     }
 
@@ -316,6 +316,7 @@ public class LoginActivity extends AppCompatActivity implements OnClickListener 
 
             @Override
             public void onError(QBResponseException e) {
+                progress.dismiss();
                 Toast.makeText(getBaseContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });

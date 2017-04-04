@@ -74,7 +74,8 @@ public class PaymentMethodActivity  extends AppCompatActivity {
         setContentView(R.layout.activity_payment_method);
 
         progress = new ProgressDialog(this);
-        progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        progress.setMessage(getString(R.string.wait));
+        progress.setCanceledOnTouchOutside(false);
 
         mLinearLayoutManager = new LinearLayoutManager(this);
         mLinearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
@@ -148,7 +149,6 @@ public class PaymentMethodActivity  extends AppCompatActivity {
 
         @Override
         protected void onPreExecute() {
-            progress.setMessage("Mohon tunggu..");
             progress.show();
             super.onPreExecute();
         }
@@ -241,7 +241,6 @@ public class PaymentMethodActivity  extends AppCompatActivity {
 
         @Override
         protected void onPreExecute() {
-            progress.setMessage(getString(R.string.wait));
             progress.show();
             super.onPreExecute();
         }

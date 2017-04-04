@@ -56,7 +56,8 @@ public class PurchaseProcessPLNActivity extends AppCompatActivity {
         setContentView(R.layout.activity_purchase_process_pln);
 
         progress = new ProgressDialog(this);
-        progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        progress.setMessage(getString(R.string.wait));
+        progress.setCanceledOnTouchOutside(false);
 
         etAmount = (EditText) findViewById(R.id.edt_amount);
         etCustomer = (EditText) findViewById(R.id.edt_customer);
@@ -144,7 +145,6 @@ public class PurchaseProcessPLNActivity extends AppCompatActivity {
 
         @Override
         protected void onPreExecute() {
-            progress.setMessage(getString(R.string.wait));
             progress.show();
             super.onPreExecute();
         }

@@ -142,6 +142,13 @@
             android:name=".Tab3.DetailTransactionActivity"
             android:label="Detail Transaksi"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".Tab2.ListUsersActivity"
+            android:label="Add User"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Tab2.ChatMessageActivity"
+            android:screenOrientation="portrait" />
 
     </application>
 

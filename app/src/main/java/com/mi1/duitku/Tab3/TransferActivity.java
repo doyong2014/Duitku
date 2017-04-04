@@ -52,7 +52,8 @@ public class TransferActivity extends AppCompatActivity {
         setContentView(R.layout.activity_transfer);
 
         progress = new ProgressDialog(this);
-        progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        progress.setMessage(getString(R.string.wait));
+        progress.setCanceledOnTouchOutside(false);
 
         etEmail = (EditText) findViewById(R.id.edt_receiver_email);
         etAmount = (EditText) findViewById(R.id.edt_amount);
@@ -119,7 +120,6 @@ public class TransferActivity extends AppCompatActivity {
         @Override
         protected void onPreExecute() {
             // TODO Auto-generated method stub
-            progress.setMessage(getString(R.string.wait));
             progress.show();
             super.onPreExecute();
         }

@@ -1,5 +1,6 @@
 package com.mi1.duitku.Main;
 
+import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
@@ -12,7 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.mi1.duitku.R;
-import com.mi1.duitku.Tab2.TabPagerAdapter;
+import com.mi1.duitku.Tab2.Adapter.TabPagerAdapter;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -21,6 +22,7 @@ public class Tab2Fragment extends Fragment {
 
     private TabLayout topTap;
     private ViewPager viewPager;
+    private Context _context;
 
     public Tab2Fragment() {
         // Required empty public constructor
@@ -32,6 +34,7 @@ public class Tab2Fragment extends Fragment {
 
         // Inflate the layout for this fragment
         View view =  inflater.inflate(R.layout.fragment_tab, container, false);
+        _context = getContext();
 
         Toolbar toolbar = (Toolbar) view.findViewById(R.id.toolbar);
         AppCompatActivity activity = (AppCompatActivity) getActivity();

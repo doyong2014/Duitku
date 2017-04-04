@@ -79,7 +79,8 @@ public class PaymentProcessActivity extends AppCompatActivity {
         }
 
         progress = new ProgressDialog(this);
-        progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        progress.setMessage(getString(R.string.wait));
+        progress.setCanceledOnTouchOutside(false);
 
         etSubscriberId = (EditText) findViewById(R.id.edt_subscriber_id);
         edit_periodebulan = (EditText) findViewById(R.id.edit_periodebulan);
@@ -173,7 +174,6 @@ public class PaymentProcessActivity extends AppCompatActivity {
 
         @Override
         protected void onPreExecute() {
-            progress.setMessage(getString(R.string.wait));
             progress.show();
             super.onPreExecute();
         }

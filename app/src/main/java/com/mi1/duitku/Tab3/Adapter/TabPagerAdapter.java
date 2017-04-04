@@ -1,13 +1,12 @@
-package com.mi1.duitku.Tab2;
+package com.mi1.duitku.Tab3.Adapter;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
-
-/**
- * Created by owner on 3/4/2017.
- */
+import com.mi1.duitku.Tab3.CashInFragment;
+import com.mi1.duitku.Tab3.CashOutFragment;
+import com.mi1.duitku.Tab3.DompetFragment;
 
 public class TabPagerAdapter extends FragmentStatePagerAdapter {
 
@@ -25,11 +24,14 @@ public class TabPagerAdapter extends FragmentStatePagerAdapter {
         // Returning the current tabs
         switch (position) {
             case 0:
-                InboxFragment tabFragment1 = new InboxFragment();
+                DompetFragment tabFragment1 = new DompetFragment();
                 return tabFragment1;
             case 1:
-                GroupFragment tabFragment2 = new GroupFragment();
+                CashInFragment tabFragment2 = new CashInFragment();
                 return tabFragment2;
+            case 2:
+                CashOutFragment tabFragment3 = new CashOutFragment();
+                return tabFragment3;
             default:
                 return null;
         }
