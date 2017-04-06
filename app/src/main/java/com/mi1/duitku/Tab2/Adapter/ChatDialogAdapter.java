@@ -108,4 +108,8 @@ public class ChatDialogAdapter extends RecyclerView.Adapter<ChatDialogAdapter.Vi
         return ret;
     }
 
+    public void setData(ArrayList<QBChatDialog> qbChatDialogs){
+        this.qbChatDialogs = qbChatDialogs;
+    }
+
 }

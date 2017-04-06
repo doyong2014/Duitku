@@ -15,12 +15,12 @@ import java.util.ArrayList;
  * Created by owner on 3/31/2017.
  */
 
-public class ListUsersAdapter extends BaseAdapter {
+public class PrivateChatAdapter extends BaseAdapter {
 
     private Context context;
     private ArrayList<QBUser> qbUserArrayList;
 
-    public ListUsersAdapter(Context context, ArrayList<QBUser> qbUserArrayList) {
+    public PrivateChatAdapter(Context context, ArrayList<QBUser> qbUserArrayList) {
         this.context = context;
         this.qbUserArrayList = qbUserArrayList;
     }

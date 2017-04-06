@@ -143,7 +143,11 @@
             android:label="Detail Transaksi"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".Tab2.ListUsersActivity"
+            android:name=".Tab2.CreatePrivateChatActivity"
+            android:label="Add User"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Tab2.CreateGroupChatActivity"
             android:label="Add User"
             android:screenOrientation="portrait" />
         <activity

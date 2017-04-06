@@ -27,15 +27,17 @@ import com.quickblox.chat.exception.QBChatException;
 import com.quickblox.chat.listeners.QBChatDialogMessageListener;
 import com.quickblox.chat.model.QBChatDialog;
 import com.quickblox.chat.model.QBChatMessage;
+import com.quickblox.chat.model.QBDialogType;
 import com.quickblox.chat.request.QBMessageGetBuilder;
 import com.quickblox.core.QBEntityCallback;
 import com.quickblox.core.exception.QBResponseException;
 
 import org.jivesoftware.smack.SmackException;
+import org.jivesoftware.smackx.muc.DiscussionHistory;
 
 import java.util.ArrayList;
 
-public class ChatMessageActivity extends AppCompatActivity {
+public class ChatMessageActivity extends AppCompatActivity implements QBChatDialogMessageListener {
 
     public static String DIALOG_EXTRA = "dialog";
     private QBChatDialog qbChatDialog;
@@ -76,11 +78,13 @@ public class ChatMessageActivity extends AppCompatActivity {
                 } catch (SmackException.NotConnectedException e) {
                     e.printStackTrace();
                 }
-                //put message to cache
-                QBChatMessagesHolder.getInstance().putMessage(qbChatDialog.getDialogId(), chatMessage);
-                ArrayList<QBChatMessage> messages = QBChatMessagesHolder.getInstance().getChatMessagesByDialogId(qbChatDialog.getDialogId());
-                adapter.setData(messages);
-                adapter.notifyDataSetChanged();
+                if (qbChatDialog.getType() == QBDialogType.PRIVATE) {
+                    //put message to cache
+                    QBChatMessagesHolder.getInstance().putMessage(qbChatDialog.getDialogId(), chatMessage);
+                    ArrayList<QBChatMessage> messages = QBChatMessagesHolder.getInstance().getChatMessagesByDialogId(qbChatDialog.getDialogId());
+                    adapter.setData(messages);
+                    adapter.notifyDataSetChanged();
+                }
 
                 //remove test from edittext
                 hideKeyboard();
@@ -92,9 +96,21 @@ public class ChatMessageActivity extends AppCompatActivity {
         });
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        qbChatDialog.removeMessageListrener(this);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        qbChatDialog.removeMessageListrener(this);
+    }
+
     private void retrieveMessage() {
         QBMessageGetBuilder messageGetBuilder = new QBMessageGetBuilder();
-        messageGetBuilder.setLimit(50); // get limit 500 messages
+        messageGetBuilder.setLimit(100); // get limit 100 messages
 
         if (qbChatDialog != null) {
             QBRestChatService.getDialogMessages(qbChatDialog, messageGetBuilder).performAsync(new QBEntityCallback<ArrayList<QBChatMessage>>() {
@@ -107,7 +123,9 @@ public class ChatMessageActivity extends AppCompatActivity {
                     adapter = new ChatMessageAdapter(ChatMessageActivity.this, qbChatMessages);
                     recycler.setAdapter(adapter);
                     adapter.notifyDataSetChanged();
-                    recycler.smoothScrollToPosition(adapter.getItemCount()-1);
+                    if (adapter.getItemCount() > 0) {
+                        recycler.smoothScrollToPosition(adapter.getItemCount() - 1);
+                    }
 //                    adapter.notifyItemInserted(qbChatMessages.size());
                 }
 
@@ -128,33 +146,26 @@ public class ChatMessageActivity extends AppCompatActivity {
 
         //Register listener Incoming Message
         QBIncomingMessagesManager incomingMessage = QBChatService.getInstance().getIncomingMessagesManager();
-        incomingMessage.addDialogMessageListener(new QBChatDialogMessageListener() {
-            @Override
-            public void processMessage(String s, QBChatMessage qbChatMessage, Integer integer) {
-            }
+        incomingMessage.addDialogMessageListener(ChatMessageActivity.this);
 
-            @Override
-            public void processError(String s, QBChatException e, QBChatMessage qbChatMessage, Integer integer) {
-            }
-        });
+        if (qbChatDialog.getType() == QBDialogType.PUBLIC_GROUP || qbChatDialog.getType() == QBDialogType.GROUP) {
+            DiscussionHistory discussionHistory = new DiscussionHistory();
+            discussionHistory.setMaxStanzas(0);
+
+            qbChatDialog.join(discussionHistory, new QBEntityCallback() {
+                @Override
+                public void onSuccess(Object o, Bundle bundle) {
+                }
+
+                @Override
+                public void onError(QBResponseException e) {
+                    Log.d("error", e.getMessage());
+                }
+            });
+        }
 
         // Add message listener for that particular chat dialog
-        qbChatDialog.addMessageListener(new QBChatDialogMessageListener() {
-            @Override
-            public void processMessage(String s, QBChatMessage qbChatMessage, Integer integer) {
-                //Cache Message
-                QBChatMessagesHolder.getInstance().putMessage(qbChatMessage.getDialogId(), qbChatMessage);
-                ArrayList<QBChatMessage> messages = QBChatMessagesHolder.getInstance().getChatMessagesByDialogId(qbChatMessage.getDialogId());
-                adapter.setData(messages);
-                adapter.notifyDataSetChanged();
-                recycler.smoothScrollToPosition(adapter.getItemCount()-1);
-            }
-
-            @Override
-            public void processError(String s, QBChatException e, QBChatMessage qbChatMessage, Integer integer) {
-                Log.e("error", e.getMessage());
-            }
-        });
+        qbChatDialog.addMessageListener(this);
     }
 
     @Override
@@ -193,4 +204,18 @@ public class ChatMessageActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    public void processMessage(String s, QBChatMessage qbChatMessage, Integer integer) {
+        //Cache Message
+        QBChatMessagesHolder.getInstance().putMessage(qbChatMessage.getDialogId(), qbChatMessage);
+        ArrayList<QBChatMessage> messages = QBChatMessagesHolder.getInstance().getChatMessagesByDialogId(qbChatMessage.getDialogId());
+        adapter.setData(messages);
+        adapter.notifyDataSetChanged();
+        recycler.smoothScrollToPosition(adapter.getItemCount()-1);
+    }
+
+    @Override
+    public void processError(String s, QBChatException e, QBChatMessage qbChatMessage, Integer integer) {
+        Log.e("error", e.getMessage());
+    }
 }

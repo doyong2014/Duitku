@@ -5,6 +5,9 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.provider.MediaStore;
 
+import com.mi1.duitku.Tab2.Holder.QBUsersHolder;
+import com.quickblox.users.model.QBUser;
+
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -12,9 +15,11 @@ import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Locale;
 import java.util.Set;
 
@@ -156,5 +161,17 @@ public class CommonFunction {
         cursor.close();
 
         return filePath;
+    }
+
+    public static String createChatDialogName(ArrayList<Integer> qbUsers){
+        List<QBUser> qbUsers1 = QBUsersHolder.getInstance().getUsersByIds(qbUsers);
+        StringBuilder name = new StringBuilder();
+        for(QBUser user: qbUsers1){
+            name.append(user.getFullName()).append(" ");
+        }
+        if(name.length() > 30) {
+            name = name.replace(30, name.length()-1, "...");
+        }
+        return name.toString();
     }
 }

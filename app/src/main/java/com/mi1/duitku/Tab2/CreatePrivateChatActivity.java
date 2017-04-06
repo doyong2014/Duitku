@@ -6,30 +6,31 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.util.SparseBooleanArray;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 
 import com.mi1.duitku.Common.AppGlobal;
 import com.mi1.duitku.R;
-import com.mi1.duitku.Tab2.Adapter.ListUsersAdapter;
+import com.mi1.duitku.Tab2.Adapter.PrivateChatAdapter;
 import com.mi1.duitku.Tab2.Holder.QBUsersHolder;
 import com.quickblox.chat.QBChatService;
 import com.quickblox.chat.QBRestChatService;
+import com.quickblox.chat.QBSystemMessagesManager;
 import com.quickblox.chat.model.QBChatDialog;
+import com.quickblox.chat.model.QBChatMessage;
 import com.quickblox.chat.utils.DialogUtils;
 import com.quickblox.core.QBEntityCallback;
 import com.quickblox.core.exception.QBResponseException;
 import com.quickblox.users.QBUsers;
 import com.quickblox.users.model.QBUser;
 
+import org.jivesoftware.smack.SmackException;
+
 import java.util.ArrayList;
 
-public class ListUsersActivity extends AppCompatActivity {
+public class CreatePrivateChatActivity extends AppCompatActivity {
 
     private ListView listUsers;
     private ProgressDialog progress;
@@ -54,7 +55,7 @@ public class ListUsersActivity extends AppCompatActivity {
 
         progress.show();
 
-        QBUser user = (QBUser)listUsers.getItemAtPosition(position);
+        final QBUser user = (QBUser)listUsers.getItemAtPosition(position);
         QBChatDialog dialog = DialogUtils.buildPrivateDialog(user.getId());
 
         QBRestChatService.createChatDialog(dialog).performAsync(new QBEntityCallback<QBChatDialog>() {
@@ -62,6 +63,17 @@ public class ListUsersActivity extends AppCompatActivity {
             public void onSuccess(QBChatDialog qbChatDialog, Bundle bundle) {
                 progress.dismiss();
                 Toast.makeText(getBaseContext(), "create private chat dialog successfully", Toast.LENGTH_SHORT).show();
+
+                //send system message to recipient Id user
+                QBSystemMessagesManager qbSystemMessagesManager = QBChatService.getInstance().getSystemMessagesManager();
+                QBChatMessage qbChatMessage = new QBChatMessage();
+                qbChatMessage.setRecipientId(user.getId());
+                qbChatMessage.setBody(qbChatDialog.getDialogId());
+                try {
+                    qbSystemMessagesManager.sendSystemMessage(qbChatMessage);
+                } catch (SmackException.NotConnectedException e) {
+                    e.printStackTrace();
+                }
                 finish();
             }
 
@@ -80,8 +92,6 @@ public class ListUsersActivity extends AppCompatActivity {
             @Override
             public void onSuccess(ArrayList<QBUser> qbUsers, Bundle bundle) {
 
-                QBUsersHolder.getInstance().putUsers(qbUsers);
-
                 ArrayList<QBUser>  qbUserWithoutCurret = new ArrayList<QBUser>();
 
                 for(QBUser user: qbUsers) {
@@ -89,9 +99,9 @@ public class ListUsersActivity extends AppCompatActivity {
                         qbUserWithoutCurret.add(user);
                     }
                 }
-
+                QBUsersHolder.getInstance().putUsers(qbUserWithoutCurret);
                 progress.dismiss();
-                ListUsersAdapter adapter = new ListUsersAdapter(getBaseContext(), qbUserWithoutCurret);
+                PrivateChatAdapter adapter = new PrivateChatAdapter(getBaseContext(), qbUserWithoutCurret);
                 listUsers.setAdapter(adapter);
                 adapter.notifyDataSetChanged();
             }
@@ -126,10 +136,10 @@ public class ListUsersActivity extends AppCompatActivity {
             if(listUsers.getCheckedItemPositions().size() == 1) {
                 createPrivateChat(listUsers.getCheckedItemPosition());
             } else{
-                Toast.makeText(ListUsersActivity.this, "Please select friend to chat", Toast.LENGTH_SHORT).show();
+                Toast.makeText(CreatePrivateChatActivity.this, "Please select friend to chat", Toast.LENGTH_SHORT).show();
             }
         } else if (id == android.R.id.home) {
-            ListUsersActivity.this.finish();
+            CreatePrivateChatActivity.this.finish();
         }
 
         return super.onOptionsItemSelected(item);

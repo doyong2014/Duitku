@@ -17,8 +17,10 @@ public class QBUsersHolder {
     private SparseArray<QBUser> qbUserSparseArray;
 
     public static synchronized QBUsersHolder getInstance() {
-        if(instance == null){
-            instance = new QBUsersHolder();
+        synchronized (QBUsersHolder.class) {
+            if (instance == null) {
+                instance = new QBUsersHolder();
+            }
         }
         return instance;
     }
@@ -27,7 +29,7 @@ public class QBUsersHolder {
         qbUserSparseArray = new SparseArray<>();
     }
 
-    public void putUsers(List<QBUser> users){
+    public void putUsers(ArrayList<QBUser> users){
         for(QBUser user:users){
             putUser(user);
         }
@@ -41,8 +43,8 @@ public class QBUsersHolder {
         return qbUserSparseArray.get(id);
     }
 
-    public List<QBUser> getUsersByIds(List<Integer> ids){
-        List<QBUser> qbUser = new ArrayList<>();
+    public ArrayList<QBUser> getUsersByIds(ArrayList<Integer> ids){
+        ArrayList<QBUser> qbUser = new ArrayList<>();
         for(Integer id:ids){
             QBUser user = getUserById(id);
             if(user != null) {
@@ -51,5 +53,15 @@ public class QBUsersHolder {
         }
 
         return qbUser;
+    }
+
+    public ArrayList<QBUser> getAllUsers(){
+        ArrayList<QBUser> qbUsers = new ArrayList<>();
+        for(int i = 0; i < qbUserSparseArray.size(); i++) {
+            int key = qbUserSparseArray.keyAt(i);
+            qbUsers.add(qbUserSparseArray.get(key));
+        }
+
+        return qbUsers;
     }
 }
