@@ -300,19 +300,19 @@ public class LoginActivity extends AppCompatActivity implements OnClickListener 
     private void checkQB() {
         initQBFramework();
 
-        QBUsers.getUsers(null).performAsync(new QBEntityCallback<ArrayList<QBUser>>() {
+        QBUsers.getUserByLogin(AppGlobal._userInfo.phoneNumber).performAsync(new QBEntityCallback<QBUser>() {
             @Override
-            public void onSuccess(ArrayList<QBUser> qbUsers, Bundle bundle) {
+            public void onSuccess(QBUser qbUser, Bundle bundle) {
 
-                boolean registerd = false;
-                for(QBUser user: qbUsers) {
-                    if (user.getId().equals(AppGlobal._userInfo.password)) {
-                        registerd = true;
-                        break;
-                    }
-                }
+               // boolean registerd = false;
+               // for(QBUser user: qbUsers) {
+               //     if (user.getLogin().equals(AppGlobal._userInfo.phoneNumber)) {
+               //         registerd = true;
+               //         break;
+               //     }
+               // }
 
-                if(registerd) {
+                if(qbUser.getLogin().equals(AppGlobal._userInfo.phoneNumber)) {
                     loginQB();
                 } else {
                     signUpQB();
@@ -322,7 +322,12 @@ public class LoginActivity extends AppCompatActivity implements OnClickListener 
 
             @Override
             public void onError(QBResponseException e) {
-                Log.e("error", e.getMessage());
+                if (e.getErrors().size() > 0 && e.getErrors().get(0).equals("Entity you are looking for was not found."))
+                    signUpQB();
+                else {
+                    progress.dismiss();
+                    Toast.makeText(getBaseContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }
