@@ -306,7 +306,7 @@ public class LoginActivity extends AppCompatActivity implements OnClickListener 
 
                 boolean registerd = false;
                 for(QBUser user: qbUsers) {
-                    if (user.getId().equals(AppGlobal._userInfo.password)) {
+                    if (user.getLogin().equals(AppGlobal._userInfo.password)) {
                         registerd = true;
                         break;
                     }
