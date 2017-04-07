@@ -27,7 +27,10 @@ import com.mi1.duitku.Common.CommonFunction;
 import com.mi1.duitku.Common.Constant;
 import com.mi1.duitku.Common.UserInfo;
 import com.mi1.duitku.Main.MainActivity;
+import com.mi1.duitku.Tab2.Adapter.PrivateChatAdapter;
+import com.mi1.duitku.Tab2.Holder.QBUsersHolder;
 import com.quickblox.auth.session.QBSettings;
+import com.quickblox.chat.QBChatService;
 import com.quickblox.core.QBEntityCallback;
 import com.quickblox.core.exception.QBResponseException;
 import com.quickblox.users.QBUsers;
@@ -43,6 +46,7 @@ import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
 
 public class LoginActivity extends AppCompatActivity implements OnClickListener {
 
@@ -53,15 +57,12 @@ public class LoginActivity extends AppCompatActivity implements OnClickListener 
     private EditText etPassword;
     private TextView tvError;
     private ProgressDialog progress;
-    private SharedPreferences sharedPreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-
-        sharedPreferences = getSharedPreferences(Constant.SF_NAME, 0);
 
         TextView getPassword = (TextView)findViewById(R.id.txt_forget_password);
         getPassword.setOnClickListener(this);
@@ -241,7 +242,7 @@ public class LoginActivity extends AppCompatActivity implements OnClickListener 
                     Gson gson = new GsonBuilder().create();
                     AppGlobal._userInfo = gson.fromJson(result, UserInfo.class);
                     AppGlobal._userInfo.password = password;
-                    initQB();
+                    checkQB();
 
                 } else if (statusCode.equals("-124")) {
                     progress.dismiss();
@@ -296,57 +297,39 @@ public class LoginActivity extends AppCompatActivity implements OnClickListener 
         return super.onOptionsItemSelected(item);
     }
 
-    private void initQBFramework() {
-        QBSettings.getInstance().init(getApplicationContext(), Constant.QB_APP_ID, Constant.QB_AUTH_KEY, Constant.QB_AUTH_SECRET);
-        QBSettings.getInstance().setAccountKey(Constant.QB_ACCOUNT_KEY);
-    }
-
-    private void initQB() {
-
+    private void checkQB() {
         initQBFramework();
 
-        if (!isRegister()) {
-            signUpQB();
-        } else {
-            loginQB();
-        }
-    }
-
-    private void regSF() {
-
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putInt("register", 1);
-        editor.commit();
-    }
-
-    private boolean isRegister() {
-
-        int isRegister = sharedPreferences.getInt("register", 0);
-        if (isRegister != 0) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    private void signUpQB() {
-
-        QBUser qbUser = new QBUser(AppGlobal._userInfo.phoneNumber, Constant.QB_ACCOUNT_PASS);
-        qbUser.setFullName(AppGlobal._userInfo.name);
-        qbUser.setEmail(AppGlobal._userInfo.email);
-        QBUsers.signUp(qbUser).performAsync(new QBEntityCallback<QBUser>() {
+        QBUsers.getUsers(null).performAsync(new QBEntityCallback<ArrayList<QBUser>>() {
             @Override
-            public void onSuccess(QBUser qbUser, Bundle bundle) {
-                regSF();
-                loginQB();
-//                Toast.makeText(getBaseContext(), "Sign Up Successfully", Toast.LENGTH_SHORT).show();
+            public void onSuccess(ArrayList<QBUser> qbUsers, Bundle bundle) {
+
+                boolean registerd = false;
+                for(QBUser user: qbUsers) {
+                    if (user.getId().equals(AppGlobal._userInfo.password)) {
+                        registerd = true;
+                        break;
+                    }
+                }
+
+                if(registerd) {
+                    loginQB();
+                } else {
+                    signUpQB();
+                }
+
             }
 
             @Override
             public void onError(QBResponseException e) {
-                Toast.makeText(getBaseContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
+                Log.e("error", e.getMessage());
             }
         });
+    }
+
+    private void initQBFramework() {
+        QBSettings.getInstance().init(getApplicationContext(), Constant.QB_APP_ID, Constant.QB_AUTH_KEY, Constant.QB_AUTH_SECRET);
+        QBSettings.getInstance().setAccountKey(Constant.QB_ACCOUNT_KEY);
     }
 
     private void loginQB() {
@@ -371,5 +354,26 @@ public class LoginActivity extends AppCompatActivity implements OnClickListener 
             }
         });
     }
+
+    private void signUpQB() {
+
+        QBUser qbUser = new QBUser(AppGlobal._userInfo.phoneNumber, Constant.QB_ACCOUNT_PASS);
+        qbUser.setFullName(AppGlobal._userInfo.name);
+        qbUser.setEmail(AppGlobal._userInfo.email);
+        QBUsers.signUp(qbUser).performAsync(new QBEntityCallback<QBUser>() {
+            @Override
+            public void onSuccess(QBUser qbUser, Bundle bundle) {
+                loginQB();
+//                Toast.makeText(getBaseContext(), "Sign Up Successfully", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onError(QBResponseException e) {
+                progress.dismiss();
+                Toast.makeText(getBaseContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
 }
 
