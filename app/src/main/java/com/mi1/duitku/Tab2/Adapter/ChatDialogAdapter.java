@@ -49,7 +49,7 @@ public class ChatDialogAdapter extends RecyclerView.Adapter<ChatDialogAdapter.Vi
         QBChatDialog item = qbChatDialogs.get(position);
         holder.tvUserName.setText(item.getName());
         holder.tvMessage.setText(item.getLastMessage());
-        holder.tvTime.setText(CommonFunction.getFormatedDate1(item.getLastMessageDateSent()));
+        holder.tvTime.setText(CommonFunction.getFormatedDate1(item.getLastMessageDateSent()*1000));
 
         ColorGenerator generator = ColorGenerator.MATERIAL;
         int randomColor = generator.getRandomColor();

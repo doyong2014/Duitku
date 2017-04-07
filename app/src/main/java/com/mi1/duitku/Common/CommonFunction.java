@@ -17,6 +17,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
@@ -148,11 +149,13 @@ public class CommonFunction {
         return  retDate;
     }
 
-    public static String getFormatedDate1(long date) {
+    public static String getFormatedDate1(long milliseconds) {
 
-        SimpleDateFormat df = new SimpleDateFormat("yyyy/MM/dd hh:mm");
-        String retDate = df.format(date);
-        return  retDate;
+        if (milliseconds == 0) {
+            milliseconds = Calendar.getInstance().getTimeInMillis();
+        }
+        SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd HH:mm", Locale.getDefault());
+        return dateFormat.format(new Date(milliseconds));
     }
 
     public static String getFilePathFromUri(Context context, Uri uri) {

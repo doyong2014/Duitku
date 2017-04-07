@@ -3,22 +3,29 @@ package com.mi1.duitku.Tab2.Adapter;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.os.Build;
+import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.text.format.DateFormat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.mi1.duitku.Common.AppGlobal;
+import com.mi1.duitku.Common.CommonFunction;
 import com.mi1.duitku.R;
 import com.quickblox.chat.QBChatService;
 import com.quickblox.chat.model.QBChatMessage;
+import com.quickblox.core.QBEntityCallback;
+import com.quickblox.core.exception.QBResponseException;
+import com.quickblox.users.QBUsers;
+import com.quickblox.users.model.QBUser;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
  * Created by owner on 4/3/2017.
@@ -51,16 +58,31 @@ public class ChatMessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
-        QBChatMessage item = qbChatMessages.get(position);
+        final QBChatMessage item = qbChatMessages.get(position);
         if(holder.getItemViewType() == TYPE_SENDER) {
             SendViewHolder viewHolder = (SendViewHolder) holder;
-            viewHolder.tvTime.setText(getTime(item.getDateSent()));
+            viewHolder.tvTime.setText(CommonFunction.getFormatedDate1(item.getDateSent()*1000));
             viewHolder.tvMessage.setText(item.getBody());
         } else {
-            ReceiveViewHolder viewHolder = (ReceiveViewHolder) holder;
-            viewHolder.tvTime.setText(getTime(item.getDateSent()));
+            final ReceiveViewHolder viewHolder = (ReceiveViewHolder) holder;
             viewHolder.tvMessage.setText(item.getBody());
-//            viewHolder.ivPhoto
+            viewHolder.tvTime.setText(CommonFunction.getFormatedDate1(item.getDateSent()*1000));
+            QBUsers.getUser(item.getSenderId()).performAsync(new QBEntityCallback<QBUser>() {
+                @Override
+                public void onSuccess(QBUser user, Bundle args) {
+                    viewHolder.tvTime.setText(user.getFullName() + " " + viewHolder.tvTime.getText());
+                    if (!user.getCustomData().isEmpty()) {
+                        Picasso.with(context).load(user.getCustomData().toLowerCase()).fit().into(viewHolder.ivPhoto);
+                    }
+                }
+
+                @Override
+                public void onError(QBResponseException errors) {
+
+                }
+            });
+
+
         }
 
     }
@@ -93,23 +115,14 @@ public class ChatMessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     class ReceiveViewHolder extends RecyclerView.ViewHolder {
 
         TextView tvTime, tvMessage;
-        ImageView ivPhoto;
+        CircleImageView ivPhoto;
 
         public ReceiveViewHolder (View itemView) {
             super (itemView);
             tvTime = (TextView) itemView.findViewById(R.id.txt_time);
             tvMessage = (TextView) itemView.findViewById(R.id.txt_msg);
-            ivPhoto = (ImageView) itemView.findViewById(R.id.img_photo);
+            ivPhoto = (CircleImageView) itemView.findViewById(R.id.civ_user_photo);
         }
-    }
-
-    private String getTime(long time) {
-        String ret = "";
-        if (time != 0) {
-            time = Calendar.getInstance().getTimeInMillis();
-            ret = String.valueOf(DateFormat.format("MM/dd HH:mm", time));
-        }
-        return ret;
     }
 
     public void setData(ArrayList<QBChatMessage> qbChatMessages){

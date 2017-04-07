@@ -19,10 +19,13 @@ import com.mi1.duitku.Common.DividerItemDecoration;
 import com.mi1.duitku.Tab2.Holder.QBChatDialogsHolder;
 import com.quickblox.chat.QBChatService;
 import com.quickblox.chat.QBIncomingMessagesManager;
+import com.quickblox.chat.QBPrivateChat;
+import com.quickblox.chat.QBPrivateChatManager;
 import com.quickblox.chat.QBRestChatService;
 import com.quickblox.chat.QBSystemMessagesManager;
 import com.quickblox.chat.exception.QBChatException;
 import com.quickblox.chat.listeners.QBChatDialogMessageListener;
+import com.quickblox.chat.listeners.QBPrivateChatManagerListener;
 import com.quickblox.chat.listeners.QBSystemMessageListener;
 import com.quickblox.chat.model.QBChatDialog;
 import com.quickblox.chat.model.QBChatMessage;
@@ -42,7 +45,6 @@ public class InboxFragment extends Fragment implements QBSystemMessageListener, 
     private Context _context;
     private ChatDialogAdapter adapter;
     private RecyclerView recycler;
-    private QBSystemMessagesManager qbSystemMessagesManager;
     private ProgressDialog progress;
 
     public InboxFragment() {
@@ -53,12 +55,6 @@ public class InboxFragment extends Fragment implements QBSystemMessageListener, 
     public void onResume() {
         super.onResume();
         loadChatDialogs();
-    }
-
-    @Override
-    public void onPause() {
-        super.onStop();
-        qbSystemMessagesManager.removeSystemMessageListener(this);
     }
 
     @Override
@@ -93,11 +89,13 @@ public class InboxFragment extends Fragment implements QBSystemMessageListener, 
 
     private void registerListener() {
 
-        qbSystemMessagesManager = QBChatService.getInstance().getSystemMessagesManager();
+        QBSystemMessagesManager qbSystemMessagesManager = QBChatService.getInstance().getSystemMessagesManager();
+        qbSystemMessagesManager.removeSystemMessageListener(InboxFragment.this);
         qbSystemMessagesManager.addSystemMessageListener(InboxFragment.this);
 
         //Register listener Incoming Message
         QBIncomingMessagesManager incomingMessage = QBChatService.getInstance().getIncomingMessagesManager();
+        incomingMessage.removeDialogMessageListrener(InboxFragment.this);
         incomingMessage.addDialogMessageListener(InboxFragment.this);
     }
 
@@ -169,7 +167,10 @@ public class InboxFragment extends Fragment implements QBSystemMessageListener, 
 
     @Override
     public void processMessage(String s, QBChatMessage qbChatMessage, Integer integer) {
-        loadChatDialogs();
+        QBDialogType dialogType = QBChatDialogsHolder.getInstance().getChatDialogById(qbChatMessage.getDialogId()).getType();
+        if (dialogType.equals(QBDialogType.PRIVATE)) {
+            loadChatDialogs();
+        }
     }
 
     @Override

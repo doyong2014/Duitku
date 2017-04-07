@@ -20,7 +20,6 @@ import com.mi1.duitku.R;
 import com.mi1.duitku.Tab2.Adapter.ChatMessageAdapter;
 import com.mi1.duitku.Tab2.Holder.QBChatMessagesHolder;
 import com.quickblox.chat.QBChatService;
-import com.quickblox.chat.QBIncomingMessagesManager;
 import com.quickblox.chat.QBRestChatService;
 import com.quickblox.chat.exception.QBChatException;
 import com.quickblox.chat.listeners.QBChatDialogMessageListener;
@@ -66,6 +65,9 @@ public class ChatMessageActivity extends AppCompatActivity implements QBChatDial
         llSendMsg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (etMessage.getText().toString().isEmpty()) {
+                    return;
+                }
                 QBChatMessage chatMessage = new QBChatMessage();
                 chatMessage.setBody(etMessage.getText().toString());
                 chatMessage.setSenderId(QBChatService.getInstance().getUser().getId());

@@ -300,29 +300,25 @@ public class LoginActivity extends AppCompatActivity implements OnClickListener 
     private void checkQB() {
         initQBFramework();
 
-        QBUsers.getUsers(null).performAsync(new QBEntityCallback<ArrayList<QBUser>>() {
+        QBUsers.getUserByLogin(AppGlobal._userInfo.phoneNumber).performAsync(new QBEntityCallback<QBUser>() {
             @Override
-            public void onSuccess(ArrayList<QBUser> qbUsers, Bundle bundle) {
+            public void onSuccess(QBUser qbUser, Bundle bundle) {
 
-                boolean registerd = false;
-                for(QBUser user: qbUsers) {
-                    if (user.getId().equals(AppGlobal._userInfo.password)) {
-                        registerd = true;
-                        break;
-                    }
-                }
-
-                if(registerd) {
+                if(qbUser.getLogin().equals(AppGlobal._userInfo.phoneNumber)) {
                     loginQB();
                 } else {
                     signUpQB();
                 }
-
             }
 
             @Override
             public void onError(QBResponseException e) {
-                Log.e("error", e.getMessage());
+                if (e.getErrors().size() > 0 && e.getErrors().get(0).equals("Entity you are looking for was not found."))
+                    signUpQB();
+                else {
+                    progress.dismiss();
+                    Toast.makeText(getBaseContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }
@@ -340,6 +336,9 @@ public class LoginActivity extends AppCompatActivity implements OnClickListener 
             @Override
             public void onSuccess(QBUser qbUser, Bundle bundle) {
 //                Toast.makeText(getBaseContext(), "Longin Successfully", Toast.LENGTH_SHORT).show();
+                if (!AppGlobal._userInfo.picUrl.isEmpty()) {
+                    qbUser.setCustomData(AppGlobal._userInfo.picUrl);
+                }
                 progress.dismiss();
                 Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                 startActivity(intent);
@@ -360,6 +359,7 @@ public class LoginActivity extends AppCompatActivity implements OnClickListener 
         QBUser qbUser = new QBUser(AppGlobal._userInfo.phoneNumber, Constant.QB_ACCOUNT_PASS);
         qbUser.setFullName(AppGlobal._userInfo.name);
         qbUser.setEmail(AppGlobal._userInfo.email);
+//        qbUser.setCustomData(AppGlobal._userInfo.picUrl);
         QBUsers.signUp(qbUser).performAsync(new QBEntityCallback<QBUser>() {
             @Override
             public void onSuccess(QBUser qbUser, Bundle bundle) {

@@ -42,7 +42,6 @@ public class GroupFragment extends Fragment implements QBSystemMessageListener, 
     private Context _context;
     private ChatDialogAdapter adapter;
     private RecyclerView recycler;
-    private QBSystemMessagesManager qbSystemMessagesManager;
     private ProgressDialog progress;
 
     public GroupFragment() {
@@ -56,12 +55,6 @@ public class GroupFragment extends Fragment implements QBSystemMessageListener, 
     }
 
     @Override
-    public void onStop() {
-        super.onStop();
-        qbSystemMessagesManager.removeSystemMessageListener(this);
-    }
-
-    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
@@ -72,6 +65,7 @@ public class GroupFragment extends Fragment implements QBSystemMessageListener, 
         progress.setMessage(getString(R.string.wait));
         progress.setCanceledOnTouchOutside(false);
         progress.show();
+
         registerListener();
         LinearLayoutManager layoutManager = new LinearLayoutManager(_context);
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
@@ -93,11 +87,13 @@ public class GroupFragment extends Fragment implements QBSystemMessageListener, 
 
     private void registerListener() {
 
-        qbSystemMessagesManager = QBChatService.getInstance().getSystemMessagesManager();
+        QBSystemMessagesManager qbSystemMessagesManager = QBChatService.getInstance().getSystemMessagesManager();
+        qbSystemMessagesManager.removeSystemMessageListener(GroupFragment.this);
         qbSystemMessagesManager.addSystemMessageListener(GroupFragment.this);
 
         //Register listener Incoming Message
         QBIncomingMessagesManager incomingMessage = QBChatService.getInstance().getIncomingMessagesManager();
+        incomingMessage.removeDialogMessageListrener(GroupFragment.this);
         incomingMessage.addDialogMessageListener(GroupFragment.this);
     }
 
@@ -168,7 +164,10 @@ public class GroupFragment extends Fragment implements QBSystemMessageListener, 
 
     @Override
     public void processMessage(String s, QBChatMessage qbChatMessage, Integer integer) {
-        loadChatDialogs();
+        QBDialogType dialogType = QBChatDialogsHolder.getInstance().getChatDialogById(qbChatMessage.getDialogId()).getType();
+        if (dialogType.equals(QBDialogType.PUBLIC_GROUP) || dialogType.equals(QBDialogType.GROUP)) {
+            loadChatDialogs();
+        }
     }
 
     @Override
