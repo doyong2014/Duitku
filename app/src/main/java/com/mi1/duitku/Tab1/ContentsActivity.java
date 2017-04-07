@@ -50,7 +50,7 @@ public class ContentsActivity extends AppCompatActivity {
             title = "NEWS";
         }else if(tab == 2) {
             item = Tab1Global._promovData.get(position);
-            title = "PROMOV";
+            title = "PROMO";
         }else if(tab == 3) {
             item = Tab1Global._eventsData.get(position);
             title = "EVENTS";
