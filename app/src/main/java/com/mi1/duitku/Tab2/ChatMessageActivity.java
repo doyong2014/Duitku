@@ -60,7 +60,6 @@ public class ChatMessageActivity extends AppCompatActivity implements QBChatDial
         recycler = (RecyclerView)findViewById(R.id.recycler_message);
         recycler.setLayoutManager(layoutManager);
         etMessage = (EditText)findViewById(R.id.et_post_msg);
-        registerListener();
         initChatDialogs();
         retrieveMessage();
         LinearLayout llSendMsg = (LinearLayout)findViewById(R.id.ll_post_msg_go);
@@ -77,7 +76,7 @@ public class ChatMessageActivity extends AppCompatActivity implements QBChatDial
                 } catch (SmackException.NotConnectedException e) {
                     e.printStackTrace();
                 }
-                if (qbChatDialog.getType() == QBDialogType.PRIVATE) {
+                if (qbChatDialog.getType().equals(QBDialogType.PRIVATE)) {
                     //put message to cache
                     QBChatMessagesHolder.getInstance().putMessage(qbChatDialog.getDialogId(), chatMessage);
                     ArrayList<QBChatMessage> messages = QBChatMessagesHolder.getInstance().getChatMessagesByDialogId(qbChatDialog.getDialogId());
@@ -85,8 +84,11 @@ public class ChatMessageActivity extends AppCompatActivity implements QBChatDial
                     adapter.notifyDataSetChanged();
                 }
 
+
+                if (adapter.getItemCount() != 0) {
+                    recycler.smoothScrollToPosition(adapter.getItemCount()-1);
+                }
                 //remove test from edittext
-                recycler.smoothScrollToPosition(adapter.getItemCount()-1);
                 hideKeyboard();
                 etMessage.setText("");
                 etMessage.setFocusable(true);
@@ -95,21 +97,9 @@ public class ChatMessageActivity extends AppCompatActivity implements QBChatDial
         });
     }
 
-    private void registerListener() {
-        //Register listener Incoming Message
-        QBIncomingMessagesManager incomingMessage = QBChatService.getInstance().getIncomingMessagesManager();
-        incomingMessage.addDialogMessageListener(ChatMessageActivity.this);
-    }
-
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        qbChatDialog.removeMessageListrener(this);
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
         qbChatDialog.removeMessageListrener(this);
     }
 
@@ -145,7 +135,7 @@ public class ChatMessageActivity extends AppCompatActivity implements QBChatDial
         qbChatDialog = (QBChatDialog)getIntent().getSerializableExtra(DIALOG_EXTRA);
         qbChatDialog.initForChat(QBChatService.getInstance());
 
-        if (qbChatDialog.getType() == QBDialogType.PUBLIC_GROUP || qbChatDialog.getType() == QBDialogType.GROUP) {
+        if (qbChatDialog.getType().equals(QBDialogType.PUBLIC_GROUP) || qbChatDialog.getType().equals(QBDialogType.GROUP)) {
             DiscussionHistory discussionHistory = new DiscussionHistory();
             discussionHistory.setMaxStanzas(0);
 
@@ -162,7 +152,7 @@ public class ChatMessageActivity extends AppCompatActivity implements QBChatDial
         }
 
         // Add message listener for that particular chat dialog
-//        qbChatDialog.addMessageListener(this);
+        qbChatDialog.addMessageListener(this);
     }
 
     @Override
@@ -208,7 +198,9 @@ public class ChatMessageActivity extends AppCompatActivity implements QBChatDial
         ArrayList<QBChatMessage> messages = QBChatMessagesHolder.getInstance().getChatMessagesByDialogId(qbChatMessage.getDialogId());
         adapter.setData(messages);
         adapter.notifyDataSetChanged();
-//        recycler.smoothScrollToPosition(adapter.getItemCount()-1);
+        if (adapter.getItemCount() != 0) {
+            recycler.smoothScrollToPosition(adapter.getItemCount()-1);
+        }
     }
 
     @Override

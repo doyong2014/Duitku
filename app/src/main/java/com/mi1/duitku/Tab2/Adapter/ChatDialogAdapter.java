@@ -15,6 +15,7 @@ import android.widget.TextView;
 
 import com.amulyakhare.textdrawable.TextDrawable;
 import com.amulyakhare.textdrawable.util.ColorGenerator;
+import com.mi1.duitku.Common.CommonFunction;
 import com.mi1.duitku.R;
 import com.mi1.duitku.Tab2.ChatMessageActivity;
 import com.quickblox.chat.model.QBChatDialog;
@@ -40,7 +41,6 @@ public class ChatDialogAdapter extends RecyclerView.Adapter<ChatDialogAdapter.Vi
 
         View v = LayoutInflater.from(context).inflate(R.layout.list_chat_dialog, parent, false);
         return new ViewHolder(v);
-
     }
 
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
@@ -49,7 +49,7 @@ public class ChatDialogAdapter extends RecyclerView.Adapter<ChatDialogAdapter.Vi
         QBChatDialog item = qbChatDialogs.get(position);
         holder.tvUserName.setText(item.getName());
         holder.tvMessage.setText(item.getLastMessage());
-        holder.tvTime.setText(getTime(item.getLastMessageDateSent()));
+        holder.tvTime.setText(CommonFunction.getFormatedDate1(item.getLastMessageDateSent()));
 
         ColorGenerator generator = ColorGenerator.MATERIAL;
         int randomColor = generator.getRandomColor();
@@ -98,14 +98,6 @@ public class ChatDialogAdapter extends RecyclerView.Adapter<ChatDialogAdapter.Vi
             ivNew.setVisibility(View.GONE);
             llDialog = (LinearLayout)view.findViewById(R.id.ll_dialog);
         }
-    }
-
-    private String getTime(long time) {
-        String ret = "";
-        if (time != 0) {
-            ret = String.valueOf(DateFormat.format("MM/dd HH:mm", time));
-        }
-        return ret;
     }
 
     public void setData(ArrayList<QBChatDialog> qbChatDialogs){

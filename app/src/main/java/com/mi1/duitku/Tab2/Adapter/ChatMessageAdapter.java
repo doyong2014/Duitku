@@ -42,11 +42,10 @@ public class ChatMessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         if(viewType == TYPE_SENDER) {
             View v = LayoutInflater.from(context).inflate(R.layout.list_send_msg, parent, false);
             return new SendViewHolder(v);
-        } else if(viewType == TYPE_RECEIVE) {
+        } else {
             View v = LayoutInflater.from(context).inflate(R.layout.list_rev_msg, parent, false);
             return new ReceiveViewHolder(v);
         }
-        return null;
     }
 
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
@@ -68,7 +67,7 @@ public class ChatMessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
 
     @Override
     public int getItemViewType(int position) {
-        if (qbChatMessages.get(position).getSenderId() == QBChatService.getInstance().getUser().getId()) {
+        if (qbChatMessages.get(position).getSenderId().equals(QBChatService.getInstance().getUser().getId())) {
             return TYPE_SENDER;
         } else {
             return TYPE_RECEIVE;

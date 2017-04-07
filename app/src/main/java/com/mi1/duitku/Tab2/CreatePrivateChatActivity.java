@@ -97,7 +97,7 @@ public class CreatePrivateChatActivity extends AppCompatActivity {
                 ArrayList<QBUser>  qbUserWithoutCurret = new ArrayList<QBUser>();
 
                 for(QBUser user: qbUsers) {
-                    if (user.getId() != QBChatService.getInstance().getUser().getId()) {
+                    if (!user.getId().equals(QBChatService.getInstance().getUser().getId())) {
                         qbUserWithoutCurret.add(user);
                     }
                 }

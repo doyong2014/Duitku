@@ -148,6 +148,13 @@ public class CommonFunction {
         return  retDate;
     }
 
+    public static String getFormatedDate1(long date) {
+
+        SimpleDateFormat df = new SimpleDateFormat("yyyy/MM/dd hh:mm");
+        String retDate = df.format(date);
+        return  retDate;
+    }
+
     public static String getFilePathFromUri(Context context, Uri uri) {
 
         String filePath = "";

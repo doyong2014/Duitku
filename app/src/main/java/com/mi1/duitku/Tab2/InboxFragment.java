@@ -42,6 +42,7 @@ public class InboxFragment extends Fragment implements QBSystemMessageListener, 
     private Context _context;
     private ChatDialogAdapter adapter;
     private RecyclerView recycler;
+    private QBSystemMessagesManager qbSystemMessagesManager;
     private ProgressDialog progress;
 
     public InboxFragment() {
@@ -55,6 +56,12 @@ public class InboxFragment extends Fragment implements QBSystemMessageListener, 
     }
 
     @Override
+    public void onPause() {
+        super.onStop();
+        qbSystemMessagesManager.removeSystemMessageListener(this);
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
@@ -64,7 +71,7 @@ public class InboxFragment extends Fragment implements QBSystemMessageListener, 
         progress = new ProgressDialog(_context);
         progress.setMessage(getString(R.string.wait));
         progress.setCanceledOnTouchOutside(false);
-
+        progress.show();
         registerListener();
         LinearLayoutManager layoutManager = new LinearLayoutManager(_context);
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
@@ -86,7 +93,7 @@ public class InboxFragment extends Fragment implements QBSystemMessageListener, 
 
     private void registerListener() {
 
-        QBSystemMessagesManager qbSystemMessagesManager = QBChatService.getInstance().getSystemMessagesManager();
+        qbSystemMessagesManager = QBChatService.getInstance().getSystemMessagesManager();
         qbSystemMessagesManager.addSystemMessageListener(InboxFragment.this);
 
         //Register listener Incoming Message
@@ -99,9 +106,6 @@ public class InboxFragment extends Fragment implements QBSystemMessageListener, 
         QBRequestGetBuilder requestBuilder = new QBRequestGetBuilder();
         requestBuilder.setLimit(100);
 
-        if (QBChatDialogsHolder.getInstance().getAllChatDialogs().size() == 0) {
-            progress.show();
-        }
         QBRestChatService.getChatDialogs(null, requestBuilder).performAsync(new QBEntityCallback<ArrayList<QBChatDialog>>() {
             @Override
             public void onSuccess(ArrayList<QBChatDialog> qbChatDialogs, Bundle bundle) {
@@ -114,7 +118,7 @@ public class InboxFragment extends Fragment implements QBSystemMessageListener, 
                 ArrayList<QBChatDialog> privateChatDialogs = new ArrayList<QBChatDialog>();
 
                 for(QBChatDialog dialog : qbChatDialogs) {
-                    if (dialog.getType() == QBDialogType.PRIVATE) {
+                    if (dialog.getType().equals(QBDialogType.PRIVATE)) {
                         privateChatDialogs.add(dialog);
                     }
                 }
@@ -136,10 +140,19 @@ public class InboxFragment extends Fragment implements QBSystemMessageListener, 
         QBRestChatService.getChatDialogById(qbChatMessage.getBody()).performAsync(new QBEntityCallback<QBChatDialog>() {
             @Override
             public void onSuccess(QBChatDialog qbChatDialog, Bundle bundle) {
-                QBChatDialogsHolder.getInstance().putDialog(qbChatDialog);
-                ArrayList<QBChatDialog> qbChatDialogs = QBChatDialogsHolder.getInstance().getAllChatDialogs();
-                adapter.setData(qbChatDialogs);
-                adapter.notifyDataSetChanged();
+                if (qbChatDialog.getType().equals(QBDialogType.PRIVATE)) {
+                    QBChatDialogsHolder.getInstance().putDialog(qbChatDialog);
+                    ArrayList<QBChatDialog> qbChatDialogs = QBChatDialogsHolder.getInstance().getAllChatDialogs();
+                    ArrayList<QBChatDialog> privateChatDialogs = new ArrayList<QBChatDialog>();
+
+                    for(QBChatDialog dialog : qbChatDialogs) {
+                        if (dialog.getType().equals(QBDialogType.PRIVATE)) {
+                            privateChatDialogs.add(dialog);
+                        }
+                    }
+                    adapter.setData(qbChatDialogs);
+                    adapter.notifyDataSetChanged();
+                }
             }
 
             @Override
