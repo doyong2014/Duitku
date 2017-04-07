@@ -12,7 +12,6 @@ import android.view.MenuItem;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import com.mi1.duitku.Common.AppGlobal;
 import com.mi1.duitku.Common.CommonFunction;
 import com.mi1.duitku.R;
 import com.mi1.duitku.Tab2.Adapter.GroupChatAdapter;
@@ -23,7 +22,6 @@ import com.quickblox.chat.QBSystemMessagesManager;
 import com.quickblox.chat.model.QBChatDialog;
 import com.quickblox.chat.model.QBChatMessage;
 import com.quickblox.chat.model.QBDialogType;
-import com.quickblox.chat.utils.DialogUtils;
 import com.quickblox.core.QBEntityCallback;
 import com.quickblox.core.exception.QBResponseException;
 import com.quickblox.users.QBUsers;
@@ -56,10 +54,7 @@ public class CreateGroupChatActivity extends AppCompatActivity {
 
     private void createGroupChat(SparseBooleanArray checkedItemPositions) {
 
-        final ProgressDialog mDialog = new ProgressDialog(this);
-        mDialog.setMessage("Please waiting...");
-        mDialog.setCanceledOnTouchOutside(false);
-        mDialog.show();
+        progress.show();
 
         int countChoice = listUsers.getCount();
         ArrayList<Integer> occupantIdsList = new ArrayList<>();
@@ -78,7 +73,7 @@ public class CreateGroupChatActivity extends AppCompatActivity {
         QBRestChatService.createChatDialog(dialog).performAsync(new QBEntityCallback<QBChatDialog>() {
             @Override
             public void onSuccess(QBChatDialog qbChatDialog, Bundle bundle) {
-                mDialog.dismiss();
+                progress.dismiss();
 
                 //send system message to recipient Id user
                 QBSystemMessagesManager qbSystemMessagesManager = QBChatService.getInstance().getSystemMessagesManager();
@@ -106,12 +101,31 @@ public class CreateGroupChatActivity extends AppCompatActivity {
 
     private void retrieveAllUser() {
 
-        ArrayList<QBUser> qbUsers = QBUsersHolder.getInstance().getAllUsers();
-        GroupChatAdapter adapter = new GroupChatAdapter(getBaseContext(), qbUsers);
-        listUsers.setAdapter(adapter);
-        adapter.notifyDataSetChanged();
+        progress.show();
 
+        QBUsers.getUsers(null).performAsync(new QBEntityCallback<ArrayList<QBUser>>() {
+            @Override
+            public void onSuccess(ArrayList<QBUser> qbUsers, Bundle bundle) {
 
+                ArrayList<QBUser>  qbUserWithoutCurret = new ArrayList<QBUser>();
+
+                for(QBUser user: qbUsers) {
+                    if (user.getId() != QBChatService.getInstance().getUser().getId()) {
+                        qbUserWithoutCurret.add(user);
+                    }
+                }
+                QBUsersHolder.getInstance().putUsers(qbUserWithoutCurret);
+                GroupChatAdapter adapter = new GroupChatAdapter(getBaseContext(), qbUserWithoutCurret);
+                listUsers.setAdapter(adapter);
+                adapter.notifyDataSetChanged();
+                progress.dismiss();
+            }
+
+            @Override
+            public void onError(QBResponseException e) {
+                Log.e("error", e.getMessage());
+            }
+        });
     }
 
     @Override
@@ -134,10 +148,10 @@ public class CreateGroupChatActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         if (id == R.id.action_add_chat) {
-            if(listUsers.getCheckedItemPositions().size() >= 1) {
+            if(listUsers.getCheckedItemPositions().size() > 1) {
                 createGroupChat(listUsers.getCheckedItemPositions());
             } else{
-                Toast.makeText(CreateGroupChatActivity.this, "Please select friend to chat", Toast.LENGTH_SHORT).show();
+                Toast.makeText(CreateGroupChatActivity.this, "Please select two or more friends to chat", Toast.LENGTH_SHORT).show();
             }
         } else if (id == android.R.id.home) {
             CreateGroupChatActivity.this.finish();

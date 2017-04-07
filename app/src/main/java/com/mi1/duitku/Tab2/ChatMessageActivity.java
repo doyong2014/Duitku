@@ -16,7 +16,6 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 
-import com.mi1.duitku.Common.AppGlobal;
 import com.mi1.duitku.R;
 import com.mi1.duitku.Tab2.Adapter.ChatMessageAdapter;
 import com.mi1.duitku.Tab2.Holder.QBChatMessagesHolder;
@@ -44,7 +43,6 @@ public class ChatMessageActivity extends AppCompatActivity implements QBChatDial
     private RecyclerView recycler;
     private EditText etMessage;
     private ChatMessageAdapter adapter;
-    private LinearLayoutManager layoutManager;
     private ProgressDialog progress;
 
     @Override
@@ -56,12 +54,13 @@ public class ChatMessageActivity extends AppCompatActivity implements QBChatDial
         progress.setMessage(getString(R.string.wait));
         progress.setCanceledOnTouchOutside(false);
 
-        layoutManager = new LinearLayoutManager(this);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        layoutManager.setStackFromEnd(true);
         recycler = (RecyclerView)findViewById(R.id.recycler_message);
         recycler.setLayoutManager(layoutManager);
         etMessage = (EditText)findViewById(R.id.et_post_msg);
-
+        registerListener();
         initChatDialogs();
         retrieveMessage();
         LinearLayout llSendMsg = (LinearLayout)findViewById(R.id.ll_post_msg_go);
@@ -70,7 +69,7 @@ public class ChatMessageActivity extends AppCompatActivity implements QBChatDial
             public void onClick(View v) {
                 QBChatMessage chatMessage = new QBChatMessage();
                 chatMessage.setBody(etMessage.getText().toString());
-                chatMessage.setSenderId(AppGlobal._userInfo.qbId);
+                chatMessage.setSenderId(QBChatService.getInstance().getUser().getId());
                 chatMessage.setSaveToHistory(true);
 
                 try {
@@ -87,13 +86,19 @@ public class ChatMessageActivity extends AppCompatActivity implements QBChatDial
                 }
 
                 //remove test from edittext
-                hideKeyboard();
                 recycler.smoothScrollToPosition(adapter.getItemCount()-1);
+                hideKeyboard();
                 etMessage.setText("");
                 etMessage.setFocusable(true);
 
             }
         });
+    }
+
+    private void registerListener() {
+        //Register listener Incoming Message
+        QBIncomingMessagesManager incomingMessage = QBChatService.getInstance().getIncomingMessagesManager();
+        incomingMessage.addDialogMessageListener(ChatMessageActivity.this);
     }
 
     @Override
@@ -123,10 +128,6 @@ public class ChatMessageActivity extends AppCompatActivity implements QBChatDial
                     adapter = new ChatMessageAdapter(ChatMessageActivity.this, qbChatMessages);
                     recycler.setAdapter(adapter);
                     adapter.notifyDataSetChanged();
-                    if (adapter.getItemCount() > 0) {
-                        recycler.smoothScrollToPosition(adapter.getItemCount() - 1);
-                    }
-//                    adapter.notifyItemInserted(qbChatMessages.size());
                 }
 
                 @Override
@@ -143,10 +144,6 @@ public class ChatMessageActivity extends AppCompatActivity implements QBChatDial
 
         qbChatDialog = (QBChatDialog)getIntent().getSerializableExtra(DIALOG_EXTRA);
         qbChatDialog.initForChat(QBChatService.getInstance());
-
-        //Register listener Incoming Message
-        QBIncomingMessagesManager incomingMessage = QBChatService.getInstance().getIncomingMessagesManager();
-        incomingMessage.addDialogMessageListener(ChatMessageActivity.this);
 
         if (qbChatDialog.getType() == QBDialogType.PUBLIC_GROUP || qbChatDialog.getType() == QBDialogType.GROUP) {
             DiscussionHistory discussionHistory = new DiscussionHistory();
@@ -165,7 +162,7 @@ public class ChatMessageActivity extends AppCompatActivity implements QBChatDial
         }
 
         // Add message listener for that particular chat dialog
-        qbChatDialog.addMessageListener(this);
+//        qbChatDialog.addMessageListener(this);
     }
 
     @Override
@@ -211,7 +208,7 @@ public class ChatMessageActivity extends AppCompatActivity implements QBChatDial
         ArrayList<QBChatMessage> messages = QBChatMessagesHolder.getInstance().getChatMessagesByDialogId(qbChatMessage.getDialogId());
         adapter.setData(messages);
         adapter.notifyDataSetChanged();
-        recycler.smoothScrollToPosition(adapter.getItemCount()-1);
+//        recycler.smoothScrollToPosition(adapter.getItemCount()-1);
     }
 
     @Override

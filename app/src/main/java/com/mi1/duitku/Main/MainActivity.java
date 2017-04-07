@@ -205,7 +205,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 QBChatService.getInstance().login(qbUser, new QBEntityCallback() {
                     @Override
                     public void onSuccess(Object o, Bundle bundle) {
-                        AppGlobal._userInfo.qbId = QBChatService.getInstance().getUser().getId();
                     }
 
                     @Override

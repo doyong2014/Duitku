@@ -8,6 +8,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,9 +18,11 @@ import com.mi1.duitku.Tab2.Adapter.ChatDialogAdapter;
 import com.mi1.duitku.Common.DividerItemDecoration;
 import com.mi1.duitku.Tab2.Holder.QBChatDialogsHolder;
 import com.quickblox.chat.QBChatService;
+import com.quickblox.chat.QBIncomingMessagesManager;
 import com.quickblox.chat.QBRestChatService;
 import com.quickblox.chat.QBSystemMessagesManager;
 import com.quickblox.chat.exception.QBChatException;
+import com.quickblox.chat.listeners.QBChatDialogMessageListener;
 import com.quickblox.chat.listeners.QBSystemMessageListener;
 import com.quickblox.chat.model.QBChatDialog;
 import com.quickblox.chat.model.QBChatMessage;
@@ -34,7 +37,7 @@ import java.util.ArrayList;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class InboxFragment extends Fragment implements QBSystemMessageListener {
+public class InboxFragment extends Fragment implements QBSystemMessageListener, QBChatDialogMessageListener {
 
     private Context _context;
     private ChatDialogAdapter adapter;
@@ -45,11 +48,11 @@ public class InboxFragment extends Fragment implements QBSystemMessageListener {
         // Required empty public constructor
     }
 
-//    @Override
-//    public void onResume() {
-//        super.onResume();
-//        loadChatDialogs();
-//    }
+    @Override
+    public void onResume() {
+        super.onResume();
+        loadChatDialogs();
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -62,13 +65,12 @@ public class InboxFragment extends Fragment implements QBSystemMessageListener {
         progress.setMessage(getString(R.string.wait));
         progress.setCanceledOnTouchOutside(false);
 
+        registerListener();
         LinearLayoutManager layoutManager = new LinearLayoutManager(_context);
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recycler = (RecyclerView) view.findViewById(R.id.recycler_private);
         recycler.setLayoutManager(layoutManager);
         recycler.addItemDecoration(new DividerItemDecoration(_context));
-
-        loadChatDialogs();
 
         FloatingActionButton fabAdd = (FloatingActionButton)view.findViewById(R.id.fab_add_user);
         fabAdd.setOnClickListener(new View.OnClickListener() {
@@ -82,18 +84,35 @@ public class InboxFragment extends Fragment implements QBSystemMessageListener {
         return view;
     }
 
+    private void registerListener() {
+
+        QBSystemMessagesManager qbSystemMessagesManager = QBChatService.getInstance().getSystemMessagesManager();
+        qbSystemMessagesManager.addSystemMessageListener(InboxFragment.this);
+
+        //Register listener Incoming Message
+        QBIncomingMessagesManager incomingMessage = QBChatService.getInstance().getIncomingMessagesManager();
+        incomingMessage.addDialogMessageListener(InboxFragment.this);
+    }
+
     private void loadChatDialogs() {
 
-        progress.show();
         QBRequestGetBuilder requestBuilder = new QBRequestGetBuilder();
         requestBuilder.setLimit(100);
 
+        if (QBChatDialogsHolder.getInstance().getAllChatDialogs().size() == 0) {
+            progress.show();
+        }
         QBRestChatService.getChatDialogs(null, requestBuilder).performAsync(new QBEntityCallback<ArrayList<QBChatDialog>>() {
             @Override
             public void onSuccess(ArrayList<QBChatDialog> qbChatDialogs, Bundle bundle) {
-
                 QBChatDialogsHolder.getInstance().putDialogs(qbChatDialogs);
+
+                if (progress.isShowing()) {
+                    progress.dismiss();
+                }
+
                 ArrayList<QBChatDialog> privateChatDialogs = new ArrayList<QBChatDialog>();
+
                 for(QBChatDialog dialog : qbChatDialogs) {
                     if (dialog.getType() == QBDialogType.PRIVATE) {
                         privateChatDialogs.add(dialog);
@@ -102,14 +121,11 @@ public class InboxFragment extends Fragment implements QBSystemMessageListener {
                 adapter = new ChatDialogAdapter(_context, privateChatDialogs);
                 recycler.setAdapter(adapter);
                 adapter.notifyDataSetChanged();
-                progress.dismiss();
-                QBSystemMessagesManager qbSystemMessagesManager = QBChatService.getInstance().getSystemMessagesManager();
-                qbSystemMessagesManager.addSystemMessageListener(InboxFragment.this);
             }
 
             @Override
             public void onError(QBResponseException e) {
-
+                Log.d("error", e.getMessage());
             }
         });
     }
@@ -135,6 +151,16 @@ public class InboxFragment extends Fragment implements QBSystemMessageListener {
 
     @Override
     public void processError(QBChatException e, QBChatMessage qbChatMessage) {
+
+    }
+
+    @Override
+    public void processMessage(String s, QBChatMessage qbChatMessage, Integer integer) {
+        loadChatDialogs();
+    }
+
+    @Override
+    public void processError(String s, QBChatException e, QBChatMessage qbChatMessage, Integer integer) {
 
     }
 }

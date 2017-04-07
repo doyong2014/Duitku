@@ -13,7 +13,6 @@ public class UserInfo {
 	public String phoneNumber;
 	public String picUrl;
 	public String password;
-	public int qbId;
 
 	public  UserInfo(){
 

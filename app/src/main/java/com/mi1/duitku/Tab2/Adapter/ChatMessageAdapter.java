@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.mi1.duitku.Common.AppGlobal;
 import com.mi1.duitku.R;
+import com.quickblox.chat.QBChatService;
 import com.quickblox.chat.model.QBChatMessage;
 
 import java.util.ArrayList;
@@ -67,7 +68,7 @@ public class ChatMessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
 
     @Override
     public int getItemViewType(int position) {
-        if (qbChatMessages.get(position).getSenderId() == AppGlobal._userInfo.qbId) {
+        if (qbChatMessages.get(position).getSenderId() == QBChatService.getInstance().getUser().getId()) {
             return TYPE_SENDER;
         } else {
             return TYPE_RECEIVE;

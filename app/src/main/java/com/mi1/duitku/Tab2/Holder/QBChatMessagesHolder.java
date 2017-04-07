@@ -35,11 +35,9 @@ public class QBChatMessagesHolder {
     }
 
     public void putMessage(String dialogId, QBChatMessage qbChatMessage) {
-        List<QBChatMessage> lstResult = (List)this.qbChatMessageHashMap.get(dialogId);
+        ArrayList<QBChatMessage> lstResult = this.qbChatMessageHashMap.get(dialogId);
         lstResult.add(qbChatMessage);
-        ArrayList<QBChatMessage> lstAdded = new ArrayList(lstResult.size());
-        lstAdded.addAll(lstResult);
-        putMessages(dialogId, lstAdded);
+        putMessages(dialogId, lstResult);
     }
 
     public ArrayList<QBChatMessage> getChatMessagesByDialogId(String dialogId) {

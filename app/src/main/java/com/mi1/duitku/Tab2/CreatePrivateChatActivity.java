@@ -20,6 +20,7 @@ import com.quickblox.chat.QBRestChatService;
 import com.quickblox.chat.QBSystemMessagesManager;
 import com.quickblox.chat.model.QBChatDialog;
 import com.quickblox.chat.model.QBChatMessage;
+import com.quickblox.chat.model.QBDialogType;
 import com.quickblox.chat.utils.DialogUtils;
 import com.quickblox.core.QBEntityCallback;
 import com.quickblox.core.exception.QBResponseException;
@@ -57,12 +58,12 @@ public class CreatePrivateChatActivity extends AppCompatActivity {
 
         final QBUser user = (QBUser)listUsers.getItemAtPosition(position);
         QBChatDialog dialog = DialogUtils.buildPrivateDialog(user.getId());
+        dialog.setType(QBDialogType.PRIVATE);
 
         QBRestChatService.createChatDialog(dialog).performAsync(new QBEntityCallback<QBChatDialog>() {
             @Override
             public void onSuccess(QBChatDialog qbChatDialog, Bundle bundle) {
                 progress.dismiss();
-                Toast.makeText(getBaseContext(), "create private chat dialog successfully", Toast.LENGTH_SHORT).show();
 
                 //send system message to recipient Id user
                 QBSystemMessagesManager qbSystemMessagesManager = QBChatService.getInstance().getSystemMessagesManager();
@@ -74,6 +75,7 @@ public class CreatePrivateChatActivity extends AppCompatActivity {
                 } catch (SmackException.NotConnectedException e) {
                     e.printStackTrace();
                 }
+                Toast.makeText(getBaseContext(), "create private chat dialog successfully", Toast.LENGTH_SHORT).show();
                 finish();
             }
 
@@ -95,15 +97,15 @@ public class CreatePrivateChatActivity extends AppCompatActivity {
                 ArrayList<QBUser>  qbUserWithoutCurret = new ArrayList<QBUser>();
 
                 for(QBUser user: qbUsers) {
-                    if (user.getId() != AppGlobal._userInfo.qbId) {
+                    if (user.getId() != QBChatService.getInstance().getUser().getId()) {
                         qbUserWithoutCurret.add(user);
                     }
                 }
                 QBUsersHolder.getInstance().putUsers(qbUserWithoutCurret);
-                progress.dismiss();
                 PrivateChatAdapter adapter = new PrivateChatAdapter(getBaseContext(), qbUserWithoutCurret);
                 listUsers.setAdapter(adapter);
                 adapter.notifyDataSetChanged();
+                progress.dismiss();
             }
 
             @Override
