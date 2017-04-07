@@ -18,19 +18,11 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
-import com.mi1.duitku.Common.AppGlobal;
 import com.mi1.duitku.Common.CommonFunction;
 import com.mi1.duitku.Common.Constant;
-import com.mi1.duitku.Common.UserInfo;
-import com.quickblox.auth.session.QBSettings;
-import com.quickblox.core.QBEntityCallback;
-import com.quickblox.core.exception.QBResponseException;
-import com.quickblox.users.QBUsers;
-import com.quickblox.users.model.QBUser;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -232,8 +224,9 @@ public class SignupActivity extends AppCompatActivity{
         @Override
         protected void onPostExecute(String result) {
 
+            progress.dismiss();
+
             if (result == null){
-                progress.dismiss();
                 dispError(getString(R.string.error_failed_connect));
                 return;
             }
@@ -243,16 +236,14 @@ public class SignupActivity extends AppCompatActivity{
                 JSONObject jsonObj = new JSONObject(result);
                 String statusCode = jsonObj.getString(Constant.JSON_STATUS_CODE);
                 if (statusCode.equals("00")){
-                    signUpQB();
+                    showDialog();
                 } else {
-                    progress.dismiss();
                     String status = jsonObj.getString(Constant.JSON_STATUS_MESSAGE);
                     dispError(status);
                 }
 
             } catch (Exception e) {
                 // TODO: handle exception
-                progress.dismiss();
                 Log.e("error", e.getMessage());
             }
         }
@@ -308,33 +299,6 @@ public class SignupActivity extends AppCompatActivity{
         }
 
         return super.onOptionsItemSelected(item);
-    }
-
-    private void initQBFramework() {
-        QBSettings.getInstance().init(getApplicationContext(), Constant.QB_APP_ID, Constant.QB_AUTH_KEY, Constant.QB_AUTH_SECRET);
-        QBSettings.getInstance().setAccountKey(Constant.QB_ACCOUNT_KEY);
-    }
-
-    private void signUpQB() {
-
-        initQBFramework();
-
-        QBUser qbUser = new QBUser(phoneNumber, Constant.QB_ACCOUNT_PASS);
-        qbUser.setFullName(userName);
-        qbUser.setEmail(emailAddress);
-        QBUsers.signUp(qbUser).performAsync(new QBEntityCallback<QBUser>() {
-            @Override
-            public void onSuccess(QBUser qbUser, Bundle bundle) {
-//                Toast.makeText(getBaseContext(), "Sign Up Successfully", Toast.LENGTH_SHORT).show();
-                progress.dismiss();
-                showDialog();
-            }
-
-            @Override
-            public void onError(QBResponseException e) {
-                Toast.makeText(getBaseContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
-            }
-        });
     }
 }
 

@@ -37,6 +37,7 @@ public class Constant {
 	public static final String JSON_PIC_URL = "profPicUrl";
 
 	public static final String COMMUNITY_CODE = "DK";
+	public static final String SF_NAME = "mil";
 
 	public static final String STATUS_INQUIRY = "inquiry";
 	public static final String API_KEY = "BB224EFF62CB9207965CD5B320496595";
@@ -61,10 +62,10 @@ public class Constant {
 		public static final int TRANSACTION_PPOB = 9;
 	}
 
-	public static final String QB_APP_ID = "55550";
-	public static final String QB_AUTH_KEY = "YNPyyuAOL5V-dKD";
-	public static final String QB_AUTH_SECRET = "LZQXnbtb3FMKkwv";
-	public static final String QB_ACCOUNT_KEY = "qRdk1s73exBkUXFqoEWV";
+	public static final String QB_APP_ID = "55347";
+	public static final String QB_AUTH_KEY = "9CtR4LDJXnw2dHB";
+	public static final String QB_AUTH_SECRET = "CLyEZMXtnBZ54Xr";
+	public static final String QB_ACCOUNT_KEY = "Fp1obhGtQmMaA6zxVJyM";
 	public static final String QB_ACCOUNT_PASS = "12345678";
 
 }

@@ -3,6 +3,7 @@ package com.mi1.duitku;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
@@ -52,12 +53,15 @@ public class LoginActivity extends AppCompatActivity implements OnClickListener 
     private EditText etPassword;
     private TextView tvError;
     private ProgressDialog progress;
+    private SharedPreferences sharedPreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        sharedPreferences = getSharedPreferences(Constant.SF_NAME, 0);
 
         TextView getPassword = (TextView)findViewById(R.id.txt_forget_password);
         getPassword.setOnClickListener(this);
@@ -237,7 +241,7 @@ public class LoginActivity extends AppCompatActivity implements OnClickListener 
                     Gson gson = new GsonBuilder().create();
                     AppGlobal._userInfo = gson.fromJson(result, UserInfo.class);
                     AppGlobal._userInfo.password = password;
-                    loginQB();
+                    initQB();
 
                 } else if (statusCode.equals("-124")) {
                     progress.dismiss();
@@ -297,9 +301,55 @@ public class LoginActivity extends AppCompatActivity implements OnClickListener 
         QBSettings.getInstance().setAccountKey(Constant.QB_ACCOUNT_KEY);
     }
 
-    private void loginQB() {
+    private void initQB() {
 
         initQBFramework();
+
+        if (!isRegister()) {
+            signUpQB();
+        } else {
+            loginQB();
+        }
+    }
+
+    private void regSF() {
+
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putInt("register", 1);
+        editor.commit();
+    }
+
+    private boolean isRegister() {
+
+        int isRegister = sharedPreferences.getInt("register", 0);
+        if (isRegister != 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    private void signUpQB() {
+
+        QBUser qbUser = new QBUser(AppGlobal._userInfo.phoneNumber, Constant.QB_ACCOUNT_PASS);
+        qbUser.setFullName(AppGlobal._userInfo.name);
+        qbUser.setEmail(AppGlobal._userInfo.email);
+        QBUsers.signUp(qbUser).performAsync(new QBEntityCallback<QBUser>() {
+            @Override
+            public void onSuccess(QBUser qbUser, Bundle bundle) {
+                regSF();
+                loginQB();
+//                Toast.makeText(getBaseContext(), "Sign Up Successfully", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onError(QBResponseException e) {
+                Toast.makeText(getBaseContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void loginQB() {
 
         QBUser qbUser = new QBUser(AppGlobal._userInfo.phoneNumber, Constant.QB_ACCOUNT_PASS);
 
