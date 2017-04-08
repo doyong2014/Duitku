@@ -18,9 +18,14 @@ import com.amulyakhare.textdrawable.util.ColorGenerator;
 import com.mi1.duitku.Common.CommonFunction;
 import com.mi1.duitku.R;
 import com.mi1.duitku.Tab2.ChatMessageActivity;
+import com.mi1.duitku.Tab2.Holder.QBUsersHolder;
 import com.quickblox.chat.model.QBChatDialog;
+import com.quickblox.users.model.QBUser;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
  * Created by owner on 3/31/2017.
@@ -51,17 +56,21 @@ public class ChatDialogAdapter extends RecyclerView.Adapter<ChatDialogAdapter.Vi
         holder.tvMessage.setText(item.getLastMessage());
         holder.tvTime.setText(CommonFunction.getFormatedDate1(item.getLastMessageDateSent()*1000));
 
-        ColorGenerator generator = ColorGenerator.MATERIAL;
-        int randomColor = generator.getRandomColor();
+        QBUser qbUser = QBUsersHolder.getInstance().getUserById(item.getUserId());
+        if (!qbUser.getCustomData().isEmpty()) {
+            Picasso.with(context).load(qbUser.getCustomData().toLowerCase()).fit().into(holder.civPhoto);
+        } else {
+            ColorGenerator generator = ColorGenerator.MATERIAL;
+            int randomColor = generator.getRandomColor();
 
-        TextDrawable.IBuilder builder = TextDrawable.builder().beginConfig()
-                .withBorder(4)
-                .endConfig()
-                .round();
+            TextDrawable.IBuilder builder = TextDrawable.builder().beginConfig()
+                    .withBorder(4)
+                    .endConfig()
+                    .round();
 
-        TextDrawable drawable = builder.build(item.getName().substring(0,1).toUpperCase(), randomColor);
-
-        holder.ivPhoto.setImageDrawable(drawable);
+            TextDrawable drawable = builder.build(item.getName().substring(0, 1).toUpperCase(), randomColor);
+            holder.civPhoto.setImageDrawable(drawable);
+        }
 
         if(item.getUnreadMessageCount() > 0) {
             holder.ivNew.setVisibility(View.VISIBLE);
@@ -85,7 +94,8 @@ public class ChatDialogAdapter extends RecyclerView.Adapter<ChatDialogAdapter.Vi
     public class ViewHolder extends RecyclerView.ViewHolder {
 
         TextView tvUserName, tvMessage, tvTime;
-        ImageView ivPhoto, ivNew;
+        ImageView ivNew;
+        CircleImageView civPhoto;
         LinearLayout llDialog;
 
         public ViewHolder(View view) {
@@ -93,7 +103,7 @@ public class ChatDialogAdapter extends RecyclerView.Adapter<ChatDialogAdapter.Vi
             tvUserName = (TextView)view.findViewById(R.id.txt_username);
             tvMessage = (TextView)view.findViewById(R.id.txt_message);
             tvTime = (TextView)view.findViewById(R.id.txt_time);
-            ivPhoto = (ImageView)view.findViewById(R.id.img_photo);
+            civPhoto = (CircleImageView)view.findViewById(R.id.civ_photo);
             ivNew = (ImageView)view.findViewById(R.id.img_new);
             ivNew.setVisibility(View.GONE);
             llDialog = (LinearLayout)view.findViewById(R.id.ll_dialog);

@@ -72,6 +72,8 @@ public class ChatMessageActivity extends AppCompatActivity implements QBChatDial
                 chatMessage.setBody(etMessage.getText().toString());
                 chatMessage.setSenderId(QBChatService.getInstance().getUser().getId());
                 chatMessage.setSaveToHistory(true);
+//                chatMessage.setProperty("username", AppGlobal._userInfo.name);
+//                chatMessage.setProperty("picUrl", AppGlobal._userInfo.picUrl);
 
                 try {
                     qbChatDialog.sendMessage(chatMessage);
