@@ -61,10 +61,10 @@ public class Constant {
 		public static final int TRANSACTION_PPOB = 9;
 	}
 
-	public static final String QB_APP_ID = "55550"; //"55347";
-	public static final String QB_AUTH_KEY = "YNPyyuAOL5V-dKD"; //"9CtR4LDJXnw2dHB";
-	public static final String QB_AUTH_SECRET = "LZQXnbtb3FMKkwv"; //"CLyEZMXtnBZ54Xr";
-	public static final String QB_ACCOUNT_KEY = "qRdk1s73exBkUXFqoEWV"; //"Fp1obhGtQmMaA6zxVJyM";
+	public static final String QB_APP_ID = "55347"; //"55347";	//"55550"
+	public static final String QB_AUTH_KEY = "9CtR4LDJXnw2dHB-dKD"; //"9CtR4LDJXnw2dHB"		"YNPyyuAOL5V"
+	public static final String QB_AUTH_SECRET = "CLyEZMXtnBZ54Xr"; //"CLyEZMXtnBZ54Xr"		"LZQXnbtb3FMKkwv"
+	public static final String QB_ACCOUNT_KEY = "Fp1obhGtQmMaA6zxVJyM"; //"Fp1obhGtQmMaA6zxVJyM"	"qRdk1s73exBkUXFqoEWV"
 	public static final String QB_ACCOUNT_PASS = "12345678";
 
 }
