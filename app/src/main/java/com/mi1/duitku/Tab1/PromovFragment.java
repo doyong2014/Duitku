@@ -36,7 +36,6 @@ import java.util.Collections;
  */
 public class PromovFragment extends Fragment {
 
-    private LinearLayoutManager layoutManager;
     private TwinklingRefreshLayout refresh;
     private RecyclerView recycler;
     private PromovAdapter adapter;
@@ -66,7 +65,7 @@ public class PromovFragment extends Fragment {
             }
         });
 
-        layoutManager = new LinearLayoutManager(getActivity());
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recycler = (RecyclerView) view.findViewById(R.id.recycler_promov);
         recycler.setLayoutManager(layoutManager);

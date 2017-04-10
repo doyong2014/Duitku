@@ -62,7 +62,7 @@ public class Constant {
 	}
 
 	public static final String QB_APP_ID = "55347"; //"55347";	//"55550"
-	public static final String QB_AUTH_KEY = "9CtR4LDJXnw2dHB-dKD"; //"9CtR4LDJXnw2dHB"		"YNPyyuAOL5V"
+	public static final String QB_AUTH_KEY = "9CtR4LDJXnw2dHB"; //"9CtR4LDJXnw2dHB"		"YNPyyuAOL5V-dKD"
 	public static final String QB_AUTH_SECRET = "CLyEZMXtnBZ54Xr"; //"CLyEZMXtnBZ54Xr"		"LZQXnbtb3FMKkwv"
 	public static final String QB_ACCOUNT_KEY = "Fp1obhGtQmMaA6zxVJyM"; //"Fp1obhGtQmMaA6zxVJyM"	"qRdk1s73exBkUXFqoEWV"
 	public static final String QB_ACCOUNT_PASS = "12345678";

@@ -3,6 +3,7 @@ package com.mi1.duitku.Tab2.Adapter;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.os.Build;
+import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,6 +15,9 @@ import com.mi1.duitku.R;
 import com.mi1.duitku.Tab2.Holder.QBUsersHolder;
 import com.quickblox.chat.QBChatService;
 import com.quickblox.chat.model.QBChatMessage;
+import com.quickblox.core.QBEntityCallback;
+import com.quickblox.core.exception.QBResponseException;
+import com.quickblox.users.QBUsers;
 import com.quickblox.users.model.QBUser;
 import com.squareup.picasso.Picasso;
 
@@ -58,16 +62,31 @@ public class ChatMessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
             viewHolder.tvTime.setText(CommonFunction.getFormatedDate1(item.getDateSent()*1000));
             viewHolder.tvMessage.setText(item.getBody());
         } else {
-            ReceiveViewHolder viewHolder = (ReceiveViewHolder) holder;
-            QBUser qbUser = QBUsersHolder.getInstance().getUserById(item.getSenderId());
+            final ReceiveViewHolder viewHolder = (ReceiveViewHolder) holder;
+//            QBUser qbUser = QBUsersHolder.getInstance().getUserById(item.getSenderId());
             viewHolder.tvMessage.setText(item.getBody());
-            viewHolder.tvTime.setText(qbUser.getFullName() + " " +CommonFunction.getFormatedDate1(item.getDateSent()*1000));
+            viewHolder.tvTime.setText(CommonFunction.getFormatedDate1(item.getDateSent()*1000));
 
-            if (!qbUser.getCustomData().isEmpty()) {
-                Picasso.with(context).load(qbUser.getCustomData().toLowerCase()).fit().into(viewHolder.civPhoto);
-            }
+//            if (qbUser.getCustomData() != null) {
+//                Picasso.with(context).load(qbUser.getCustomData().toLowerCase()).fit().into(viewHolder.civPhoto);
+//            }
+
+            QBUsers.getUser(item.getSenderId()).performAsync(new QBEntityCallback<QBUser>() {
+                @Override
+                public void onSuccess(QBUser user, Bundle args) {
+                    viewHolder.tvTime.setText(user.getFullName() + " " + viewHolder.tvTime.getText());
+                    if (!user.getCustomData().isEmpty()) {
+                        Picasso.with(context).load(user.getCustomData().toLowerCase()).fit().into(viewHolder.civPhoto);
+                    }
+                    viewHolder.tvTime.setText(user.getFullName() + " " + viewHolder.tvTime.getText());
+                }
+
+                @Override
+                public void onError(QBResponseException errors) {
+
+                }
+            });
         }
-
     }
 
     @Override

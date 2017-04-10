@@ -36,7 +36,6 @@ import java.util.Collections;
  */
 public class NewsFragment extends Fragment{
 
-    private LinearLayoutManager layoutManager;
     private TwinklingRefreshLayout refresh;
     private RecyclerView recycler;
     private NewsAdapter adapter;
@@ -67,7 +66,7 @@ public class NewsFragment extends Fragment{
             }
         });
 
-        layoutManager = new LinearLayoutManager(getActivity());
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recycler = (RecyclerView) view.findViewById(R.id.recycler_news);
         recycler.setLayoutManager(layoutManager);

@@ -56,10 +56,10 @@ public class ChatDialogAdapter extends RecyclerView.Adapter<ChatDialogAdapter.Vi
         holder.tvMessage.setText(item.getLastMessage());
         holder.tvTime.setText(CommonFunction.getFormatedDate1(item.getLastMessageDateSent()*1000));
 
-        QBUser qbUser = QBUsersHolder.getInstance().getUserById(item.getUserId());
-        if (!qbUser.getCustomData().isEmpty()) {
-            Picasso.with(context).load(qbUser.getCustomData().toLowerCase()).fit().into(holder.civPhoto);
-        } else {
+//        QBUser qbUser = QBUsersHolder.getInstance().getUserById(item.getUserId());
+//        if (qbUser.getCustomData() != null) {
+//            Picasso.with(context).load(qbUser.getCustomData().toLowerCase()).fit().into(holder.civPhoto);
+//        } else {
             ColorGenerator generator = ColorGenerator.MATERIAL;
             int randomColor = generator.getRandomColor();
 
@@ -69,8 +69,8 @@ public class ChatDialogAdapter extends RecyclerView.Adapter<ChatDialogAdapter.Vi
                     .round();
 
             TextDrawable drawable = builder.build(item.getName().substring(0, 1).toUpperCase(), randomColor);
-            holder.civPhoto.setImageDrawable(drawable);
-        }
+            holder.ivPhoto.setImageDrawable(drawable);
+//        }
 
         if(item.getUnreadMessageCount() > 0) {
             holder.ivNew.setVisibility(View.VISIBLE);
@@ -95,7 +95,8 @@ public class ChatDialogAdapter extends RecyclerView.Adapter<ChatDialogAdapter.Vi
 
         TextView tvUserName, tvMessage, tvTime;
         ImageView ivNew;
-        CircleImageView civPhoto;
+//        CircleImageView civPhoto;
+        ImageView ivPhoto;
         LinearLayout llDialog;
 
         public ViewHolder(View view) {
@@ -103,7 +104,7 @@ public class ChatDialogAdapter extends RecyclerView.Adapter<ChatDialogAdapter.Vi
             tvUserName = (TextView)view.findViewById(R.id.txt_username);
             tvMessage = (TextView)view.findViewById(R.id.txt_message);
             tvTime = (TextView)view.findViewById(R.id.txt_time);
-            civPhoto = (CircleImageView)view.findViewById(R.id.civ_photo);
+            ivPhoto = (ImageView)view.findViewById(R.id.iv_photo);
             ivNew = (ImageView)view.findViewById(R.id.img_new);
             ivNew.setVisibility(View.GONE);
             llDialog = (LinearLayout)view.findViewById(R.id.ll_dialog);
