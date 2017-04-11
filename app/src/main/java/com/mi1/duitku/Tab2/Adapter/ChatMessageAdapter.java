@@ -75,8 +75,10 @@ public class ChatMessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
                 @Override
                 public void onSuccess(QBUser user, Bundle args) {
                     viewHolder.tvTime.setText(user.getFullName() + " " + viewHolder.tvTime.getText());
-                    if (!user.getCustomData().isEmpty()) {
-                        Picasso.with(context).load(user.getCustomData().toLowerCase()).fit().into(viewHolder.civPhoto);
+                    if (user.getCustomData() != null) {
+                        if (!user.getCustomData().isEmpty()) {
+                            Picasso.with(context).load(user.getCustomData().toLowerCase()).fit().into(viewHolder.civPhoto);
+                        }
                     }
                     viewHolder.tvTime.setText(user.getFullName() + " " + viewHolder.tvTime.getText());
                 }
