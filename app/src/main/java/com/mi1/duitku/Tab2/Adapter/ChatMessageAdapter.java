@@ -85,7 +85,6 @@ public class ChatMessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
 
                 @Override
                 public void onError(QBResponseException errors) {
-
                 }
             });
         }

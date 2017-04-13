@@ -40,7 +40,7 @@ public class Tab1Fragment extends Fragment {
         // Initializing the TabLayout
         topTap = (TabLayout) view.findViewById(R.id.tab_top);
         topTap.addTab(topTap.newTab().setText("NEWS"));
-        topTap.addTab(topTap.newTab().setText("PROMOV"));
+        topTap.addTab(topTap.newTab().setText("PROMO"));
         topTap.addTab(topTap.newTab().setText("EVENTS"));
         topTap.setTabGravity(TabLayout.GRAVITY_FILL);
         topTap.setTabMode(TabLayout.MODE_FIXED);

@@ -76,19 +76,19 @@ public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
                     context.startActivity(intent);
                 }
             });
-            headerHolder.cardPayment.setOnClickListener(new View.OnClickListener() {
+            headerHolder.cvPayment.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     showPostPaidDialog();
                 }
             });
-            headerHolder.cardBuy.setOnClickListener(new View.OnClickListener() {
+            headerHolder.cvBuy.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     showPrePaidDialog();
                 }
             });
-            headerHolder.cardTransfer.setOnClickListener(new View.OnClickListener() {
+            headerHolder.cvTransfer.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     Intent intent  = new Intent(context, TransferActivity.class);
@@ -106,7 +106,7 @@ public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
                 Picasso.with(context).load(item.thumbnail_images.thumbnail.url).into(genericViewHolder.ivThumbnail);
             }
 
-            genericViewHolder.ivThumbnail.setOnClickListener(new View.OnClickListener() {
+            genericViewHolder.cvNews.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     Intent intent = new Intent(context, ContentsActivity.class);
@@ -163,9 +163,9 @@ public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
         SliderLayout slider;
         TextView tvBalance;
         TextView tvTopUp;
-        CardView cardPayment;
-        CardView cardBuy;
-        CardView cardTransfer;
+        CardView cvPayment;
+        CardView cvBuy;
+        CardView cvTransfer;
 
         public HeaderViewHolder (View itemView) {
             super (itemView);
@@ -176,9 +176,9 @@ public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
 
             tvBalance = (TextView)itemView.findViewById(R.id.txt_balance);
             tvTopUp = (TextView)itemView.findViewById(R.id.txt_topup);
-            cardPayment = (CardView) itemView.findViewById(R.id.card_payment);
-            cardBuy = (CardView) itemView.findViewById(R.id.card_buy);
-            cardTransfer = (CardView) itemView.findViewById(R.id.card_transfer);
+            cvPayment = (CardView) itemView.findViewById(R.id.card_payment);
+            cvBuy = (CardView) itemView.findViewById(R.id.card_buy);
+            cvTransfer = (CardView) itemView.findViewById(R.id.card_transfer);
         }
     }
 
@@ -187,12 +187,14 @@ public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
         TextView tvTitle;
         TextView tvPostTime;
         ImageView ivThumbnail;
+        CardView cvNews;
 
         public GenericViewHolder (View itemView) {
             super (itemView);
             tvTitle = (TextView) itemView.findViewById(R.id.txt_title);
             tvPostTime = (TextView) itemView.findViewById(R.id.txt_time);
             ivThumbnail = (ImageView) itemView.findViewById(R.id.img_thumb);
+            cvNews = (CardView) itemView.findViewById(R.id.card_news);
         }
     }
 

@@ -21,7 +21,7 @@ public class ContactUsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_contact_us);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-            this.setSupportActionBar(toolbar);
+        this.setSupportActionBar(toolbar);
         getSupportActionBar().setTitle(" ");
 
         final CollapsingToolbarLayout collapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
@@ -39,14 +39,14 @@ public class ContactUsActivity extends AppCompatActivity {
                     collapsingToolbarLayout.setTitle("Hubungi Kami");
                     isShow = true;
                 } else if(isShow) {
-                    collapsingToolbarLayout.setTitle(" ");//carefull there should a space between double quote otherwise it wont work
+                    collapsingToolbarLayout.setTitle(" ");
                     isShow = false;
                 }
             }
         });
 
         LinearLayout llBack = (LinearLayout) findViewById(R.id.ll_back);
-            llBack.setOnClickListener(new View.OnClickListener() {
+        llBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 ContactUsActivity.this.finish();
@@ -60,7 +60,6 @@ public class ContactUsActivity extends AppCompatActivity {
         // Inflate the menu; this adds items to the action bar if it is present.
 
         ActionBar actionBar = getSupportActionBar();
-
         actionBar.setHomeButtonEnabled(true);
         actionBar.setDisplayHomeAsUpEnabled(true);
 

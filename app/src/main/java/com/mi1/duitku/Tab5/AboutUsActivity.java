@@ -11,6 +11,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 
 import com.mi1.duitku.R;
 
@@ -51,7 +52,7 @@ public class AboutUsActivity extends AppCompatActivity {
         llUpArrow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                scroll.pageScroll(0);
+                scroll.fullScroll(ScrollView.FOCUS_UP);
             }
         });
 
