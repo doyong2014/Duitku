@@ -19,6 +19,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
 import android.text.InputType;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -100,8 +101,8 @@ public class Tab5Fragment extends Fragment {
         progress.setMessage(getString(R.string.wait));
         progress.setCanceledOnTouchOutside(false);
 
-        if (!AppGlobal._userDetailInfo.isSync)
-            getProfile();
+        //if (!AppGlobal._userDetailInfo.isSync)
+        getProfile();
 
         if (AppGlobal._userDetailInfo.birthday != null) {
             int idx = AppGlobal._userDetailInfo.birthday.indexOf(" ");
@@ -359,7 +360,7 @@ public class Tab5Fragment extends Fragment {
             try {
                 Gson gson = new GsonBuilder().create();
                 AppGlobal._userDetailInfo = gson.fromJson(result, UserDetailInfo.class);
-                AppGlobal._userDetailInfo.isSync = true;
+                //AppGlobal._userDetailInfo.isSync = true;
                 dispUserDetailInfo();
             } catch (Exception e) {
                 // TODO: handle exception
@@ -642,7 +643,7 @@ public class Tab5Fragment extends Fragment {
                 Response response = client.newCall(request).execute();
 
                 if(response.code() == HttpURLConnection.HTTP_OK){
-                    result = response.body().toString();
+                    result = response.body().string();
                 } else {
                     result = String.valueOf(response.code());
                 }
@@ -690,7 +691,7 @@ public class Tab5Fragment extends Fragment {
 
             } catch (Exception e) {
                 // TODO: handle exception
-                //Log.e("oasis", e.toString());
+                Log.e("oasis", e.getMessage());
             }
         }
     }
