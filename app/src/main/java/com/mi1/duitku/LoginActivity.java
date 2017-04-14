@@ -3,7 +3,6 @@ package com.mi1.duitku;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
@@ -27,12 +26,10 @@ import com.mi1.duitku.Common.CommonFunction;
 import com.mi1.duitku.Common.Constant;
 import com.mi1.duitku.Common.UserInfo;
 import com.mi1.duitku.Main.MainActivity;
-import com.mi1.duitku.Tab2.Adapter.PrivateChatAdapter;
-import com.mi1.duitku.Tab2.Holder.QBUsersHolder;
 import com.quickblox.auth.session.QBSettings;
-import com.quickblox.chat.QBChatService;
 import com.quickblox.core.QBEntityCallback;
 import com.quickblox.core.exception.QBResponseException;
+import com.quickblox.messages.services.QBPushManager;
 import com.quickblox.users.QBUsers;
 import com.quickblox.users.model.QBUser;
 
@@ -46,10 +43,10 @@ import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.ArrayList;
 
 public class LoginActivity extends AppCompatActivity implements OnClickListener {
 
+    private static String TAG = "LonginActivity";
     private String userName;
     private String password;
 
@@ -351,6 +348,26 @@ public class LoginActivity extends AppCompatActivity implements OnClickListener 
     private void initQBFramework() {
         QBSettings.getInstance().init(getApplicationContext(), Constant.QB_APP_ID, Constant.QB_AUTH_KEY, Constant.QB_AUTH_SECRET);
         QBSettings.getInstance().setAccountKey(Constant.QB_ACCOUNT_KEY);
+        QBSettings.getInstance().setEnablePushNotification(true);
+        initNotification();
+    }
+
+    private void initNotification() {
+        QBPushManager.getInstance().addListener(new QBPushManager.QBSubscribeListener() {
+            @Override
+            public void onSubscriptionCreated() {
+                Log.d(TAG, "onSubscriptionCreated");
+            }
+
+            @Override
+            public void onSubscriptionError(final Exception e, int resultCode) {
+                Log.d(TAG, "onSubscriptionError" + e);
+                if (resultCode >= 0) {
+                    Log.d(TAG, "Google play service exception" + resultCode);
+                }
+                Log.d(TAG, "onSubscriptionError " + e.getMessage());
+            }
+        });
     }
 
     private void loginQB() {
@@ -361,11 +378,11 @@ public class LoginActivity extends AppCompatActivity implements OnClickListener 
             @Override
             public void onSuccess(QBUser qbUser, Bundle bundle) {
 //                Toast.makeText(getBaseContext(), "Longin Successfully", Toast.LENGTH_SHORT).show();
-                if (AppGlobal._userInfo.picUrl != null){
-                    if (!AppGlobal._userInfo.picUrl.isEmpty()) {
-                        qbUser.setCustomData(AppGlobal._userInfo.picUrl);
-                    }
-                }
+//                if (AppGlobal._userInfo.picUrl != null){
+//                    if (!AppGlobal._userInfo.picUrl.isEmpty()) {
+//                        qbUser.setCustomData(AppGlobal._userInfo.picUrl);
+//                    }
+//                }
                 progress.dismiss();
                 Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                 startActivity(intent);

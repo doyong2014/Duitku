@@ -153,6 +153,24 @@
             android:name=".Tab2.ChatMessageActivity"
             android:screenOrientation="portrait" />
 
+        <!--<service-->
+            <!--android:name=".Common.MyFCMService">-->
+            <!--<intent-filter>-->
+                <!--<action android:name="com.google.firebase.MESSAGING_EVENT"/>-->
+            <!--</intent-filter>-->
+        <!--</service>-->
+
+        <service
+            android:name="com.quickblox.messages.services.fcm.QBFcmPushListenerService">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+
+        <meta-data android:name="com.quickblox.messages.TYPE" android:value="FCM" />
+        <meta-data android:name="com.quickblox.messages.SENDER_ID" android:value="641086140476" />
+        <meta-data android:name="com.quickblox.messages.QB_ENVIRONMENT" android:value="DEVELOPMENT" />
+
     </application>
 
 </manifest>

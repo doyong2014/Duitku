@@ -1,13 +1,16 @@
 package com.mi1.duitku.Main;
 
 import android.app.ProgressDialog;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -39,10 +42,12 @@ import com.mi1.duitku.Tab5.HelpActivity;
 import com.quickblox.auth.QBAuth;
 import com.quickblox.auth.session.BaseService;
 import com.quickblox.auth.session.QBSession;
+import com.quickblox.auth.session.QBSettings;
 import com.quickblox.chat.QBChatService;
 import com.quickblox.core.QBEntityCallback;
 import com.quickblox.core.exception.BaseServiceException;
 import com.quickblox.core.exception.QBResponseException;
+import com.quickblox.messages.services.QBPushManager;
 import com.quickblox.users.model.QBUser;
 import com.squareup.picasso.Picasso;
 
@@ -61,6 +66,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
+    private static String TAG = "MainActivity";
     private DrawerLayout dlDrawer;
     private BottomNavigationViewEx bottomTab;
     private int cur_tab = 1;
@@ -77,6 +83,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         _instance = this;
 
         createSessionForChat();
+        LocalBroadcastManager.getInstance(MainActivity.this).registerReceiver(pushBroadcastReceiver,
+                new IntentFilter("new-push-event"));
         progress = new ProgressDialog(this);
         progress.setMessage(getString(R.string.wait));
         progress.setCanceledOnTouchOutside(false);
@@ -195,6 +203,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         QBAuth.createSession(qbUser).performAsync(new QBEntityCallback<QBSession>() {
             @Override
             public void onSuccess(QBSession qbSession, Bundle bundle) {
+
                 qbUser.setId(qbSession.getUserId());
                 try {
                     qbUser.setPassword(BaseService.getBaseService().getToken());
@@ -220,6 +229,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
         });
     }
+
+    private BroadcastReceiver pushBroadcastReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String message = intent.getStringExtra("message");
+            String from = intent.getStringExtra("from");
+            Log.i(TAG, "Receiving message: " + message + ", from " + from);
+        }
+    };
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

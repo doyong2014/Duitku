@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "641086140476",
+    "firebase_url": "https://mi1-duitku-92dd7.firebaseio.com",
+    "project_id": "mi1-duitku-92dd7",
+    "storage_bucket": "mi1-duitku-92dd7.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:641086140476:android:8e7ea7079826056a",
+        "android_client_info": {
+          "package_name": "com.mi1.duitku"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "641086140476-422dsq1frs5tgqu55492qpvu07junevf.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAjd3XUDTSwA8-ICzQpa_bPqIZh2ucGpRM"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
