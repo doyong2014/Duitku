@@ -2,13 +2,12 @@ package com.mi1.duitku;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 
 import com.mi1.duitku.Common.AppGlobal;
 
-public class HomeActivity extends AppCompatActivity {
+public class HomeActivity extends BaseActivity {
 
     public static HomeActivity _instance;
 

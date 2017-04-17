@@ -8,6 +8,8 @@ import android.provider.MediaStore;
 import com.mi1.duitku.Tab2.Holder.QBUsersHolder;
 import com.quickblox.users.model.QBUser;
 
+import org.ocpsoft.prettytime.PrettyTime;
+
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -183,5 +185,22 @@ public class CommonFunction {
             name = name.replace(30, name.length()-1, "...");
         }
         return name.toString();
+    }
+
+    public static String getTimeAgo(String dateString) {
+
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
+        Date convertedDate = new Date();
+
+        try {
+            convertedDate = dateFormat.parse(dateString);
+        } catch (ParseException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+
+        PrettyTime pt  = new PrettyTime(Locale.US);
+        String datetime = pt.format(convertedDate);
+        return datetime;
     }
 }

@@ -8,7 +8,6 @@ import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -22,6 +21,7 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.appsflyer.AFInAppEventParameterName;
 import com.appsflyer.AFInAppEventType;
 import com.appsflyer.AppsFlyerLib;
+import com.mi1.duitku.BaseActivity;
 import com.mi1.duitku.Common.AppGlobal;
 import com.mi1.duitku.Common.Constant;
 import com.mi1.duitku.LoginActivity;
@@ -45,7 +45,7 @@ import java.util.Map;
 /**
  * Created by WORYA on 3/16/2016.
  */
-public class PaymentProcessActivity extends AppCompatActivity {
+public class PaymentProcessActivity extends BaseActivity {
 
     public static final String TAG_ACTIVITYTITLE = "activity_title";
     public static final String TAG_ACTIVITYPRODUCTCODE = "product_code";

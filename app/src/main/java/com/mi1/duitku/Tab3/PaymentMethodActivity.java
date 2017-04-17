@@ -10,7 +10,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -25,6 +24,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.mi1.duitku.BaseActivity;
 import com.mi1.duitku.Common.AppGlobal;
 import com.mi1.duitku.Common.CommonFunction;
 import com.mi1.duitku.Common.Constant;
@@ -52,7 +52,7 @@ import java.util.Collections;
 /**
  * Created by latifalbar on 11/16/2015.
  */
-public class PaymentMethodActivity  extends AppCompatActivity {
+public class PaymentMethodActivity  extends BaseActivity {
 
     private LinearLayoutManager mLinearLayoutManager;
     private RecyclerView recycler;

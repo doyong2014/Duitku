@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -12,6 +11,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import com.mi1.duitku.BaseActivity;
 import com.mi1.duitku.R;
 import com.mi1.duitku.Tab3.Common.CPPOBProductParent;
 import com.mi1.duitku.Tab3.Common.Tab3Global;
@@ -19,7 +19,7 @@ import com.mi1.duitku.Tab3.Common.Tab3Global;
 /**
  * Created by WORYA on 3/16/2016.
  */
-public class PurchaseActivity extends AppCompatActivity {
+public class PurchaseActivity extends BaseActivity {
 
     private CPPOBProductParent product = new CPPOBProductParent();
     private ListView listPurchase;

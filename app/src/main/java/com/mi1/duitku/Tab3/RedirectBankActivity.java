@@ -3,7 +3,6 @@ package com.mi1.duitku.Tab3;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.webkit.WebView;
@@ -11,13 +10,14 @@ import android.webkit.WebViewClient;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.mi1.duitku.BaseActivity;
 import com.mi1.duitku.Common.Constant;
 import com.mi1.duitku.R;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class RedirectBankActivity extends AppCompatActivity {
+public class RedirectBankActivity extends BaseActivity {
 
     private ProgressBar progress;
     private WebView mWebView;

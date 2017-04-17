@@ -4,18 +4,18 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 
+import com.mi1.duitku.BaseActivity;
 import com.mi1.duitku.Common.CommonFunction;
 import com.mi1.duitku.Common.Constant;
 import com.mi1.duitku.R;
 import com.mi1.duitku.Tab3.Common.CashInfo;
 import com.mi1.duitku.Tab3.Common.Tab3Global;
 
-public class DetailTransactionActivity extends AppCompatActivity {
+public class DetailTransactionActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

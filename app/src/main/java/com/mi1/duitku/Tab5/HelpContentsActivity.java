@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -13,9 +12,10 @@ import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
+import com.mi1.duitku.BaseActivity;
 import com.mi1.duitku.R;
 
-public class HelpContentsActivity extends AppCompatActivity {
+public class HelpContentsActivity extends BaseActivity {
 
     private String title = "";
     private int position = 0;

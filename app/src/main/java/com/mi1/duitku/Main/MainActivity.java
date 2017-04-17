@@ -7,13 +7,13 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -26,7 +26,10 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import com.afollestad.materialdialogs.DialogAction;
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
+import com.mi1.duitku.BaseActivity;
 import com.mi1.duitku.Common.AppGlobal;
 import com.mi1.duitku.Common.Constant;
 import com.mi1.duitku.LoginActivity;
@@ -42,12 +45,10 @@ import com.mi1.duitku.Tab5.HelpActivity;
 import com.quickblox.auth.QBAuth;
 import com.quickblox.auth.session.BaseService;
 import com.quickblox.auth.session.QBSession;
-import com.quickblox.auth.session.QBSettings;
 import com.quickblox.chat.QBChatService;
 import com.quickblox.core.QBEntityCallback;
 import com.quickblox.core.exception.BaseServiceException;
 import com.quickblox.core.exception.QBResponseException;
-import com.quickblox.messages.services.QBPushManager;
 import com.quickblox.users.model.QBUser;
 import com.squareup.picasso.Picasso;
 
@@ -64,7 +65,7 @@ import java.net.URL;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+public class MainActivity extends BaseActivity implements View.OnClickListener {
 
     private static String TAG = "MainActivity";
     private DrawerLayout dlDrawer;
@@ -162,7 +163,24 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     }
 
-    private void selectFragment(int index){
+    @Override
+    public void onBackPressed() {
+        MaterialDialog dialog = new MaterialDialog.Builder(MainActivity.this)
+                .title("memastikan")
+                .content("Apakah anda yakin ingin keluar dari aplikasi?")
+                .positiveText("Ya")
+                .negativeText("Tidak")
+                .cancelable(false)
+                .onPositive(new MaterialDialog.SingleButtonCallback() {
+                    @Override
+                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                        _instance.finish();
+                    }
+                }).build();
+        dialog.show();
+    }
+
+    private void selectFragment(int index) {
 
         Fragment fragment = null;
         cur_tab = index;

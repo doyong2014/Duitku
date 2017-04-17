@@ -6,17 +6,15 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.EditText;
 
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.mi1.duitku.BaseActivity;
 import com.mi1.duitku.Common.AppGlobal;
 import com.mi1.duitku.Common.Constant;
 import com.mi1.duitku.LoginActivity;
@@ -38,7 +36,7 @@ import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 
-public class ConfirmationActivity extends AppCompatActivity {
+public class ConfirmationActivity extends BaseActivity {
 
     public static final String TAG_ACTIVITYTITLE = "activity_title";
     public static final String TAG_SUBSCRIBER = "subscriberId";

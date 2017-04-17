@@ -3,13 +3,13 @@ package com.mi1.duitku.Tab3;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.mi1.duitku.BaseActivity;
 import com.mi1.duitku.R;
 import com.mi1.duitku.Tab3.Common.Inquiry;
 import com.mi1.duitku.Tab3.Common.InquiryResponse;
@@ -22,7 +22,7 @@ import com.mi1.duitku.Tab3.Common.PayResponse;
 /**
  * Created by latifalbar on 11/19/2015.
  */
-public class PayStatusActivity extends AppCompatActivity {
+public class PayStatusActivity extends BaseActivity {
 
     private TextView txtTransactionId;
     private TextView txtJumlah;

@@ -7,7 +7,6 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -21,6 +20,7 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.appsflyer.AFInAppEventParameterName;
 import com.appsflyer.AFInAppEventType;
 import com.appsflyer.AppsFlyerLib;
+import com.mi1.duitku.BaseActivity;
 import com.mi1.duitku.Common.AppGlobal;
 import com.mi1.duitku.Common.Constant;
 import com.mi1.duitku.LoginActivity;
@@ -41,7 +41,7 @@ import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 
-public class PurchaseProcessPLNActivity extends AppCompatActivity {
+public class PurchaseProcessPLNActivity extends BaseActivity {
 
     private EditText etAmount;
     private EditText etCustomer;

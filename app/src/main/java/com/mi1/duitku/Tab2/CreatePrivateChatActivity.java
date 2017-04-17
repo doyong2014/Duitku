@@ -4,14 +4,13 @@ import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import com.mi1.duitku.Common.AppGlobal;
+import com.mi1.duitku.BaseActivity;
 import com.mi1.duitku.R;
 import com.mi1.duitku.Tab2.Adapter.PrivateChatAdapter;
 import com.mi1.duitku.Tab2.Holder.QBUsersHolder;
@@ -31,7 +30,7 @@ import org.jivesoftware.smack.SmackException;
 
 import java.util.ArrayList;
 
-public class CreatePrivateChatActivity extends AppCompatActivity {
+public class CreatePrivateChatActivity extends BaseActivity {
 
     private ListView listUsers;
     private ProgressDialog progress;

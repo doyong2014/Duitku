@@ -8,7 +8,6 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -20,12 +19,12 @@ import android.widget.Toast;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.mi1.duitku.BaseActivity;
 import com.mi1.duitku.Common.AppGlobal;
 import com.mi1.duitku.Common.Constant;
 import com.mi1.duitku.LoginActivity;
 import com.mi1.duitku.Main.MainActivity;
 import com.mi1.duitku.R;
-import com.mi1.duitku.RecoveryPasswordActivity;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -38,7 +37,7 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-public class TransferActivity extends AppCompatActivity {
+public class TransferActivity extends BaseActivity {
 
     private EditText etEmail;
     private EditText etAmount;

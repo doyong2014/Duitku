@@ -4,7 +4,6 @@ import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.util.SparseBooleanArray;
 import android.view.Menu;
@@ -12,6 +11,7 @@ import android.view.MenuItem;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.mi1.duitku.BaseActivity;
 import com.mi1.duitku.Common.CommonFunction;
 import com.mi1.duitku.R;
 import com.mi1.duitku.Tab2.Adapter.GroupChatAdapter;
@@ -31,7 +31,7 @@ import org.jivesoftware.smack.SmackException;
 
 import java.util.ArrayList;
 
-public class CreateGroupChatActivity extends AppCompatActivity {
+public class CreateGroupChatActivity extends BaseActivity {
 
     private ListView listUsers;
     private ProgressDialog progress;

@@ -5,7 +5,6 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -16,6 +15,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 
+import com.mi1.duitku.BaseActivity;
 import com.mi1.duitku.R;
 import com.mi1.duitku.Tab2.Adapter.ChatMessageAdapter;
 import com.mi1.duitku.Tab2.Holder.QBChatMessagesHolder;
@@ -35,7 +35,7 @@ import org.jivesoftware.smackx.muc.DiscussionHistory;
 
 import java.util.ArrayList;
 
-public class ChatMessageActivity extends AppCompatActivity implements QBChatDialogMessageListener {
+public class ChatMessageActivity extends BaseActivity implements QBChatDialogMessageListener {
 
     public static String DIALOG_EXTRA = "dialog";
     private QBChatDialog qbChatDialog;

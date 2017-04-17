@@ -4,16 +4,16 @@ import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
 
+import com.mi1.duitku.BaseActivity;
 import com.mi1.duitku.R;
 
-public class ContactUsActivity extends AppCompatActivity {
+public class ContactUsActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 

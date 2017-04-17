@@ -7,9 +7,7 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -23,11 +21,11 @@ import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.mi1.duitku.BaseActivity;
 import com.mi1.duitku.Common.Constant;
 import com.mi1.duitku.R;
 import com.mi1.duitku.Tab1.Common.DataModel;
 import com.mi1.duitku.Tab1.Common.Tab1Global;
-import com.mi1.duitku.Tab5.HelpContentsActivity;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -41,7 +39,7 @@ import java.util.Collections;
 /**
  * Created by WORYA on 3/16/2016.
  */
-public class SearchActivity extends AppCompatActivity {
+public class SearchActivity extends BaseActivity {
 
     private int cur_tab = 0;
     private String keywords;

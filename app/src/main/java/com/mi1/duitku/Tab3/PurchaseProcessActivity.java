@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -13,9 +12,8 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.TextView;
 
-import com.mi1.duitku.Common.AppGlobal;
+import com.mi1.duitku.BaseActivity;
 import com.mi1.duitku.Common.CommonFunction;
 import com.mi1.duitku.R;
 import com.mi1.duitku.Tab3.Common.CPPOBProduct;
@@ -24,7 +22,7 @@ import com.mi1.duitku.Tab3.Common.CPPOBProductParent;
 /**
  * Created by WORYA on 3/16/2016.
  */
-public class PurchaseProcessActivity extends AppCompatActivity {
+public class PurchaseProcessActivity extends BaseActivity {
 
     public static final String TAG_ACTIVITYTITLE = "activity_title";
     public static final String TAG_ACTIVITYPRODUCT = "activity_product";
