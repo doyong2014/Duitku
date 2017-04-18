@@ -28,7 +28,11 @@ import com.mi1.duitku.Main.MainActivity;
 import com.quickblox.auth.session.QBSettings;
 import com.quickblox.core.QBEntityCallback;
 import com.quickblox.core.exception.QBResponseException;
+import com.quickblox.messages.QBPushNotifications;
+import com.quickblox.messages.model.QBNotificationChannel;
+import com.quickblox.messages.model.QBSubscription;
 import com.quickblox.messages.services.QBPushManager;
+import com.quickblox.messages.services.SubscribeService;
 import com.quickblox.users.QBUsers;
 import com.quickblox.users.model.QBUser;
 
@@ -42,6 +46,7 @@ import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
 
 public class LoginActivity extends BaseActivity implements OnClickListener {
 
@@ -352,6 +357,9 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
     }
 
     private void initNotification() {
+        QBSubscription subscription = new QBSubscription(QBNotificationChannel.GCM);
+        QBPushNotifications.createSubscription(subscription);
+//        SubscribeService.subscribeToPushes(LoginActivity.this, true);
         QBPushManager.getInstance().addListener(new QBPushManager.QBSubscribeListener() {
             @Override
             public void onSubscriptionCreated() {

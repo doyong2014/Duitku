@@ -105,6 +105,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         bottomTab = (BottomNavigationViewEx) findViewById(R.id.nav_bottom);
         bottomTab.setTextVisibility(false);
         bottomTab.enableShiftingMode(false);
+        bottomTab.setIconSize(20, 20);
 //        bottomTab.enableAnimation(true);
         bottomTab.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener(){
             @Override
@@ -409,7 +410,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     public void onClick(View v) {
 
         Intent intent = null;
-        Fragment fragment = null;
 
         switch (v.getId()) {
 
