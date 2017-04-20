@@ -166,6 +166,10 @@ public class CommonFunction {
 
         String[] projection = { MediaStore.Images.Media.DATA };
         Cursor cursor = context.getContentResolver().query(uri, projection, null, null, null);
+        if (cursor == null)
+        {
+            return uri.getPath();
+        }
         if(cursor.moveToFirst()){
             int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
             filePath = cursor.getString(column_index);

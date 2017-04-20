@@ -248,14 +248,63 @@ public class Tab5Fragment extends Fragment {
         boolean result = true;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
 
-            if (targetSdkVersion >= Build.VERSION_CODES.M) {
+            if (targetSdkVersion >= Build.VERSION_CODES.M)
+            {
                 // targetSdkVersion >= Android M, we can
                 // use Context#checkSelfPermission
-                result = getActivity().getApplicationContext().checkSelfPermission(Manifest.permission.CAMERA)
-                        == PackageManager.PERMISSION_GRANTED;
-            } else {
+                if(result)
+                {
+                    result = getActivity().getApplicationContext().checkSelfPermission(Manifest.permission.CAMERA)
+                            == PackageManager.PERMISSION_GRANTED;
+                }
+                if(result)
+                {
+                    result = getActivity().getApplicationContext().checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE)
+                            == PackageManager.PERMISSION_GRANTED;
+                }
+                if(result)
+                {
+                    result = getActivity().getApplicationContext().checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                            == PackageManager.PERMISSION_GRANTED;
+                }
+            }
+            else
+            {
                 // targetSdkVersion < Android M, we have to use PermissionChecker
+                if(result)
+                {
+                    result = PermissionChecker.checkSelfPermission(getActivity().getApplicationContext(), Manifest.permission.CAMERA)
+                            == PermissionChecker.PERMISSION_GRANTED;
+                }
+                if(result)
+                {
+                    result = PermissionChecker.checkSelfPermission(getActivity().getApplicationContext(), Manifest.permission.READ_EXTERNAL_STORAGE)
+                            == PermissionChecker.PERMISSION_GRANTED;
+                }
+                if(result)
+                {
+                    result = PermissionChecker.checkSelfPermission(getActivity().getApplicationContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                            == PermissionChecker.PERMISSION_GRANTED;
+                }
+
+            }
+        }
+        else
+        {
+            // targetSdkVersion < Android M, we have to use PermissionChecker
+            if(result)
+            {
                 result = PermissionChecker.checkSelfPermission(getActivity().getApplicationContext(), Manifest.permission.CAMERA)
+                        == PermissionChecker.PERMISSION_GRANTED;
+            }
+            if(result)
+            {
+                result = PermissionChecker.checkSelfPermission(getActivity().getApplicationContext(), Manifest.permission.READ_EXTERNAL_STORAGE)
+                        == PermissionChecker.PERMISSION_GRANTED;
+            }
+            if(result)
+            {
+                result = PermissionChecker.checkSelfPermission(getActivity().getApplicationContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE)
                         == PermissionChecker.PERMISSION_GRANTED;
             }
         }
