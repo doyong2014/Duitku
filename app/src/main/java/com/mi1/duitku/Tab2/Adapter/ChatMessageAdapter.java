@@ -63,24 +63,16 @@ public class ChatMessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
             viewHolder.tvMessage.setText(item.getBody());
         } else {
             final ReceiveViewHolder viewHolder = (ReceiveViewHolder) holder;
-//            QBUser qbUser = QBUsersHolder.getInstance().getUserById(item.getSenderId());
             viewHolder.tvMessage.setText(item.getBody());
             viewHolder.tvTime.setText(CommonFunction.getFormatedDate1(item.getDateSent()*1000));
-
-//            if (qbUser.getCustomData() != null) {
-//                Picasso.with(context).load(qbUser.getCustomData().toLowerCase()).fit().into(viewHolder.civPhoto);
-//            }
 
             QBUsers.getUser(item.getSenderId()).performAsync(new QBEntityCallback<QBUser>() {
                 @Override
                 public void onSuccess(QBUser user, Bundle args) {
                     viewHolder.tvTime.setText(user.getFullName() + " " + viewHolder.tvTime.getText());
-                    if (user.getCustomData() != null) {
-                        if (!user.getCustomData().isEmpty()) {
-                            Picasso.with(context).load(user.getCustomData().toLowerCase()).fit().into(viewHolder.civPhoto);
-                        }
+                    if (user.getCustomData() != null && !user.getCustomData().isEmpty()) {
+                        Picasso.with(context).load(user.getCustomData().toLowerCase()).fit().into(viewHolder.civPhoto);
                     }
-                    viewHolder.tvTime.setText(user.getFullName() + " " + viewHolder.tvTime.getText());
                 }
 
                 @Override

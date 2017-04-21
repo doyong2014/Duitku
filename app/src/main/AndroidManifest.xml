@@ -17,6 +17,11 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:name=".ApplicationClass">
+
+        <meta-data android:name="com.quickblox.messages.TYPE" android:value="FCM" />
+        <meta-data android:name="com.quickblox.messages.SENDER_ID" android:value="@string/fcm_sender_id" />
+        <meta-data android:name="com.quickblox.messages.QB_ENVIRONMENT" android:value="DEVELOPMENT" />
+
         <activity
             android:name=".SplashActivity"
             android:screenOrientation="portrait"
@@ -176,10 +181,6 @@
                 <action android:name="com.google.firebase.INSTANCE_ID_EVENT"/>
             </intent-filter>
         </service>
-
-        <meta-data android:name="com.quickblox.messages.TYPE" android:value="FCM" />
-        <meta-data android:name="com.quickblox.messages.SENDER_ID" android:value="641086140476" />
-        <meta-data android:name="com.quickblox.messages.QB_ENVIRONMENT" android:value="DEVELOPMENT" />
 
     </application>
 

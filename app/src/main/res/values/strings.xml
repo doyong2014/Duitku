@@ -159,5 +159,6 @@
     <string name="alert_change_password">The Password has been changed successfully.</string>
 
     <string name="confirm_transfer">Do you really want to transfer?</string>
+    <string name="fcm_sender_id">979270705931</string>
 
 </resources>

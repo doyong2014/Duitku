@@ -8,6 +8,7 @@ public class AppGlobal {
 
     public static UserInfo _userInfo = null;
     public static UserDetailInfo _userDetailInfo = null;
+    public static int qbID;
 
     public static void initData() {
         _userInfo = new UserInfo();

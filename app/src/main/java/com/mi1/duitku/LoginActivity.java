@@ -27,12 +27,8 @@ import com.mi1.duitku.Common.UserInfo;
 import com.mi1.duitku.Main.MainActivity;
 import com.quickblox.auth.session.QBSettings;
 import com.quickblox.core.QBEntityCallback;
+import com.quickblox.core.StoringMechanism;
 import com.quickblox.core.exception.QBResponseException;
-import com.quickblox.messages.QBPushNotifications;
-import com.quickblox.messages.model.QBNotificationChannel;
-import com.quickblox.messages.model.QBSubscription;
-import com.quickblox.messages.services.QBPushManager;
-import com.quickblox.messages.services.SubscribeService;
 import com.quickblox.users.QBUsers;
 import com.quickblox.users.model.QBUser;
 
@@ -46,7 +42,6 @@ import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.ArrayList;
 
 public class LoginActivity extends BaseActivity implements OnClickListener {
 
@@ -180,8 +175,8 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 //                    jsonObject.put("password", param[1]);
 //                    jsonObject.put("community_code", param[2]);
 
-                    jsonObject.put("username", "081213497969"); //0818718184 //081213497969
-                    jsonObject.put("password", CommonFunction.md5("TMIA7EPD"));//ZOP8AUK2 //TMIA7EPD
+                    jsonObject.put("username", "8618642502551"); // 081213497969
+                    jsonObject.put("password", CommonFunction.md5("NB1NSFW5"));// TMIA7EPD
                     jsonObject.put("community_code", param[2]);
 
                 } catch (JSONException e) {
@@ -239,11 +234,11 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
                 String statusCode = jsonObj.getString(Constant.JSON_STATUS_CODE);
 
                 if (statusCode.equals("00")){
-
                     Gson gson = new GsonBuilder().create();
                     AppGlobal._userInfo = gson.fromJson(result, UserInfo.class);
                     AppGlobal._userInfo.password = password;
-                    checkQB();
+                    initQBFramework();
+                    loginQB();
 
                 } else if (statusCode.equals("-124")) {
                     progress.dismiss();
@@ -263,7 +258,6 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
                 progress.dismiss();
                 Log.e("oasis", e.getMessage());
             }
-
         }
     }
 
@@ -298,83 +292,12 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
         return super.onOptionsItemSelected(item);
     }
 
-    private void checkQB() {
-        initQBFramework();
-
-        QBUsers.getUserByLogin(AppGlobal._userInfo.phoneNumber).performAsync(new QBEntityCallback<QBUser>() {
-            @Override
-            public void onSuccess(QBUser qbUser, Bundle bundle) {
-
-                if(qbUser.getLogin().equals(AppGlobal._userInfo.phoneNumber)) {
-                    loginQB();
-                } else {
-                    signUpQB();
-                }
-            }
-
-            @Override
-            public void onError(QBResponseException e) {
-                if (e.getErrors().size() > 0 && e.getErrors().get(0).equals("Entity you are looking for was not found."))
-                    signUpQB();
-                else {
-                    progress.dismiss();
-                    Toast.makeText(getBaseContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
-
-//        QBUsers.getUsers(null).performAsync(new QBEntityCallback<ArrayList<QBUser>>() {
-//            @Override
-//            public void onSuccess(ArrayList<QBUser> qbUsers, Bundle bundle) {
-//                QBUsersHolder.getInstance().putUsers(qbUsers);
-//                boolean registerd = false;
-//                for(QBUser user: qbUsers) {
-//                    if (user.getLogin().equals(AppGlobal._userInfo.phoneNumber)) {
-//                        registerd = true;
-//                        break;
-//                    }
-//                }
-//                if(registerd) {
-//                    loginQB();
-//                } else {
-//                    signUpQB();
-//                }
-//            }
-//
-//            @Override
-//            public void onError(QBResponseException e) {
-//                Log.e("error", e.getMessage());
-//            }
-//        });
-
-    }
-
     private void initQBFramework() {
+
+        QBSettings.getInstance().setStoringMehanism(StoringMechanism.UNSECURED);
         QBSettings.getInstance().init(getApplicationContext(), Constant.QB_APP_ID, Constant.QB_AUTH_KEY, Constant.QB_AUTH_SECRET);
         QBSettings.getInstance().setAccountKey(Constant.QB_ACCOUNT_KEY);
         QBSettings.getInstance().setEnablePushNotification(true);
-        initNotification();
-    }
-
-    private void initNotification() {
-        QBSubscription subscription = new QBSubscription(QBNotificationChannel.GCM);
-        QBPushNotifications.createSubscription(subscription);
-//        SubscribeService.subscribeToPushes(LoginActivity.this, true);
-        QBPushManager.getInstance().addListener(new QBPushManager.QBSubscribeListener() {
-            @Override
-            public void onSubscriptionCreated() {
-                Log.d(TAG, "onSubscriptionCreated");
-            }
-
-            @Override
-            public void onSubscriptionError(final Exception e, int resultCode) {
-                Log.d(TAG, "onSubscriptionError" + e);
-                if (resultCode >= 0) {
-                    Log.d(TAG, "Google play service exception" + resultCode);
-                }
-                Log.d(TAG, "onSubscriptionError " + e.getMessage());
-            }
-        });
     }
 
     private void loginQB() {
@@ -384,12 +307,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
         QBUsers.signIn(qbUser).performAsync(new QBEntityCallback<QBUser>() {
             @Override
             public void onSuccess(QBUser qbUser, Bundle bundle) {
-//                Toast.makeText(getBaseContext(), "Longin Successfully", Toast.LENGTH_SHORT).show();
-//                if (AppGlobal._userInfo.picUrl != null){
-//                    if (!AppGlobal._userInfo.picUrl.isEmpty()) {
-//                        qbUser.setCustomData(AppGlobal._userInfo.picUrl);
-//                    }
-//                }
+                AppGlobal.qbID = qbUser.getId();
                 progress.dismiss();
                 Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                 startActivity(intent);
@@ -399,8 +317,13 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 
             @Override
             public void onError(QBResponseException e) {
+
                 progress.dismiss();
-                Toast.makeText(getBaseContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
+                if (e.getMessage().equals("Unauthorized")) {
+                    signUpQB();
+                } else {
+                    Toast.makeText(getBaseContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }
@@ -410,12 +333,10 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
         QBUser qbUser = new QBUser(AppGlobal._userInfo.phoneNumber, Constant.QB_ACCOUNT_PASS);
         qbUser.setFullName(AppGlobal._userInfo.name);
         qbUser.setEmail(AppGlobal._userInfo.email);
-//        qbUser.setCustomData(AppGlobal._userInfo.picUrl);
         QBUsers.signUp(qbUser).performAsync(new QBEntityCallback<QBUser>() {
             @Override
             public void onSuccess(QBUser qbUser, Bundle bundle) {
                 loginQB();
-//                Toast.makeText(getBaseContext(), "Sign Up Successfully", Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -425,6 +346,5 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
             }
         });
     }
-
 }
 

@@ -43,6 +43,10 @@ import com.mi1.duitku.R;
 import com.mi1.duitku.Tab5.BlurTransformation;
 import com.mi1.duitku.Tab5.ChangePasswordActivity;
 import com.mi1.duitku.Tab5.ShareCodeActivity;
+import com.quickblox.core.QBEntityCallback;
+import com.quickblox.core.exception.QBResponseException;
+import com.quickblox.users.QBUsers;
+import com.quickblox.users.model.QBUser;
 import com.squareup.picasso.MemoryPolicy;
 import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
@@ -101,7 +105,6 @@ public class Tab5Fragment extends Fragment {
         progress.setMessage(getString(R.string.wait));
         progress.setCanceledOnTouchOutside(false);
 
-        //if (!AppGlobal._userDetailInfo.isSync)
         getProfile();
 
         if (AppGlobal._userDetailInfo.birthday != null) {
@@ -252,18 +255,15 @@ public class Tab5Fragment extends Fragment {
             {
                 // targetSdkVersion >= Android M, we can
                 // use Context#checkSelfPermission
-                if(result)
-                {
+                if(result) {
                     result = getActivity().getApplicationContext().checkSelfPermission(Manifest.permission.CAMERA)
                             == PackageManager.PERMISSION_GRANTED;
                 }
-                if(result)
-                {
+                if(result) {
                     result = getActivity().getApplicationContext().checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE)
                             == PackageManager.PERMISSION_GRANTED;
                 }
-                if(result)
-                {
+                if(result) {
                     result = getActivity().getApplicationContext().checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)
                             == PackageManager.PERMISSION_GRANTED;
                 }
@@ -271,18 +271,15 @@ public class Tab5Fragment extends Fragment {
             else
             {
                 // targetSdkVersion < Android M, we have to use PermissionChecker
-                if(result)
-                {
+                if(result) {
                     result = PermissionChecker.checkSelfPermission(getActivity().getApplicationContext(), Manifest.permission.CAMERA)
                             == PermissionChecker.PERMISSION_GRANTED;
                 }
-                if(result)
-                {
+                if(result) {
                     result = PermissionChecker.checkSelfPermission(getActivity().getApplicationContext(), Manifest.permission.READ_EXTERNAL_STORAGE)
                             == PermissionChecker.PERMISSION_GRANTED;
                 }
-                if(result)
-                {
+                if(result) {
                     result = PermissionChecker.checkSelfPermission(getActivity().getApplicationContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE)
                             == PermissionChecker.PERMISSION_GRANTED;
                 }
@@ -292,18 +289,15 @@ public class Tab5Fragment extends Fragment {
         else
         {
             // targetSdkVersion < Android M, we have to use PermissionChecker
-            if(result)
-            {
+            if(result) {
                 result = PermissionChecker.checkSelfPermission(getActivity().getApplicationContext(), Manifest.permission.CAMERA)
                         == PermissionChecker.PERMISSION_GRANTED;
             }
-            if(result)
-            {
+            if(result) {
                 result = PermissionChecker.checkSelfPermission(getActivity().getApplicationContext(), Manifest.permission.READ_EXTERNAL_STORAGE)
                         == PermissionChecker.PERMISSION_GRANTED;
             }
-            if(result)
-            {
+            if(result) {
                 result = PermissionChecker.checkSelfPermission(getActivity().getApplicationContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE)
                         == PermissionChecker.PERMISSION_GRANTED;
             }
@@ -409,7 +403,6 @@ public class Tab5Fragment extends Fragment {
             try {
                 Gson gson = new GsonBuilder().create();
                 AppGlobal._userDetailInfo = gson.fromJson(result, UserDetailInfo.class);
-                //AppGlobal._userDetailInfo.isSync = true;
                 dispUserDetailInfo();
             } catch (Exception e) {
                 // TODO: handle exception
@@ -733,6 +726,20 @@ public class Tab5Fragment extends Fragment {
                             .networkPolicy(NetworkPolicy.NO_CACHE).fit().transform(new BlurTransformation(_context)).into(ivBlurPhoto);
                     Picasso.with(MainActivity._instance).load(AppGlobal._userInfo.picUrl.toLowerCase()).memoryPolicy(MemoryPolicy.NO_CACHE )
                             .networkPolicy(NetworkPolicy.NO_CACHE).fit().into(MainActivity._instance.civUserPhoto);
+                    QBUser qbUser = new QBUser();
+                    qbUser.setId(AppGlobal.qbID);
+                    qbUser.setCustomData(AppGlobal._userInfo.picUrl);
+                    QBUsers.updateUser(qbUser).performAsync(new QBEntityCallback<QBUser>() {
+                        @Override
+                        public void onSuccess(QBUser qbUser, Bundle bundle) {
+                            Log.e("error", "ok");
+                        }
+
+                        @Override
+                        public void onError(QBResponseException e) {
+                            Log.e("error", e.getMessage());
+                        }
+                    });
                 } else {
                     String status = jsonObj.getString(Constant.JSON_STATUS_MESSAGE);
                     Toast.makeText(_context, status, Toast.LENGTH_SHORT).show();

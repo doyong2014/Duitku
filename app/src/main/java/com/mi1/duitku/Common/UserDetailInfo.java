@@ -12,7 +12,6 @@ public class UserDetailInfo {
     public String addr;
     public String addrDetail;
     public String zipcode;
-    public boolean isSync = false;
 
     public UserDetailInfo() {}
 

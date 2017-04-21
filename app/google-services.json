@@ -1,27 +1,27 @@
 {
   "project_info": {
-    "project_number": "641086140476",
-    "firebase_url": "https://mi1-duitku-92dd7.firebaseio.com",
-    "project_id": "mi1-duitku-92dd7",
-    "storage_bucket": "mi1-duitku-92dd7.appspot.com"
+    "project_number": "979270705931",
+    "firebase_url": "https://mi1-duitku-165105.firebaseio.com",
+    "project_id": "mi1-duitku-165105",
+    "storage_bucket": "mi1-duitku-165105.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:641086140476:android:8e7ea7079826056a",
+        "mobilesdk_app_id": "1:979270705931:android:8e7ea7079826056a",
         "android_client_info": {
           "package_name": "com.mi1.duitku"
         }
       },
       "oauth_client": [
         {
-          "client_id": "641086140476-422dsq1frs5tgqu55492qpvu07junevf.apps.googleusercontent.com",
+          "client_id": "979270705931-6rah00q926gikbor9qa21uhiaamio77k.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyAjd3XUDTSwA8-ICzQpa_bPqIZh2ucGpRM"
+          "current_key": "AIzaSyD9tJ1qFrpeZoDIy3Logmjtk_CXekJZSwM"
         }
       ],
       "services": {
