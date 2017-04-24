@@ -327,7 +327,15 @@ public class Tab5Fragment extends Fragment {
 
             String mImgURI = CommonFunction.getFilePathFromUri(_context, data.getData());
             BitmapFactory.Options options = new BitmapFactory.Options();
-            options.inSampleSize = 4;
+            int height = getImgSize(mImgURI);
+            if (height > 2400) {
+                options.inSampleSize = 8;
+            } else if (height > 1200) {
+                options.inSampleSize = 4;
+            } else if (height > 600) {
+                options.inSampleSize = 2;
+            }
+
             bmUserPhoto = BitmapFactory.decodeFile(mImgURI, options);
 
             String[] params = new String[2];
@@ -336,6 +344,17 @@ public class Tab5Fragment extends Fragment {
             UploadImageAsync _uploadImageAsync = new UploadImageAsync();
             _uploadImageAsync.execute(params);
         }
+    }
+
+    private int getImgSize(String path){
+        BitmapFactory.Options options = new BitmapFactory.Options();
+        options.inJustDecodeBounds = true;
+        BitmapFactory.decodeFile(path, options);
+        int imageHeight = options.outHeight;
+        int imageWidth = options.outWidth;
+
+        return imageHeight;
+
     }
 
     public class GetProfileAsync extends AsyncTask<String, Integer, String> {

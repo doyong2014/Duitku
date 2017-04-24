@@ -101,7 +101,7 @@ public class GroupFragment extends Fragment implements QBSystemMessageListener, 
 
         QBRequestGetBuilder requestBuilder = new QBRequestGetBuilder();
         requestBuilder.in("type", "1", "2");
-        requestBuilder.setLimit(100);
+        requestBuilder.setLimit(50);
 
         QBRestChatService.getChatDialogs(null, requestBuilder).performAsync(new QBEntityCallback<ArrayList<QBChatDialog>>() {
             @Override

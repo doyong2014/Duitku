@@ -1,5 +1,6 @@
 package com.mi1.duitku.Main;
 
+import android.Manifest;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.ProgressDialog;
@@ -7,14 +8,17 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.NotificationCompat;
@@ -31,6 +35,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.afollestad.materialdialogs.DialogAction;
@@ -112,7 +117,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
             new callProductList().execute();
         }
 
-        Contacts.getIntstace().listContact = getContactList();
+        getContacts();
 
         bottomTab = (BottomNavigationViewEx) findViewById(R.id.nav_bottom);
         bottomTab.setTextVisibility(false);
@@ -292,6 +297,67 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 
         notificationManager.notify(0 /* ID of notification */, notificationBuilder.build());
+    }
+
+    private void getContacts() {
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            int permissionResult = checkSelfPermission(Manifest.permission.READ_CONTACTS);
+
+            if (permissionResult == PackageManager.PERMISSION_DENIED) {
+
+                /* 사용자가 CALL_PHONE 권한을 한번이라도 거부한 적이 있는 지 조사한다.
+                * 거부한 이력이 한번이라도 있다면, true를 리턴한다.
+                */
+                if (shouldShowRequestPermissionRationale(Manifest.permission.READ_CONTACTS)) {
+
+                    MaterialDialog dialog = new MaterialDialog.Builder(MainActivity.this)
+                            .title("You need to permission for fetch contacts")
+                            .content("")
+                            .positiveText("Ya")
+                            .negativeText("Tidak")
+                            .cancelable(false)
+                            .onPositive(new MaterialDialog.SingleButtonCallback() {
+                                @Override
+                                public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                                        requestPermissions(new String[]{Manifest.permission.READ_CONTACTS}, 1000);
+                                    }
+                                }
+                            })
+                            .onNegative(new MaterialDialog.SingleButtonCallback() {
+                                @Override
+                                public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                                    Toast.makeText(MainActivity.this, "canceled the permission.", Toast.LENGTH_SHORT).show();
+                                }
+                            }).build();
+
+                    dialog.show();
+                } else { //최초로 권한을 요청할 때
+                    // CALL_PHONE 권한을 Android OS 에 요청한다.
+                    requestPermissions(new String[]{Manifest.permission.READ_CONTACTS}, 1000);
+                }
+
+            } else { /* CALL_PHONE의 권한이 있을 때 */
+                Contacts.getIntstace().listContact = getContactList();
+            }
+
+        } else {
+            Contacts.getIntstace().listContact = getContactList();
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        if (requestCode == 1000) {
+
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                Contacts.getIntstace().listContact = getContactList();
+            }
+            else {
+                Toast.makeText(MainActivity.this, "Access denied", Toast.LENGTH_SHORT).show();
+            }
+        }
     }
 
     @Override
