@@ -171,13 +171,13 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 
                 JSONObject jsonObject = new JSONObject();
                 try {
-//                    jsonObject.put("username", param[0]);
-//                    jsonObject.put("password", param[1]);
-//                    jsonObject.put("community_code", param[2]);
-
-                    jsonObject.put("username", "8618642502551"); // 081213497969  8618642502551
-                    jsonObject.put("password", CommonFunction.md5("NB1NSFW5"));// TMIA7EPD  NB1NSFW5
+                    jsonObject.put("username", param[0]);
+                    jsonObject.put("password", param[1]);
                     jsonObject.put("community_code", param[2]);
+
+//                    jsonObject.put("username", "8618642502551"); // 081213497969  8618642502551
+//                    jsonObject.put("password", CommonFunction.md5("NB1NSFW5"));// TMIA7EPD  NB1NSFW5
+//                    jsonObject.put("community_code", param[2]);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
