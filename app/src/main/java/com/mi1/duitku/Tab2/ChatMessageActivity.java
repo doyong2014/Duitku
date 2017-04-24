@@ -16,9 +16,9 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 
 import com.mi1.duitku.BaseActivity;
+import com.mi1.duitku.Common.AppGlobal;
 import com.mi1.duitku.R;
 import com.mi1.duitku.Tab2.Adapter.ChatMessageAdapter;
-import com.mi1.duitku.Tab2.Holder.QBChatMessagesHolder;
 import com.quickblox.chat.QBChatService;
 import com.quickblox.chat.QBRestChatService;
 import com.quickblox.chat.exception.QBChatException;
@@ -43,6 +43,7 @@ public class ChatMessageActivity extends BaseActivity implements QBChatDialogMes
     private EditText etMessage;
     private ChatMessageAdapter adapter;
     private ProgressDialog progress;
+    private ArrayList<QBChatMessage> lstQBChatMessage = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,10 +71,10 @@ public class ChatMessageActivity extends BaseActivity implements QBChatDialogMes
                 }
                 QBChatMessage chatMessage = new QBChatMessage();
                 chatMessage.setBody(etMessage.getText().toString());
-                chatMessage.setSenderId(QBChatService.getInstance().getUser().getId());
+                chatMessage.setSenderId(AppGlobal.qbID);
                 chatMessage.setSaveToHistory(true);
-//                chatMessage.setProperty("username", AppGlobal._userInfo.name);
-//                chatMessage.setProperty("picUrl", AppGlobal._userInfo.picUrl);
+                chatMessage.setProperty("username", AppGlobal._userInfo.name);
+                chatMessage.setProperty("picUrl", AppGlobal._userInfo.picUrl);
 
                 try {
                     qbChatDialog.sendMessage(chatMessage);
@@ -82,12 +83,9 @@ public class ChatMessageActivity extends BaseActivity implements QBChatDialogMes
                 }
                 if (qbChatDialog.getType().equals(QBDialogType.PRIVATE)) {
                     //put message to cache
-                    QBChatMessagesHolder.getInstance().putMessage(qbChatDialog.getDialogId(), chatMessage);
-                    ArrayList<QBChatMessage> messages = QBChatMessagesHolder.getInstance().getChatMessagesByDialogId(qbChatDialog.getDialogId());
-                    adapter.setData(messages);
+                    lstQBChatMessage.add(chatMessage);
                     adapter.notifyDataSetChanged();
                 }
-
 
                 if (adapter.getItemCount() != 0) {
                     recycler.smoothScrollToPosition(adapter.getItemCount()-1);
@@ -105,31 +103,6 @@ public class ChatMessageActivity extends BaseActivity implements QBChatDialogMes
     protected void onDestroy() {
         super.onDestroy();
         qbChatDialog.removeMessageListrener(this);
-    }
-
-    private void retrieveMessage() {
-        QBMessageGetBuilder messageGetBuilder = new QBMessageGetBuilder();
-        messageGetBuilder.setLimit(100); // get limit 100 messages
-
-        if (qbChatDialog != null) {
-            QBRestChatService.getDialogMessages(qbChatDialog, messageGetBuilder).performAsync(new QBEntityCallback<ArrayList<QBChatMessage>>() {
-                @Override
-                public void onSuccess(ArrayList<QBChatMessage> qbChatMessages, Bundle bundle) {
-                    //put messages to cache
-                    progress.dismiss();
-                    QBChatMessagesHolder.getInstance().putMessages(qbChatDialog.getDialogId(), qbChatMessages);
-
-                    adapter = new ChatMessageAdapter(ChatMessageActivity.this, qbChatMessages);
-                    recycler.setAdapter(adapter);
-                    adapter.notifyDataSetChanged();
-                }
-
-                @Override
-                public void onError(QBResponseException e) {
-                    progress.dismiss();
-                }
-            });
-        }
     }
 
     private void initChatDialogs() {
@@ -157,6 +130,31 @@ public class ChatMessageActivity extends BaseActivity implements QBChatDialogMes
 
         // Add message listener for that particular chat dialog
         qbChatDialog.addMessageListener(this);
+    }
+
+    private void retrieveMessage() {
+        QBMessageGetBuilder messageGetBuilder = new QBMessageGetBuilder();
+        messageGetBuilder.setLimit(100); // get limit 100 messages
+
+        if (qbChatDialog != null) {
+            QBRestChatService.getDialogMessages(qbChatDialog, messageGetBuilder).performAsync(new QBEntityCallback<ArrayList<QBChatMessage>>() {
+                @Override
+                public void onSuccess(ArrayList<QBChatMessage> qbChatMessages, Bundle bundle) {
+                    //put messages to cache
+                    progress.dismiss();
+                    lstQBChatMessage = qbChatMessages;
+
+                    adapter = new ChatMessageAdapter(ChatMessageActivity.this, lstQBChatMessage);
+                    recycler.setAdapter(adapter);
+                    adapter.notifyDataSetChanged();
+                }
+
+                @Override
+                public void onError(QBResponseException e) {
+                    progress.dismiss();
+                }
+            });
+        }
     }
 
     @Override
@@ -198,9 +196,7 @@ public class ChatMessageActivity extends BaseActivity implements QBChatDialogMes
     @Override
     public void processMessage(String s, QBChatMessage qbChatMessage, Integer integer) {
         //Cache Message
-        QBChatMessagesHolder.getInstance().putMessage(qbChatMessage.getDialogId(), qbChatMessage);
-        ArrayList<QBChatMessage> messages = QBChatMessagesHolder.getInstance().getChatMessagesByDialogId(qbChatMessage.getDialogId());
-        adapter.setData(messages);
+        lstQBChatMessage.add(qbChatMessage);
         adapter.notifyDataSetChanged();
         if (adapter.getItemCount() != 0) {
             recycler.smoothScrollToPosition(adapter.getItemCount()-1);

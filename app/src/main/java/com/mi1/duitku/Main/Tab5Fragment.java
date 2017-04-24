@@ -326,9 +326,9 @@ public class Tab5Fragment extends Fragment {
         if (requestCode == 105 && resultCode == RESULT_OK) {
 
             String mImgURI = CommonFunction.getFilePathFromUri(_context, data.getData());
-//            BitmapFactory.Options options = new BitmapFactory.Options();
-//            options.inSampleSize = 4;
-            bmUserPhoto = BitmapFactory.decodeFile(mImgURI);
+            BitmapFactory.Options options = new BitmapFactory.Options();
+            options.inSampleSize = 4;
+            bmUserPhoto = BitmapFactory.decodeFile(mImgURI, options);
 
             String[] params = new String[2];
             params[0] = AppGlobal._userInfo.token;

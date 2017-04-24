@@ -7,10 +7,12 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.database.Cursor;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
@@ -41,6 +43,7 @@ import com.mi1.duitku.LoginActivity;
 import com.mi1.duitku.R;
 import com.mi1.duitku.Tab1.Common.Tab1Global;
 import com.mi1.duitku.Tab1.SearchActivity;
+import com.mi1.duitku.Tab2.Common.Contacts;
 import com.mi1.duitku.Tab3.Common.CPPOBProduct;
 import com.mi1.duitku.Tab3.Common.CPPOBProductParent;
 import com.mi1.duitku.Tab3.Common.Tab3Global;
@@ -68,6 +71,7 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -107,6 +111,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         if (Tab3Global._productPayment == null || Tab3Global._productPurchase == null) {
             new callProductList().execute();
         }
+
+        Contacts.getIntstace().listContact = getContactList();
 
         bottomTab = (BottomNavigationViewEx) findViewById(R.id.nav_bottom);
         bottomTab.setTextVisibility(false);
@@ -419,6 +425,26 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
             }
         }
         return product;
+    }
+
+    private ArrayList<String> getContactList() {
+
+        String[] projection = new String[] { ContactsContract.CommonDataKinds.Phone.NUMBER };
+
+        Cursor contactCursor = this.getContentResolver().query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI,
+                projection, ContactsContract.Contacts.HAS_PHONE_NUMBER+"=1", null, null);
+
+        ArrayList<String> contactlist = new ArrayList<String>();
+
+        if (contactCursor.moveToFirst()) {
+            do {
+                String phonenumber = contactCursor.getString(0).replaceAll("-", "");
+
+                contactlist.add(phonenumber);
+            } while (contactCursor.moveToNext());
+        }
+
+        return contactlist;
     }
 
     @Override

@@ -4,7 +4,6 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -17,7 +16,6 @@ import android.view.ViewGroup;
 import com.mi1.duitku.Common.DividerItemDecoration;
 import com.mi1.duitku.R;
 import com.mi1.duitku.Tab2.Adapter.ChatDialogAdapter;
-import com.mi1.duitku.Tab2.Holder.QBChatDialogsHolder;
 import com.quickblox.chat.QBChatService;
 import com.quickblox.chat.QBIncomingMessagesManager;
 import com.quickblox.chat.QBRestChatService;
@@ -43,6 +41,7 @@ public class GroupFragment extends Fragment implements QBSystemMessageListener, 
     private ChatDialogAdapter adapter;
     private RecyclerView recycler;
     private ProgressDialog progress;
+    private ArrayList<QBChatDialog> lstQBGroupChatDialog = new ArrayList<>();
 
     public GroupFragment() {
         // Required empty public constructor
@@ -77,7 +76,8 @@ public class GroupFragment extends Fragment implements QBSystemMessageListener, 
         fabAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(_context, CreateGroupChatActivity.class);
+                Intent intent = new Intent(_context, CreateChatActivity.class);
+                intent.putExtra("chat_type", 1);
                 startActivity(intent);
             }
         });
@@ -100,25 +100,18 @@ public class GroupFragment extends Fragment implements QBSystemMessageListener, 
     private void loadChatDialogs() {
 
         QBRequestGetBuilder requestBuilder = new QBRequestGetBuilder();
+        requestBuilder.in("type", "1", "2");
         requestBuilder.setLimit(100);
 
         QBRestChatService.getChatDialogs(null, requestBuilder).performAsync(new QBEntityCallback<ArrayList<QBChatDialog>>() {
             @Override
             public void onSuccess(ArrayList<QBChatDialog> qbChatDialogs, Bundle bundle) {
-                QBChatDialogsHolder.getInstance().putDialogs(qbChatDialogs);
 
                 if (progress.isShowing()) {
                     progress.dismiss();
                 }
-
-                ArrayList<QBChatDialog> groupChatDialogs = new ArrayList<QBChatDialog>();
-
-                for(QBChatDialog dialog : qbChatDialogs) {
-                    if (dialog.getType().equals(QBDialogType.PUBLIC_GROUP) || dialog.getType().equals(QBDialogType.GROUP)) {
-                        groupChatDialogs.add(dialog);
-                    }
-                }
-                adapter = new ChatDialogAdapter(_context, groupChatDialogs);
+                lstQBGroupChatDialog = qbChatDialogs;
+                adapter = new ChatDialogAdapter(_context, lstQBGroupChatDialog, 1);
                 recycler.setAdapter(adapter);
                 adapter.notifyDataSetChanged();
             }
@@ -136,16 +129,7 @@ public class GroupFragment extends Fragment implements QBSystemMessageListener, 
             @Override
             public void onSuccess(QBChatDialog qbChatDialog, Bundle bundle) {
                 if (qbChatDialog.getType().equals(QBDialogType.PUBLIC_GROUP) || qbChatDialog.getType().equals(QBDialogType.GROUP)) {
-                    QBChatDialogsHolder.getInstance().putDialog(qbChatDialog);
-                    ArrayList<QBChatDialog> qbChatDialogs = QBChatDialogsHolder.getInstance().getAllChatDialogs();
-                    ArrayList<QBChatDialog> groupChatDialogs = new ArrayList<QBChatDialog>();
-
-                    for(QBChatDialog dialog : qbChatDialogs) {
-                        if (dialog.getType().equals(QBDialogType.PUBLIC_GROUP) || dialog.getType().equals(QBDialogType.GROUP)) {
-                            groupChatDialogs.add(dialog);
-                        }
-                    }
-                    adapter.setData(qbChatDialogs);
+                    lstQBGroupChatDialog.add(0, qbChatDialog);
                     adapter.notifyDataSetChanged();
                 }
             }
@@ -164,10 +148,19 @@ public class GroupFragment extends Fragment implements QBSystemMessageListener, 
 
     @Override
     public void processMessage(String s, QBChatMessage qbChatMessage, Integer integer) {
-        QBDialogType dialogType = QBChatDialogsHolder.getInstance().getChatDialogById(qbChatMessage.getDialogId()).getType();
-        if (dialogType.equals(QBDialogType.PUBLIC_GROUP) || dialogType.equals(QBDialogType.GROUP)) {
-            loadChatDialogs();
-        }
+        QBRestChatService.getChatDialogById(qbChatMessage.getBody()).performAsync(new QBEntityCallback<QBChatDialog>() {
+            @Override
+            public void onSuccess(QBChatDialog qbChatDialog, Bundle bundle) {
+                if (qbChatDialog.getType().equals(QBDialogType.PUBLIC_GROUP) || qbChatDialog.getType().equals(QBDialogType.GROUP)) {
+                    adapter.notifyDataSetChanged();
+                }
+            }
+
+            @Override
+            public void onError(QBResponseException e) {
+
+            }
+        });
     }
 
     @Override

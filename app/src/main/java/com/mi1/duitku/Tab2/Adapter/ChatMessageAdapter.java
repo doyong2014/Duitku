@@ -5,14 +5,15 @@ import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.mi1.duitku.Common.AppGlobal;
 import com.mi1.duitku.Common.CommonFunction;
 import com.mi1.duitku.R;
-import com.mi1.duitku.Tab2.Holder.QBUsersHolder;
 import com.quickblox.chat.QBChatService;
 import com.quickblox.chat.model.QBChatMessage;
 import com.quickblox.core.QBEntityCallback;
@@ -64,27 +65,18 @@ public class ChatMessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         } else {
             final ReceiveViewHolder viewHolder = (ReceiveViewHolder) holder;
             viewHolder.tvMessage.setText(item.getBody());
-            viewHolder.tvTime.setText(CommonFunction.getFormatedDate1(item.getDateSent()*1000));
-
-            QBUsers.getUser(item.getSenderId()).performAsync(new QBEntityCallback<QBUser>() {
-                @Override
-                public void onSuccess(QBUser user, Bundle args) {
-                    viewHolder.tvTime.setText(user.getFullName() + " " + viewHolder.tvTime.getText());
-                    if (user.getCustomData() != null && !user.getCustomData().isEmpty()) {
-                        Picasso.with(context).load(user.getCustomData().toLowerCase()).fit().into(viewHolder.civPhoto);
-                    }
-                }
-
-                @Override
-                public void onError(QBResponseException errors) {
-                }
-            });
+            String name = String.valueOf(item.getProperty("username"));
+            viewHolder.tvTime.setText(name + " " + CommonFunction.getFormatedDate1(item.getDateSent()*1000));
+            String picUrl = String.valueOf(item.getProperty("picUrl"));
+            if (!picUrl.equals("null")) {
+                Picasso.with(context).load(picUrl.toLowerCase()).fit().into(viewHolder.civPhoto);
+            }
         }
     }
 
     @Override
     public int getItemViewType(int position) {
-        if (qbChatMessages.get(position).getSenderId().equals(QBChatService.getInstance().getUser().getId())) {
+        if (qbChatMessages.get(position).getSenderId().equals(AppGlobal.qbID)) {
             return TYPE_SENDER;
         } else {
             return TYPE_RECEIVE;
@@ -118,9 +110,5 @@ public class ChatMessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
             tvMessage = (TextView) itemView.findViewById(R.id.txt_msg);
             civPhoto = (CircleImageView) itemView.findViewById(R.id.civ_user_photo);
         }
-    }
-
-    public void setData(ArrayList<QBChatMessage> qbChatMessages){
-        this.qbChatMessages = qbChatMessages;
     }
 }

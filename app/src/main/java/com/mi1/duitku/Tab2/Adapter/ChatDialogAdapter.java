@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.support.v7.widget.RecyclerView;
-import android.text.format.DateFormat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,15 +12,15 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.amulyakhare.textdrawable.TextDrawable;
-import com.amulyakhare.textdrawable.util.ColorGenerator;
+import com.mi1.duitku.Common.AppGlobal;
 import com.mi1.duitku.Common.CommonFunction;
 import com.mi1.duitku.R;
 import com.mi1.duitku.Tab2.ChatMessageActivity;
-import com.mi1.duitku.Tab2.Holder.QBUsersHolder;
 import com.quickblox.chat.model.QBChatDialog;
-import com.quickblox.users.model.QBUser;
 import com.squareup.picasso.Picasso;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 
@@ -35,10 +34,12 @@ public class ChatDialogAdapter extends RecyclerView.Adapter<ChatDialogAdapter.Vi
 
     private Context context;
     private ArrayList<QBChatDialog> qbChatDialogs;
+    private int chatType;
 
-    public ChatDialogAdapter(Context context, ArrayList<QBChatDialog> qbChatDialogs) {
+    public ChatDialogAdapter(Context context, ArrayList<QBChatDialog> qbChatDialogs, int chatType) {
         this.context = context;
         this.qbChatDialogs = qbChatDialogs;
+        this.chatType = chatType;
     }
 
     @Override
@@ -54,25 +55,31 @@ public class ChatDialogAdapter extends RecyclerView.Adapter<ChatDialogAdapter.Vi
         QBChatDialog item = qbChatDialogs.get(position);
         holder.tvUserName.setText(item.getName());
         holder.tvMessage.setText(item.getLastMessage());
-        holder.tvTime.setText(CommonFunction.getFormatedDate1(item.getLastMessageDateSent()*1000));
+        if (item.getLastMessageDateSent() != 0) {
+            holder.tvTime.setText(CommonFunction.getFormatedDate1(item.getLastMessageDateSent() * 1000));
+        } else {
+            holder.tvTime.setText(CommonFunction.getFormatedDate1(item.getCreatedAt()));
+        }
 
-//        QBUser qbUser = QBUsersHolder.getInstance().getUserById(item.getUserId());
-//        if (qbUser.getCustomData() != null) {
-//            Picasso.with(context).load(qbUser.getCustomData().toLowerCase()).fit().into(holder.civPhoto);
-//        } else {
-            ColorGenerator generator = ColorGenerator.MATERIAL;
-            int randomColor = generator.getRandomColor();
+        JSONObject qbUserPhoto = null;
+        String photoUrl;
+        if (item.getPhoto() != null) {
+            if (chatType == 0) {
+                try {
+                    qbUserPhoto = new JSONObject(item.getPhoto());
+                    photoUrl = qbUserPhoto.getString(item.getName().toLowerCase());
+                    if (!photoUrl.isEmpty()) {
+                        Picasso.with(context).load(photoUrl.toLowerCase()).fit().into(holder.civPhoto);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            } else {
+                Picasso.with(context).load(item.getPhoto().toLowerCase()).fit().into(holder.civPhoto);
+            }
+        }
 
-            TextDrawable.IBuilder builder = TextDrawable.builder().beginConfig()
-                    .withBorder(4)
-                    .endConfig()
-                    .round();
-
-            TextDrawable drawable = builder.build(item.getName().substring(0, 1).toUpperCase(), randomColor);
-            holder.ivPhoto.setImageDrawable(drawable);
-//        }
-
-        if(item.getUnreadMessageCount() > 0) {
+        if(item.getUnreadMessageCount() > 0 && !item.getLastMessageUserId().equals(AppGlobal.qbID)) {
             holder.ivNew.setVisibility(View.VISIBLE);
         }
 
@@ -95,8 +102,7 @@ public class ChatDialogAdapter extends RecyclerView.Adapter<ChatDialogAdapter.Vi
 
         TextView tvUserName, tvMessage, tvTime;
         ImageView ivNew;
-//        CircleImageView civPhoto;
-        ImageView ivPhoto;
+        CircleImageView civPhoto;
         LinearLayout llDialog;
 
         public ViewHolder(View view) {
@@ -104,15 +110,17 @@ public class ChatDialogAdapter extends RecyclerView.Adapter<ChatDialogAdapter.Vi
             tvUserName = (TextView)view.findViewById(R.id.txt_username);
             tvMessage = (TextView)view.findViewById(R.id.txt_message);
             tvTime = (TextView)view.findViewById(R.id.txt_time);
-            ivPhoto = (ImageView)view.findViewById(R.id.iv_photo);
+            civPhoto = (CircleImageView)view.findViewById(R.id.civ_photo);
             ivNew = (ImageView)view.findViewById(R.id.img_new);
             ivNew.setVisibility(View.GONE);
             llDialog = (LinearLayout)view.findViewById(R.id.ll_dialog);
+            if (chatType == 1) {
+                civPhoto.setImageResource(R.drawable.ic_group);
+            }
         }
     }
 
     public void setData(ArrayList<QBChatDialog> qbChatDialogs){
         this.qbChatDialogs = qbChatDialogs;
     }
-
 }

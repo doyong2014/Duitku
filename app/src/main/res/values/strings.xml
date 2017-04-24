@@ -160,5 +160,6 @@
 
     <string name="confirm_transfer">Do you really want to transfer?</string>
     <string name="fcm_sender_id">979270705931</string>
+    <string name="group_name">Group Name</string>
 
 </resources>

@@ -8,6 +8,7 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
 
     <application
         android:allowBackup="true"
@@ -148,11 +149,7 @@
             android:label="Detail Transaksi"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".Tab2.CreatePrivateChatActivity"
-            android:label="Add User"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".Tab2.CreateGroupChatActivity"
+            android:name=".Tab2.CreateChatActivity"
             android:label="Add User"
             android:screenOrientation="portrait" />
         <activity
