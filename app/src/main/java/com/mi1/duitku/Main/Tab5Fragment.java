@@ -88,7 +88,8 @@ public class Tab5Fragment extends Fragment {
     private CircleImageView civUserPhoto;
     private String fullName="", birthday="", email="", phone="";
     private Bitmap bmUserPhoto;
-    final int MY_PERMISSIONS_REQUEST_CAMERA = 1;
+    private final int MY_PERMISSIONS_REQUEST_CAMERA = 1;
+    private final int RESULT_LOAD_IMAGE = 105;
 
     public Tab5Fragment() {
         // Required empty public constructor
@@ -140,7 +141,7 @@ public class Tab5Fragment extends Fragment {
                 else {
                     Intent intent = new Intent(Intent.ACTION_PICK);
                     intent.setType("image/*");
-                    startActivityForResult(intent, 105);
+                    startActivityForResult(intent, RESULT_LOAD_IMAGE);
                 }
             }
         });
@@ -323,11 +324,11 @@ public class Tab5Fragment extends Fragment {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode == 105 && resultCode == RESULT_OK) {
+        if (requestCode == RESULT_LOAD_IMAGE && resultCode == RESULT_OK) {
 
             String mImgURI = CommonFunction.getFilePathFromUri(_context, data.getData());
             BitmapFactory.Options options = new BitmapFactory.Options();
-            int height = getImgSize(mImgURI);
+            int height = CommonFunction.getImgSize(mImgURI);
             if (height > 2400) {
                 options.inSampleSize = 8;
             } else if (height > 1200) {
@@ -344,17 +345,6 @@ public class Tab5Fragment extends Fragment {
             UploadImageAsync _uploadImageAsync = new UploadImageAsync();
             _uploadImageAsync.execute(params);
         }
-    }
-
-    private int getImgSize(String path){
-        BitmapFactory.Options options = new BitmapFactory.Options();
-        options.inJustDecodeBounds = true;
-        BitmapFactory.decodeFile(path, options);
-        int imageHeight = options.outHeight;
-        int imageWidth = options.outWidth;
-
-        return imageHeight;
-
     }
 
     public class GetProfileAsync extends AsyncTask<String, Integer, String> {

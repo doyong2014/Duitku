@@ -22,6 +22,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.NotificationCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
@@ -35,7 +36,6 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.afollestad.materialdialogs.DialogAction;
@@ -302,14 +302,14 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     private void getContacts() {
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            int permissionResult = checkSelfPermission(Manifest.permission.READ_CONTACTS);
+            int permissionResult = ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.READ_CONTACTS);
 
             if (permissionResult == PackageManager.PERMISSION_DENIED) {
 
                 /* 사용자가 CALL_PHONE 권한을 한번이라도 거부한 적이 있는 지 조사한다.
                 * 거부한 이력이 한번이라도 있다면, true를 리턴한다.
                 */
-                if (shouldShowRequestPermissionRationale(Manifest.permission.READ_CONTACTS)) {
+                if (ActivityCompat.shouldShowRequestPermissionRationale(MainActivity.this, Manifest.permission.READ_CONTACTS)) {
 
                     MaterialDialog dialog = new MaterialDialog.Builder(MainActivity.this)
                             .title("You need to permission for fetch contacts")

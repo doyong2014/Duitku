@@ -129,7 +129,7 @@ public class GroupFragment extends Fragment implements QBSystemMessageListener, 
             @Override
             public void onSuccess(QBChatDialog qbChatDialog, Bundle bundle) {
                 if (qbChatDialog.getType().equals(QBDialogType.PUBLIC_GROUP) || qbChatDialog.getType().equals(QBDialogType.GROUP)) {
-                    lstQBGroupChatDialog.add(0, qbChatDialog);
+                    lstQBGroupChatDialog.add(qbChatDialog);
                     adapter.notifyDataSetChanged();
                 }
             }
@@ -148,19 +148,20 @@ public class GroupFragment extends Fragment implements QBSystemMessageListener, 
 
     @Override
     public void processMessage(String s, QBChatMessage qbChatMessage, Integer integer) {
-        QBRestChatService.getChatDialogById(qbChatMessage.getBody()).performAsync(new QBEntityCallback<QBChatDialog>() {
-            @Override
-            public void onSuccess(QBChatDialog qbChatDialog, Bundle bundle) {
-                if (qbChatDialog.getType().equals(QBDialogType.PUBLIC_GROUP) || qbChatDialog.getType().equals(QBDialogType.GROUP)) {
-                    adapter.notifyDataSetChanged();
-                }
-            }
-
-            @Override
-            public void onError(QBResponseException e) {
-
-            }
-        });
+        loadChatDialogs();
+//        QBRestChatService.getChatDialogById(qbChatMessage.getBody()).performAsync(new QBEntityCallback<QBChatDialog>() {
+//            @Override
+//            public void onSuccess(QBChatDialog qbChatDialog, Bundle bundle) {
+//                if (qbChatDialog.getType().equals(QBDialogType.PUBLIC_GROUP) || qbChatDialog.getType().equals(QBDialogType.GROUP)) {
+//                    loadChatDialogs();
+//                }
+//            }
+//
+//            @Override
+//            public void onError(QBResponseException e) {
+//
+//            }
+//        });
     }
 
     @Override

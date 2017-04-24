@@ -2,6 +2,7 @@ package com.mi1.duitku.Common;
 
 import android.content.Context;
 import android.database.Cursor;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.provider.MediaStore;
 
@@ -194,5 +195,15 @@ public class CommonFunction {
         PrettyTime pt  = new PrettyTime(Locale.US);
         String datetime = pt.format(convertedDate);
         return datetime;
+    }
+
+    public static int getImgSize(String path){
+        BitmapFactory.Options options = new BitmapFactory.Options();
+        options.inJustDecodeBounds = true;
+        BitmapFactory.decodeFile(path, options);
+        int imageHeight = options.outHeight;
+        int imageWidth = options.outWidth;
+
+        return imageHeight;
     }
 }

@@ -2,6 +2,9 @@ package com.mi1.duitku.Tab2;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
@@ -17,6 +20,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.mi1.duitku.Common.AppGlobal;
+import com.mi1.duitku.Common.CommonFunction;
 import com.mi1.duitku.Common.DividerItemDecoration;
 import com.mi1.duitku.R;
 import com.mi1.duitku.Tab2.Adapter.AddUsersAdapter;
@@ -33,6 +37,7 @@ import com.quickblox.core.QBEntityCallback;
 import com.quickblox.core.exception.QBResponseException;
 import com.quickblox.users.QBUsers;
 import com.quickblox.users.model.QBUser;
+import com.squareup.picasso.Picasso;
 
 import org.jivesoftware.smack.SmackException;
 import org.json.JSONException;
@@ -40,13 +45,17 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 public class CreateChatActivity extends AppCompatActivity {
 
     private RecyclerView recycler;
     private ProgressDialog progress;
     private ArrayList<AvailableQBUser> availableQBUsers = new ArrayList<AvailableQBUser>();
     private EditText etGroupName;
+    private CircleImageView civPhoto;
     private int chatType;
+    private final int RESULT_LOAD_IMAGE = 101;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,8 +65,19 @@ public class CreateChatActivity extends AppCompatActivity {
         chatType = getIntent().getIntExtra("chat_type", 0);
 
         etGroupName = (EditText)findViewById(R.id.edt_group_name);
+        civPhoto = (CircleImageView)findViewById(R.id.civ_photo);
+        civPhoto.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                intent.setType("image/*");
+                startActivityForResult(intent, 106);
+            }
+        });
+
         if(chatType == 0) {
             etGroupName.setVisibility(View.GONE);
+            civPhoto.setVisibility(View.GONE);
         }
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
@@ -191,6 +211,16 @@ public class CreateChatActivity extends AppCompatActivity {
         if (view != null) {
             InputMethodManager inputManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
             inputManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == RESULT_LOAD_IMAGE && resultCode == RESULT_OK) {
+            String mImgURI = CommonFunction.getFilePathFromUri(CreateChatActivity.this, data.getData());
+            Picasso.with(CreateChatActivity.this).load(mImgURI.toLowerCase()).fit().into(civPhoto);
         }
     }
 

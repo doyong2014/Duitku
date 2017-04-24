@@ -131,7 +131,7 @@ public class InboxFragment extends Fragment implements QBSystemMessageListener, 
             @Override
             public void onSuccess(QBChatDialog qbChatDialog, Bundle bundle) {
                 if (qbChatDialog.getType().equals(QBDialogType.PRIVATE)) {
-                    lstQBPrivateChatDialog.add(0, qbChatDialog);
+                    lstQBPrivateChatDialog.add(qbChatDialog);
                     adapter.notifyDataSetChanged();
                 }
             }
@@ -150,19 +150,20 @@ public class InboxFragment extends Fragment implements QBSystemMessageListener, 
 
     @Override
     public void processMessage(String s, QBChatMessage qbChatMessage, Integer integer) { // receive message event
-        QBRestChatService.getChatDialogById(qbChatMessage.getBody()).performAsync(new QBEntityCallback<QBChatDialog>() {
-            @Override
-            public void onSuccess(QBChatDialog qbChatDialog, Bundle bundle) {
-                if (qbChatDialog.getType().equals(QBDialogType.PRIVATE)) {
-                    adapter.notifyDataSetChanged();
-                }
-            }
-
-            @Override
-            public void onError(QBResponseException e) {
-
-            }
-        });
+        loadChatDialogs();
+//        QBRestChatService.getChatDialogById(qbChatMessage.getBody()).performAsync(new QBEntityCallback<QBChatDialog>() {
+//            @Override
+//            public void onSuccess(QBChatDialog qbChatDialog, Bundle bundle) {
+//                if (qbChatDialog.getType().equals(QBDialogType.PRIVATE)) {
+//                    loadChatDialogs();
+//                }
+//            }
+//
+//            @Override
+//            public void onError(QBResponseException e) {
+//
+//            }
+//        });
     }
 
     @Override
