@@ -35,6 +35,7 @@ import com.quickblox.chat.model.QBDialogType;
 import com.quickblox.chat.utils.DialogUtils;
 import com.quickblox.core.QBEntityCallback;
 import com.quickblox.core.exception.QBResponseException;
+import com.quickblox.core.request.QBPagedRequestBuilder;
 import com.quickblox.users.QBUsers;
 import com.quickblox.users.model.QBUser;
 import com.squareup.picasso.Picasso;
@@ -44,6 +45,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -182,17 +185,22 @@ public class CreateChatActivity extends AppCompatActivity {
 
         progress.show();
 
-        QBUsers.getUsers(null).performAsync(new QBEntityCallback<ArrayList<QBUser>>() {
+        QBPagedRequestBuilder QBPaging = new QBPagedRequestBuilder();
+        QBUsers.getUsersByLogins(Contacts.getIntstace().listContact,QBPaging).performAsync(new QBEntityCallback<ArrayList<QBUser>>() {
             @Override
             public void onSuccess(ArrayList<QBUser> qbUsers, Bundle bundle) {
 
-                for(QBUser user: qbUsers) {
+               /* for(QBUser user: qbUsers) {
                     if (!user.getId().equals(AppGlobal.qbID)) {
                         if (Contacts.getIntstace().listContact.contains(user.getLogin())) {
                             availableQBUsers.add(new AvailableQBUser(user, false));
                         }
                     }
                 }
+                AddUsersAdapter adapter = new AddUsersAdapter(getBaseContext(), availableQBUsers);
+                */
+                for(QBUser user: qbUsers)
+                    availableQBUsers.add(new AvailableQBUser(user,false));
                 AddUsersAdapter adapter = new AddUsersAdapter(getBaseContext(), availableQBUsers);
                 recycler.setAdapter(adapter);
                 adapter.notifyDataSetChanged();
