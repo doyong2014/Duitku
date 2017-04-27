@@ -497,15 +497,23 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
         String[] projection = new String[] { ContactsContract.CommonDataKinds.Phone.NUMBER };
 
+      //  Cursor contactCursor = this.getContentResolver().query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI,
+      //          projection, ContactsContract.Contacts.HAS_PHONE_NUMBER+"=1", null, null);
         Cursor contactCursor = this.getContentResolver().query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI,
-                projection, ContactsContract.Contacts.HAS_PHONE_NUMBER+"=1", null, null);
+                          projection, null, null, null);
 
         ArrayList<String> contactlist = new ArrayList<String>();
 
         if (contactCursor.moveToFirst()) {
             do {
-                String phonenumber = contactCursor.getString(0).replaceAll("-", "");
-
+                //String phonenumber = contactCursor.getString(0).replaceAll("-", "");
+                String phonenumber = contactCursor.getString(contactCursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
+                //remove spacing
+                phonenumber = phonenumber.replaceAll("\\s+","");
+                // change +62 for indonesian code number to 0
+                if (phonenumber.contains("+62")){
+                    phonenumber = phonenumber.replace("+62", "0");
+                }
                 contactlist.add(phonenumber);
             } while (contactCursor.moveToNext());
         }

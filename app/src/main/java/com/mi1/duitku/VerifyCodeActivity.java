@@ -14,6 +14,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -21,6 +22,12 @@ import com.mi1.duitku.Common.AppGlobal;
 import com.mi1.duitku.Common.Constant;
 import com.mi1.duitku.Common.UserInfo;
 import com.mi1.duitku.Main.MainActivity;
+import com.quickblox.auth.session.QBSettings;
+import com.quickblox.core.QBEntityCallback;
+import com.quickblox.core.StoringMechanism;
+import com.quickblox.core.exception.QBResponseException;
+import com.quickblox.users.QBUsers;
+import com.quickblox.users.model.QBUser;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -203,17 +210,11 @@ public class VerifyCodeActivity extends BaseActivity {
 
                 JSONObject jsonObj = new JSONObject(result);
                 String statusCode = jsonObj.getString(Constant.JSON_STATUS_CODE);
-
                 if (statusCode.equals("00")){
-
                     Gson gson = new GsonBuilder().create();
                     AppGlobal._userInfo = gson.fromJson(result, UserInfo.class);
-
-                    Intent intent = new Intent(VerifyCodeActivity.this, MainActivity.class);
-                    startActivity(intent);
-                    HomeActivity._instance.finish();
-                    VerifyCodeActivity.this.finish();
-
+                    initQBFramework();
+                    loginQB();
                 } else {
                     String status = jsonObj.getString(Constant.JSON_STATUS_MESSAGE);
                     dispError(status);
@@ -345,6 +346,61 @@ public class VerifyCodeActivity extends BaseActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private void initQBFramework() {
+
+        QBSettings.getInstance().setStoringMehanism(StoringMechanism.UNSECURED);
+        QBSettings.getInstance().init(getApplicationContext(), Constant.QB_APP_ID, Constant.QB_AUTH_KEY, Constant.QB_AUTH_SECRET);
+        QBSettings.getInstance().setAccountKey(Constant.QB_ACCOUNT_KEY);
+        QBSettings.getInstance().setEnablePushNotification(true);
+    }
+
+    private void loginQB() {
+
+        QBUser qbUser = new QBUser(AppGlobal._userInfo.phoneNumber, Constant.QB_ACCOUNT_PASS);
+
+        QBUsers.signIn(qbUser).performAsync(new QBEntityCallback<QBUser>() {
+            @Override
+            public void onSuccess(QBUser qbUser, Bundle bundle) {
+                AppGlobal.qbID = qbUser.getId();
+                progress.dismiss();
+                Intent intent = new Intent(VerifyCodeActivity.this, MainActivity.class);
+                startActivity(intent);
+                HomeActivity._instance.finish();
+                VerifyCodeActivity.this.finish();
+            }
+
+            @Override
+            public void onError(QBResponseException e) {
+
+                progress.dismiss();
+                if (e.getMessage().equals("Unauthorized")) {
+                    signUpQB();
+                } else {
+                    Toast.makeText(getBaseContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+    }
+
+    private void signUpQB() {
+
+        QBUser qbUser = new QBUser(AppGlobal._userInfo.phoneNumber, Constant.QB_ACCOUNT_PASS);
+        qbUser.setFullName(AppGlobal._userInfo.name);
+        qbUser.setEmail(AppGlobal._userInfo.email);
+        QBUsers.signUp(qbUser).performAsync(new QBEntityCallback<QBUser>() {
+            @Override
+            public void onSuccess(QBUser qbUser, Bundle bundle) {
+                loginQB();
+            }
+
+            @Override
+            public void onError(QBResponseException e) {
+                progress.dismiss();
+                Toast.makeText(getBaseContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 }
 

@@ -3,9 +3,9 @@ package com.mi1.duitku.Common;
 public class Constant {
 
 	//production server
-//	private static final String root_url = "https://passport.duitku.com/";
+	private static final String root_url = "https://passport.duitku.com/";
 	//sandbox server
-	private static final String root_url = "http://sandbox.duitku.com/";
+//	private static final String root_url = "http://sandbox.duitku.com/";
 	public static final String LOGIN_PAGE = root_url + "webapi/api/loginduitku";
 	public static final String SIGNUP_PAGE = root_url + "webapi/api/user/registermi1";
 	public static final String RECOVERY_PASSWORD_PAGE = root_url + "webapi/api/user/forgotpasswordduitku";
