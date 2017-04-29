@@ -7,43 +7,42 @@
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:scaleType="centerCrop"
         android:src="@drawable/splash_bg"
-        android:scaleType="centerCrop"/>
-    
+        android:visibility="invisible" />
+
     <LinearLayout
         android:id="@+id/ll_home_bottom"
         android:layout_width="match_parent"
         android:layout_height="80dp"
         android:layout_alignParentBottom="true"
-        android:orientation="horizontal"
         android:gravity="center"
+        android:orientation="horizontal"
         android:weightSum="100">
 
         <Button
             android:id="@+id/btn_home_login"
-            android:layout_height="40dp"
             android:layout_width="0dp"
+            android:layout_height="40dp"
             android:layout_weight="35"
-            android:text="@string/login"
-            android:textSize="18sp"
             android:background="@drawable/btn_white"
-            />
+            android:text="@string/login"
+            android:textSize="18sp" />
 
         <View
-            android:layout_height="match_parent"
             android:layout_width="0dp"
-            android:layout_weight="5"/>
+            android:layout_height="match_parent"
+            android:layout_weight="5" />
 
         <Button
             android:id="@+id/btn_home_sign"
-            android:layout_height="40dp"
             android:layout_width="0dp"
+            android:layout_height="40dp"
             android:layout_weight="35"
-            android:text="@string/signin"
-            android:textSize="18sp"
-            android:textColor="@android:color/white"
             android:background="@drawable/btn_green"
-            />
+            android:text="@string/signin"
+            android:textColor="@android:color/white"
+            android:textSize="18sp" />
 
     </LinearLayout>
 
@@ -51,46 +50,72 @@
         android:id="@+id/txt_home_bottom"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/splash_bottom_txt"
         android:layout_above="@id/ll_home_bottom"
         android:layout_marginLeft="35dp"
         android:layout_marginRight="35dp"
-        android:textSize="18sp"
-        android:textColor="#ffff"/>
+        android:text="@string/splash_bottom_txt"
+        android:textColor="@color/Green"
+        android:textSize="18sp" />
 
     <TextView
         android:id="@+id/txt_home_middle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/splash_middle_txt"
         android:layout_above="@id/txt_home_bottom"
         android:layout_marginBottom="10dp"
         android:layout_marginLeft="35dp"
         android:layout_marginRight="35dp"
-        android:textSize="36sp"
+        android:text="@string/splash_middle_txt"
+        android:textColor="@color/color_logo"
+        android:textSize="30sp"
         android:textStyle="bold"
-        android:textColor="#ffff" />
+        android:visibility="visible" />
 
     <TextView
         android:id="@+id/txt_home_top"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/splash_top_txt"
         android:layout_above="@id/txt_home_middle"
         android:layout_marginBottom="5dp"
         android:layout_marginLeft="35dp"
         android:layout_marginRight="35dp"
+        android:text="@string/splash_top_txt"
+        android:textColor="@color/color_logo"
         android:textSize="18sp"
-        android:textColor="#ffff" />
+        android:visibility="gone" />
 
     <ImageButton
         android:layout_width="100dp"
         android:layout_height="100dp"
-        android:src="@drawable/splash_logo"
-        android:scaleType="fitCenter"
-        android:background="@null"
+        android:layout_above="@+id/txt_home_top"
         android:layout_marginBottom="20dp"
         android:layout_marginLeft="35dp"
-        android:layout_above="@+id/txt_home_top"/>
+        android:background="@null"
+        android:scaleType="fitCenter"
+        android:src="@drawable/splash_logo"
+        android:visibility="invisible" />
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="250dp"
+        android:layout_height="250dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="61dp"
+        android:visibility="visible"
+        app:srcCompat="@drawable/logodigi1" />
+
+    <ImageButton
+        android:id="@+id/ibtn"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:layout_alignWithParentIfMissing="true"
+        android:layout_marginLeft="35dp"
+        android:adjustViewBounds="false"
+        android:background="@null"
+        android:scaleType="fitCenter"
+        android:src="@drawable/splash_logo"
+        android:visibility="visible"
+        android:layout_alignBottom="@+id/imageView"
+        android:layout_alignEnd="@+id/imageView" />
 
 </RelativeLayout>

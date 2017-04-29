@@ -23,4 +23,5 @@
     <color name="background_blue">#00b3f1</color>
     <color name="font_blue">#495c97</color>
     <color name="colorError">#FF0000</color>
+    <color name="color_logo">#45568d</color>
 </resources>

@@ -16,7 +16,7 @@ public class SplashActivity extends BaseActivity {
             @Override
             public void run() {
                 // TODO Auto-generated method stub
-                Intent intent = new Intent(SplashActivity.this, WelcomeActivity.class);
+                Intent intent = new Intent(SplashActivity.this, HomeActivity.class);
                 startActivity(intent);
                 SplashActivity.this.finish();
             }
