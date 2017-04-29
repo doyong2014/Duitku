@@ -35,6 +35,7 @@ import com.quickblox.chat.model.QBDialogType;
 import com.quickblox.chat.utils.DialogUtils;
 import com.quickblox.core.QBEntityCallback;
 import com.quickblox.core.exception.QBResponseException;
+import com.quickblox.core.request.QBPagedRequestBuilder;
 import com.quickblox.users.QBUsers;
 import com.quickblox.users.model.QBUser;
 import com.squareup.picasso.Picasso;
@@ -115,8 +116,8 @@ public class CreateChatActivity extends AppCompatActivity {
                 //send system message to recipient Id user
                 QBSystemMessagesManager qbSystemMessagesManager = QBChatService.getInstance().getSystemMessagesManager();
                 QBChatMessage qbChatMessage = new QBChatMessage();
-                qbChatMessage.setRecipientId(selectedUser.getId());
                 qbChatMessage.setBody(qbChatDialog.getDialogId());
+                qbChatMessage.setRecipientId(selectedUser.getId());
                 try {
                     qbSystemMessagesManager.sendSystemMessage(qbChatMessage);
                 } catch (SmackException.NotConnectedException e) {
@@ -133,11 +134,11 @@ public class CreateChatActivity extends AppCompatActivity {
         });
     }
 
-    private void createGroupChat(ArrayList<QBUser> selectedUsers) {
+    private void createGroupChat(final ArrayList<QBUser> selectedUsers) {
 
         progress.show();
 
-        ArrayList<Integer> selectedIds = new ArrayList<>();
+        final ArrayList<Integer> selectedIds = new ArrayList<>();
 
         for (QBUser item : selectedUsers) {
             selectedIds.add(item.getId());
@@ -159,8 +160,8 @@ public class CreateChatActivity extends AppCompatActivity {
                 QBChatMessage qbChatMessage = new QBChatMessage();
                 qbChatMessage.setBody(qbChatDialog.getDialogId());
 
-                for (int i=0; i<qbChatDialog.getOccupants().size(); i++) {
-                    qbChatMessage.setRecipientId(qbChatDialog.getOccupants().get(i));
+                for (Integer item : selectedIds) {
+                    qbChatMessage.setRecipientId(item);
                     try {
                         qbSystemMessagesManager.sendSystemMessage(qbChatMessage);
                     } catch (SmackException.NotConnectedException e) {
@@ -182,7 +183,10 @@ public class CreateChatActivity extends AppCompatActivity {
 
         progress.show();
 
-        QBUsers.getUsers(null).performAsync(new QBEntityCallback<ArrayList<QBUser>>() {
+        QBPagedRequestBuilder pagedRequestBuilder = new QBPagedRequestBuilder();
+        pagedRequestBuilder.setPage(1);
+        pagedRequestBuilder.setPerPage(100);
+        QBUsers.getUsers(pagedRequestBuilder).performAsync(new QBEntityCallback<ArrayList<QBUser>>() {
             @Override
             public void onSuccess(ArrayList<QBUser> qbUsers, Bundle bundle) {
 

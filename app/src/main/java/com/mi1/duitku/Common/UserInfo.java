@@ -12,7 +12,6 @@ public class UserInfo {
 	public String name;
 	public String phoneNumber;
 	public String picUrl;
-	public String password;
 
 	public  UserInfo(){
 

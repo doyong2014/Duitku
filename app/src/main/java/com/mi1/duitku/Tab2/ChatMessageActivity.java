@@ -38,6 +38,7 @@ import java.util.ArrayList;
 public class ChatMessageActivity extends BaseActivity implements QBChatDialogMessageListener {
 
     public static String DIALOG_EXTRA = "dialog";
+    private String title;
     private QBChatDialog qbChatDialog;
     private RecyclerView recycler;
     private EditText etMessage;
@@ -50,6 +51,7 @@ public class ChatMessageActivity extends BaseActivity implements QBChatDialogMes
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat_message);
 
+        title = getIntent().getStringExtra("title");
         progress = new ProgressDialog(this);
         progress.setMessage(getString(R.string.wait));
         progress.setCanceledOnTouchOutside(false);
@@ -129,7 +131,7 @@ public class ChatMessageActivity extends BaseActivity implements QBChatDialogMes
         }
 
         // Add message listener for that particular chat dialog
-        qbChatDialog.addMessageListener(this);
+        qbChatDialog.addMessageListener(ChatMessageActivity.this);
     }
 
     private void retrieveMessage() {
@@ -146,7 +148,6 @@ public class ChatMessageActivity extends BaseActivity implements QBChatDialogMes
 
                     adapter = new ChatMessageAdapter(ChatMessageActivity.this, lstQBChatMessage);
                     recycler.setAdapter(adapter);
-                    adapter.notifyDataSetChanged();
                 }
 
                 @Override
@@ -164,6 +165,7 @@ public class ChatMessageActivity extends BaseActivity implements QBChatDialogMes
 
         actionBar.setHomeButtonEnabled(true);
         actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setTitle(title);
         actionBar.setBackgroundDrawable(ContextCompat.getDrawable(this, R.drawable.actionbar_bg));
 
         getMenuInflater().inflate(R.menu.menu_chat, menu);
@@ -194,7 +196,7 @@ public class ChatMessageActivity extends BaseActivity implements QBChatDialogMes
     }
 
     @Override
-    public void processMessage(String s, QBChatMessage qbChatMessage, Integer integer) {
+    public void processMessage(String dialogId, QBChatMessage qbChatMessage, Integer senderId) {
         //Cache Message
         lstQBChatMessage.add(qbChatMessage);
         adapter.notifyDataSetChanged();

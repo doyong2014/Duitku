@@ -188,7 +188,7 @@
                             android:layout_height="wrap_content"
                             android:text="Password"
                             android:textColor="@color/colorDisable"
-                            android:textSize="13sp" />
+                            android:textSize="13sp"/>
 
                         <TextView
                             android:id="@+id/txt_password"
@@ -196,6 +196,7 @@
                             android:layout_weight="60"
                             android:layout_height="wrap_content"
                             android:inputType="textPassword"
+                            android:text="***********"
                             android:textSize="13sp"
                             />
 

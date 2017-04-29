@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -42,6 +43,7 @@ public class GroupFragment extends Fragment implements QBSystemMessageListener, 
     private RecyclerView recycler;
     private ProgressDialog progress;
     private ArrayList<QBChatDialog> lstQBGroupChatDialog = new ArrayList<>();
+    private static final String TAG = "GroupFragment";
 
     public GroupFragment() {
         // Required empty public constructor
@@ -88,12 +90,20 @@ public class GroupFragment extends Fragment implements QBSystemMessageListener, 
     private void registerListener() {
 
         QBSystemMessagesManager qbSystemMessagesManager = QBChatService.getInstance().getSystemMessagesManager();
-        qbSystemMessagesManager.removeSystemMessageListener(GroupFragment.this);
+        try {
+            qbSystemMessagesManager.removeSystemMessageListener(GroupFragment.this);
+        } catch (Exception e) {
+            Log.d(TAG, e.getMessage());
+        }
         qbSystemMessagesManager.addSystemMessageListener(GroupFragment.this);
 
         //Register listener Incoming Message
         QBIncomingMessagesManager incomingMessage = QBChatService.getInstance().getIncomingMessagesManager();
-        incomingMessage.removeDialogMessageListrener(GroupFragment.this);
+        try {
+            incomingMessage.removeDialogMessageListrener(GroupFragment.this);
+        } catch (Exception e) {
+            Log.d(TAG, e.getMessage());
+        }
         incomingMessage.addDialogMessageListener(GroupFragment.this);
     }
 
@@ -147,21 +157,21 @@ public class GroupFragment extends Fragment implements QBSystemMessageListener, 
     }
 
     @Override
-    public void processMessage(String s, QBChatMessage qbChatMessage, Integer integer) {
-        loadChatDialogs();
-//        QBRestChatService.getChatDialogById(qbChatMessage.getBody()).performAsync(new QBEntityCallback<QBChatDialog>() {
-//            @Override
-//            public void onSuccess(QBChatDialog qbChatDialog, Bundle bundle) {
-//                if (qbChatDialog.getType().equals(QBDialogType.PUBLIC_GROUP) || qbChatDialog.getType().equals(QBDialogType.GROUP)) {
-//                    loadChatDialogs();
-//                }
-//            }
-//
-//            @Override
-//            public void onError(QBResponseException e) {
-//
-//            }
-//        });
+    public void processMessage(String dialogId, QBChatMessage qbChatMessage, Integer senderId) {
+//        loadChatDialogs();
+        QBRestChatService.getChatDialogById(dialogId).performAsync(new QBEntityCallback<QBChatDialog>() {
+            @Override
+            public void onSuccess(QBChatDialog qbChatDialog, Bundle bundle) {
+                if (qbChatDialog.getType().equals(QBDialogType.PUBLIC_GROUP) || qbChatDialog.getType().equals(QBDialogType.GROUP)) {
+                    loadChatDialogs();
+                }
+            }
+
+            @Override
+            public void onError(QBResponseException e) {
+
+            }
+        });
     }
 
     @Override
