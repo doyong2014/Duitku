@@ -27,7 +27,8 @@
             android:layout_weight="35"
             android:background="@drawable/btn_white"
             android:text="@string/login"
-            android:textSize="18sp" />
+            android:textSize="18sp"
+            android:gravity="center"/>
 
         <View
             android:layout_width="0dp"
@@ -42,7 +43,8 @@
             android:background="@drawable/btn_green"
             android:text="@string/signin"
             android:textColor="@android:color/white"
-            android:textSize="18sp" />
+            android:textSize="18sp"
+            android:gravity="center" />
 
     </LinearLayout>
 
