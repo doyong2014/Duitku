@@ -45,8 +45,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -118,8 +116,8 @@ public class CreateChatActivity extends AppCompatActivity {
                 //send system message to recipient Id user
                 QBSystemMessagesManager qbSystemMessagesManager = QBChatService.getInstance().getSystemMessagesManager();
                 QBChatMessage qbChatMessage = new QBChatMessage();
-                qbChatMessage.setRecipientId(selectedUser.getId());
                 qbChatMessage.setBody(qbChatDialog.getDialogId());
+                qbChatMessage.setRecipientId(selectedUser.getId());
                 try {
                     qbSystemMessagesManager.sendSystemMessage(qbChatMessage);
                 } catch (SmackException.NotConnectedException e) {
@@ -136,11 +134,11 @@ public class CreateChatActivity extends AppCompatActivity {
         });
     }
 
-    private void createGroupChat(ArrayList<QBUser> selectedUsers) {
+    private void createGroupChat(final ArrayList<QBUser> selectedUsers) {
 
         progress.show();
 
-        ArrayList<Integer> selectedIds = new ArrayList<>();
+        final ArrayList<Integer> selectedIds = new ArrayList<>();
 
         for (QBUser item : selectedUsers) {
             selectedIds.add(item.getId());
@@ -162,8 +160,8 @@ public class CreateChatActivity extends AppCompatActivity {
                 QBChatMessage qbChatMessage = new QBChatMessage();
                 qbChatMessage.setBody(qbChatDialog.getDialogId());
 
-                for (int i=0; i<qbChatDialog.getOccupants().size(); i++) {
-                    qbChatMessage.setRecipientId(qbChatDialog.getOccupants().get(i));
+                for (Integer item : selectedIds) {
+                    qbChatMessage.setRecipientId(item);
                     try {
                         qbSystemMessagesManager.sendSystemMessage(qbChatMessage);
                     } catch (SmackException.NotConnectedException e) {
@@ -185,22 +183,20 @@ public class CreateChatActivity extends AppCompatActivity {
 
         progress.show();
 
-        QBPagedRequestBuilder QBPaging = new QBPagedRequestBuilder();
-        QBUsers.getUsersByLogins(Contacts.getIntstace().listContact,QBPaging).performAsync(new QBEntityCallback<ArrayList<QBUser>>() {
+        QBPagedRequestBuilder pagedRequestBuilder = new QBPagedRequestBuilder();
+        pagedRequestBuilder.setPage(1);
+        pagedRequestBuilder.setPerPage(100);
+        QBUsers.getUsers(pagedRequestBuilder).performAsync(new QBEntityCallback<ArrayList<QBUser>>() {
             @Override
             public void onSuccess(ArrayList<QBUser> qbUsers, Bundle bundle) {
 
-               /* for(QBUser user: qbUsers) {
+                for(QBUser user: qbUsers) {
                     if (!user.getId().equals(AppGlobal.qbID)) {
                         if (Contacts.getIntstace().listContact.contains(user.getLogin())) {
                             availableQBUsers.add(new AvailableQBUser(user, false));
                         }
                     }
                 }
-                AddUsersAdapter adapter = new AddUsersAdapter(getBaseContext(), availableQBUsers);
-                */
-                for(QBUser user: qbUsers)
-                    availableQBUsers.add(new AvailableQBUser(user,false));
                 AddUsersAdapter adapter = new AddUsersAdapter(getBaseContext(), availableQBUsers);
                 recycler.setAdapter(adapter);
                 adapter.notifyDataSetChanged();

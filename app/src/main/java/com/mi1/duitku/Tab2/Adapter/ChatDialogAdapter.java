@@ -52,7 +52,7 @@ public class ChatDialogAdapter extends RecyclerView.Adapter<ChatDialogAdapter.Vi
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
-        QBChatDialog item = qbChatDialogs.get(position);
+        final QBChatDialog item = qbChatDialogs.get(position);
         holder.tvUserName.setText(item.getName());
         holder.tvMessage.setText(item.getLastMessage());
         if (item.getLastMessageDateSent() != 0) {
@@ -88,6 +88,7 @@ public class ChatDialogAdapter extends RecyclerView.Adapter<ChatDialogAdapter.Vi
             public void onClick(View v) {
                 Intent intent = new Intent(context, ChatMessageActivity.class);
                 intent.putExtra(ChatMessageActivity.DIALOG_EXTRA, qbChatDialogs.get(position));
+                intent.putExtra("title", item.getName());
                 context.startActivity(intent);
             }
         });

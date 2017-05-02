@@ -106,7 +106,20 @@ public class Tab5Fragment extends Fragment {
         progress.setMessage(getString(R.string.wait));
         progress.setCanceledOnTouchOutside(false);
 
-        getProfile();
+        Toolbar toolbar = (Toolbar) view.findViewById(R.id.toolbar);
+        AppCompatActivity activity = (AppCompatActivity) getActivity();
+        activity.setSupportActionBar(toolbar);
+
+        tvFullName = (TextView)view.findViewById(R.id.txt_full_name);
+        tvBirthday = (TextView)view.findViewById(R.id.txt_birthday);
+        tvEmail = (TextView)view.findViewById(R.id.txt_email);
+        tvPhone = (TextView)view.findViewById(R.id.txt_phone);
+
+        fullName = AppGlobal._userInfo.name;
+        email = AppGlobal._userInfo.email;
+        phone = AppGlobal._userInfo.phoneNumber;
+        ivBlurPhoto = (ImageView) view.findViewById(R.id.img_full);
+        civUserPhoto = (CircleImageView) view.findViewById(R.id.civ_user_photo);
 
         if (AppGlobal._userDetailInfo.birthday != null) {
             int idx = AppGlobal._userDetailInfo.birthday.indexOf(" ");
@@ -115,23 +128,19 @@ public class Tab5Fragment extends Fragment {
             } else {
                 birthday = AppGlobal._userDetailInfo.birthday;
             }
+        } else {
+            getProfile();
         }
-
-        fullName = AppGlobal._userInfo.name;
-        email = AppGlobal._userInfo.email;
-        phone = AppGlobal._userInfo.phoneNumber;
-
-        Toolbar toolbar = (Toolbar) view.findViewById(R.id.toolbar);
-        AppCompatActivity activity = (AppCompatActivity) getActivity();
-        activity.setSupportActionBar(toolbar);
-
-        ivBlurPhoto = (ImageView) view.findViewById(R.id.img_full);
-        civUserPhoto = (CircleImageView) view.findViewById(R.id.civ_user_photo);
 
         if (!AppGlobal._userInfo.picUrl.isEmpty()) {
             Picasso.with(_context).load(AppGlobal._userInfo.picUrl.toLowerCase()).fit().transform(new BlurTransformation(_context)).into(ivBlurPhoto);
             Picasso.with(_context).load(AppGlobal._userInfo.picUrl.toLowerCase()).fit().into(civUserPhoto);
         }
+
+        tvFullName.setText(fullName);
+        tvBirthday.setText(birthday);
+        tvEmail.setText(email);
+        tvPhone.setText(phone);
 
         civUserPhoto.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -146,11 +155,6 @@ public class Tab5Fragment extends Fragment {
             }
         });
 
-        if (!checkpermission())
-            ActivityCompat.requestPermissions(getActivity(),new String[]{Manifest.permission.CAMERA, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE}, MY_PERMISSIONS_REQUEST_CAMERA);
-
-        tvFullName = (TextView)view.findViewById(R.id.txt_full_name);
-        tvFullName.setText(fullName);
         LinearLayout layoutUserName = (LinearLayout)view.findViewById(R.id.ll_username);
         layoutUserName.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -159,8 +163,6 @@ public class Tab5Fragment extends Fragment {
             }
         });
 
-        tvBirthday = (TextView)view.findViewById(R.id.txt_birthday);
-        tvBirthday.setText(birthday);
         LinearLayout layoutBirthday = (LinearLayout)view.findViewById(R.id.ll_birthday);
         layoutBirthday.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -169,8 +171,6 @@ public class Tab5Fragment extends Fragment {
             }
         });
 
-        tvEmail = (TextView)view.findViewById(R.id.txt_email);
-        tvEmail.setText(email);
         LinearLayout layoutEmail = (LinearLayout)view.findViewById(R.id.ll_email);
         layoutEmail.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -179,8 +179,6 @@ public class Tab5Fragment extends Fragment {
             }
         });
 
-        TextView tvPassword = (TextView)view.findViewById(R.id.txt_password);
-        tvPassword.setText(AppGlobal._userInfo.password);
         LinearLayout layoutPassword = (LinearLayout)view.findViewById(R.id.ll_password);
         layoutPassword.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -190,8 +188,6 @@ public class Tab5Fragment extends Fragment {
             }
         });
 
-        tvPhone = (TextView)view.findViewById(R.id.txt_phone);
-        tvPhone.setText(phone);
         LinearLayout layoutPhone = (LinearLayout)view.findViewById(R.id.ll_phone);
         layoutPhone.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -317,7 +313,6 @@ public class Tab5Fragment extends Fragment {
     private void dispUserDetailInfo() {
         birthday = CommonFunction.getFormatedDate(AppGlobal._userDetailInfo.birthday);
         tvBirthday.setText(birthday);
-
     }
 
     @Override
@@ -518,7 +513,6 @@ public class Tab5Fragment extends Fragment {
                 .input("", phone, new MaterialDialog.InputCallback() {
                     @Override
                     public void onInput(MaterialDialog dialog, CharSequence input) {
-                        if (input.toString().isEmpty()) {}
                         phone = String.valueOf(input);
                         updateProfile();
                     }
@@ -637,8 +631,6 @@ public class Tab5Fragment extends Fragment {
     }
 
     private void dispUpdateInfo() {
-
-
 
         tvFullName.setText(AppGlobal._userInfo.name);
         tvBirthday.setText(birthday);

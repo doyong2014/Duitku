@@ -175,9 +175,10 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
                     jsonObject.put("password", param[1]);
                     jsonObject.put("community_code", param[2]);
 
-//                    jsonObject.put("username", "081213497969"); // 081213497969  8618642502551
-//                    jsonObject.put("password", CommonFunction.md5("TMIA7EPD"));// TMIA7EPD  NB1NSFW5
+//                    jsonObject.put("username", "8618642502551"); // 081213497969  8618642502551
+//                    jsonObject.put("password", CommonFunction.md5("NB1NSFW5"));// TMIA7EPD  NB1NSFW5
 //                    jsonObject.put("community_code", param[2]);
+
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -235,7 +236,6 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
                 if (statusCode.equals("00")){
                     Gson gson = new GsonBuilder().create();
                     AppGlobal._userInfo = gson.fromJson(result, UserInfo.class);
-                    AppGlobal._userInfo.password = password;
                     initQBFramework();
                     loginQB();
 
