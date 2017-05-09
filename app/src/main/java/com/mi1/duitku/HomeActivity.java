@@ -6,6 +6,9 @@ import android.view.View;
 import android.widget.Button;
 
 import com.mi1.duitku.Common.AppGlobal;
+import com.mi1.duitku.Common.Constant;
+import com.quickblox.auth.session.QBSettings;
+import com.quickblox.core.StoringMechanism;
 
 public class HomeActivity extends BaseActivity {
 
@@ -15,6 +18,9 @@ public class HomeActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
+
+        this.initQBFramework();
+
         setContentView(R.layout.activity_home);
 
         _instance = this;
@@ -40,5 +46,12 @@ public class HomeActivity extends BaseActivity {
                 startActivity(intent);
             }
         });
+    }
+
+    private void initQBFramework() {
+        QBSettings.getInstance().setStoringMehanism(StoringMechanism.UNSECURED);
+        QBSettings.getInstance().init(getApplicationContext(), Constant.QB_APP_ID, Constant.QB_AUTH_KEY, Constant.QB_AUTH_SECRET);
+        QBSettings.getInstance().setAccountKey(Constant.QB_ACCOUNT_KEY);
+        QBSettings.getInstance().setEnablePushNotification(true);
     }
 }

@@ -121,7 +121,7 @@ public class Tab5Fragment extends Fragment {
         ivBlurPhoto = (ImageView) view.findViewById(R.id.img_full);
         civUserPhoto = (CircleImageView) view.findViewById(R.id.civ_user_photo);
 
-        if (AppGlobal._userDetailInfo.birthday != null) {
+        if (AppGlobal._userDetailInfo != null && AppGlobal._userDetailInfo.birthday != null) {
             int idx = AppGlobal._userDetailInfo.birthday.indexOf(" ");
             if (idx != -1) {
                 birthday = AppGlobal._userDetailInfo.birthday.substring(0, idx);

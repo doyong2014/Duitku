@@ -63,6 +63,7 @@ import com.quickblox.core.QBEntityCallback;
 import com.quickblox.core.exception.BaseServiceException;
 import com.quickblox.core.exception.QBResponseException;
 import com.quickblox.messages.services.SubscribeService;
+import com.quickblox.users.QBUsers;
 import com.quickblox.users.model.QBUser;
 import com.squareup.picasso.Picasso;
 
@@ -287,8 +288,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
         Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this)
-                .setSmallIcon(R.drawable.splash_logo)
-                .setContentTitle("FCM Notification")
+                .setSmallIcon(R.drawable.logodigi1)
+                .setContentTitle("Digi1")
                 .setContentText(messageBody)
                 .setAutoCancel(true)
                 .setSound(defaultSoundUri)
@@ -585,6 +586,18 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         AppGlobal._userDetailInfo = null;
         Intent intent = new Intent(MainActivity.this, LoginActivity.class);
         startActivity(intent);
+        QBUsers.signOut().performAsync(new QBEntityCallback<Void>(){
+            @Override
+            public void onSuccess(Void result, Bundle bundle) {
+                Log.i(TAG, ">>> User was successfully signed out");
+            }
+
+            @Override
+            public void onError(QBResponseException errors)
+            {
+//                handleErrors(errors);
+            }
+        });
         MainActivity._instance.finish();
     }
 }

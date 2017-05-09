@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.media.RingtoneManager;
 import android.net.Uri;
+import android.os.Bundle;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
@@ -14,16 +15,22 @@ import com.google.firebase.messaging.RemoteMessage;
 import com.mi1.duitku.Main.MainActivity;
 import com.mi1.duitku.R;
 
+import com.quickblox.messages.services.fcm.QBFcmPushListenerService;
+
+import java.util.Map;
+
 /**
  * Created by owner on 4/13/2017.
  */
 
-public class MyFCMService extends FirebaseMessagingService {
+public class MyFCMService extends QBFcmPushListenerService {
 
     private static final String TAG = "MyFirebaseMsgService";
 
-    @Override
+    /*@Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
+
+      /*  super.onMessageReceived(remoteMessage);
 
         Log.d(TAG, "From: " + remoteMessage.getFrom());
 
@@ -36,8 +43,21 @@ public class MyFCMService extends FirebaseMessagingService {
         if (remoteMessage.getNotification() != null) {
             Log.d(TAG, "Message Notification Body: " + remoteMessage.getNotification().getBody());
             sendNotification(remoteMessage.getNotification().getBody());
-        }
+        }*/
+    //}
+
+
+    @Override
+    public void sendPushMessage(Map data, String from, String message) {
+        super.sendPushMessage(data, from, message);
+        Log.v(TAG, "From: " + from);
+        Log.v(TAG, "Message: " + message);
+
+        //if (ActivityLifecycle.getInstance().isBackground()) {
+            sendNotification(message);
+        //}
     }
+
 
     /**
      * Create and show a simple notification containing the received FCM message.
@@ -52,8 +72,8 @@ public class MyFCMService extends FirebaseMessagingService {
 
         Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this)
-                .setSmallIcon(R.drawable.splash_logo)
-                .setContentTitle("FCM Message")
+                .setSmallIcon(R.drawable.logodigi1)
+                .setContentTitle("Digi-1")
                 .setContentText(messageBody)
                 .setAutoCancel(true)
                 .setSound(defaultSoundUri)

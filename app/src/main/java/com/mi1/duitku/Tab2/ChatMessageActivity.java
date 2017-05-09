@@ -45,6 +45,7 @@ public class ChatMessageActivity extends BaseActivity implements QBChatDialogMes
     private ChatMessageAdapter adapter;
     private ProgressDialog progress;
     private ArrayList<QBChatMessage> lstQBChatMessage = new ArrayList<>();
+    private static final String PROPERTY_SAVE_TO_HISTORY = "save_to_history";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,6 +78,9 @@ public class ChatMessageActivity extends BaseActivity implements QBChatDialogMes
                 chatMessage.setSaveToHistory(true);
                 chatMessage.setProperty("username", AppGlobal._userInfo.name);
                 chatMessage.setProperty("picUrl", AppGlobal._userInfo.picUrl);
+                chatMessage.setProperty(PROPERTY_SAVE_TO_HISTORY, "1");
+                chatMessage.setDateSent(System.currentTimeMillis() / 1000);
+                chatMessage.setMarkable(true);
 
                 try {
                     qbChatDialog.sendMessage(chatMessage);
@@ -106,6 +110,19 @@ public class ChatMessageActivity extends BaseActivity implements QBChatDialogMes
         super.onDestroy();
         qbChatDialog.removeMessageListrener(this);
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        qbChatDialog.addMessageListener(this);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        qbChatDialog.removeMessageListrener(this);
+    }
+
 
     private void initChatDialogs() {
 

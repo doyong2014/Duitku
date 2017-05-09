@@ -1,27 +1,31 @@
 {
   "project_info": {
-    "project_number": "979270705931",
-    "firebase_url": "https://mi1-duitku-165105.firebaseio.com",
-    "project_id": "mi1-duitku-165105",
-    "storage_bucket": "mi1-duitku-165105.appspot.com"
+    "project_number": "402604308168",
+    "firebase_url": "https://mi1-indonesia.firebaseio.com",
+    "project_id": "mi1-indonesia",
+    "storage_bucket": "mi1-indonesia.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:979270705931:android:8e7ea7079826056a",
+        "mobilesdk_app_id": "1:402604308168:android:8e7ea7079826056a",
         "android_client_info": {
           "package_name": "com.mi1.duitku"
         }
       },
       "oauth_client": [
         {
-          "client_id": "979270705931-6rah00q926gikbor9qa21uhiaamio77k.apps.googleusercontent.com",
+          "client_id": "402604308168-lrdsqij0j2j5a68m4kt5eh550e3m3fr1.apps.googleusercontent.com",
+          "client_type": 3
+        },
+        {
+          "client_id": "402604308168-5b3788aq2c7bbrl59f31roj639m6qkqg.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyD9tJ1qFrpeZoDIy3Logmjtk_CXekJZSwM"
+          "current_key": "AIzaSyDJAJwjyudOdY4q7slYnsDV0u6uptrsshQ"
         }
       ],
       "services": {
