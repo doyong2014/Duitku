@@ -69,6 +69,16 @@ public class DataModel {
                 return Html.fromHtml(this.title).toString();
             }
         }
+        public String getUrl() {
+            if (Build.VERSION.SDK_INT >= 24)
+            {
+                return Html.fromHtml(this.url, Html.FROM_HTML_MODE_LEGACY).toString();
+            }
+            else
+            {
+                return Html.fromHtml(this.url).toString();
+            }
+        }
 
         public class Category {
             public int id;
