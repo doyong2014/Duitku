@@ -30,7 +30,7 @@ public class ContentsActivity extends BaseActivity {
 
     private String subject = " ";
     private ShareActionProvider shareActionProvider;
-    private String title, contents;
+    private String title, contents, url;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +45,7 @@ public class ContentsActivity extends BaseActivity {
         TextView tvTitle = (TextView)findViewById(R.id.txt_title);
         TextView tvPostTime = (TextView)findViewById(R.id.txt_time);
         TextView tvContents = (TextView)findViewById(R.id.txt_content);
+        TextView tvUrl = (TextView)findViewById(R.id.txt_url);
 
         Intent intent = getIntent();
         int tab = intent.getExtras().getInt("tab");
@@ -67,6 +68,7 @@ public class ContentsActivity extends BaseActivity {
 
         title = item.getTitle();
         contents = item.getContent();
+        url = item.getUrl();
         Picasso.with(this).load(item.thumbnail_images.full.url).fit().into(ivThumb);
         tvTitle.setText(title);
         tvPostTime.setText(CommonFunction.getTimeAgo(item.date));
@@ -162,6 +164,7 @@ public class ContentsActivity extends BaseActivity {
         intent.putExtra(Intent.EXTRA_SUBJECT, subject);
         intent.putExtra(Intent.EXTRA_TITLE, title);
         intent.putExtra(Intent.EXTRA_TEXT, contents);
+        intent.putExtra(Intent.EXTRA_TEXT, url);
         if(intent != null) {
 //            shareActionProvider.setShareIntent(intent);
             startActivity(Intent.createChooser(intent, "share"));

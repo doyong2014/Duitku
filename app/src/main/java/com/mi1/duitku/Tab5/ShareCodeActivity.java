@@ -20,7 +20,7 @@ public class ShareCodeActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_share_code);
+        setContentView(R.layout.activity_wallet);
 
         ImageView ivBlurPhoto = (ImageView) findViewById(R.id.img_full);
         CircleImageView civUserPhoto = (CircleImageView) findViewById(R.id.civ_user_photo);
@@ -31,7 +31,7 @@ public class ShareCodeActivity extends BaseActivity {
         }
 
         TextView tvName = (TextView)findViewById(R.id.txt_name);
-        tvName.setText(AppGlobal._userInfo.name);
+        tvName.setText(AppGlobal._userInfo.name + " - Wallet Information");
     }
 
     @Override

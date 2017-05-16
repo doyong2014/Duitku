@@ -1,0 +1,288 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/textView9"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="activity_share_code.xml" />
+
+        <ImageView
+            android:id="@+id/img_full"
+            android:layout_width="match_parent"
+            android:layout_height="230dp"
+            android:layout_alignParentTop="true"
+            android:scaleType="centerCrop" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="230dp"
+            android:layout_alignParentTop="true"
+            android:background="#80FFFFFF"
+            android:gravity="center">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/civ_user_photo"
+                android:layout_width="130dp"
+                android:layout_height="130dp"
+                android:src="@drawable/default_round_head"
+                app:civ_border_color="#FF000000"
+                app:civ_border_width="2dp" />
+
+        </LinearLayout>
+
+        <android.support.v7.widget.CardView
+            android:id="@+id/card_info"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/img_full"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginTop="-25dp"
+            card_view:cardUseCompatPadding="true">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp">
+
+                <TextView
+                    android:id="@+id/txt_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingBottom="15dp"
+                    android:paddingLeft="5dp"
+                    android:paddingTop="15dp"
+                    android:text="Information"
+                    android:textSize="14sp" />
+
+                <View
+                    android:id="@+id/viewSep"
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:layout_below="@+id/txt_name"
+                    android:layout_marginBottom="5dp"
+                    android:background="@color/colorSepLine" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/viewSep"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/textView13"
+                            android:layout_width="150dp"
+                            android:layout_height="30dp"
+                            android:gravity="center_vertical"
+                            android:text="Total Partners" />
+
+                        <TextView
+                            android:id="@+id/textView11"
+                            android:layout_width="wrap_content"
+                            android:layout_height="30dp"
+                            android:layout_weight="1"
+                            android:gravity="center_vertical"
+                            android:text="6/0"
+                            android:textAlignment="viewEnd" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/textView14"
+                            android:layout_width="150dp"
+                            android:layout_height="30dp"
+                            android:gravity="center_vertical"
+                            android:text="Cummulative RP" />
+
+                        <TextView
+                            android:id="@+id/textView16"
+                            android:layout_width="wrap_content"
+                            android:layout_height="30dp"
+                            android:layout_weight="1"
+                            android:gravity="center_vertical"
+                            android:text="19.000/0"
+                            android:textAlignment="viewEnd" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/textView17"
+                            android:layout_width="150dp"
+                            android:layout_height="30dp"
+                            android:gravity="center_vertical"
+                            android:text="LGI" />
+
+                        <TextView
+                            android:id="@+id/textView19"
+                            android:layout_width="wrap_content"
+                            android:layout_height="30dp"
+                            android:layout_weight="1"
+                            android:gravity="center_vertical"
+                            android:text="19.000/0"
+                            android:textAlignment="viewEnd" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/textView20"
+                            android:layout_width="150dp"
+                            android:layout_height="30dp"
+                            android:gravity="center_vertical"
+                            android:text="Cummulative Day LP" />
+
+                        <TextView
+                            android:id="@+id/textView22"
+                            android:layout_width="wrap_content"
+                            android:layout_height="30dp"
+                            android:layout_weight="1"
+                            android:gravity="center_vertical"
+                            android:text="19.000/0"
+                            android:textAlignment="viewEnd" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/textView23"
+                            android:layout_width="150dp"
+                            android:layout_height="30dp"
+                            android:gravity="center_vertical"
+                            android:text="Loyalty Point (LP)" />
+
+                        <TextView
+                            android:id="@+id/textView25"
+                            android:layout_width="wrap_content"
+                            android:layout_height="30dp"
+                            android:layout_weight="1"
+                            android:gravity="center_vertical"
+                            android:text="1.200"
+                            android:textAlignment="viewEnd" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/textView26"
+                            android:layout_width="150dp"
+                            android:layout_height="30dp"
+                            android:gravity="center_vertical"
+                            android:text="Register Wallet (RW)" />
+
+                        <TextView
+                            android:id="@+id/textView28"
+                            android:layout_width="wrap_content"
+                            android:layout_height="30dp"
+                            android:layout_weight="1"
+                            android:gravity="center_vertical"
+                            android:text="3.500"
+                            android:textAlignment="viewEnd" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/textView29"
+                            android:layout_width="150dp"
+                            android:layout_height="30dp"
+                            android:gravity="center_vertical"
+                            android:text="Wallet Point (WP)" />
+
+                        <TextView
+                            android:id="@+id/textView31"
+                            android:layout_width="wrap_content"
+                            android:layout_height="30dp"
+                            android:layout_weight="1"
+                            android:gravity="center_vertical"
+                            android:text="0"
+                            android:textAlignment="viewEnd" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/textView32"
+                            android:layout_width="150dp"
+                            android:layout_height="30dp"
+                            android:gravity="center_vertical"
+                            android:text="Profit Point (PP)" />
+
+                        <TextView
+                            android:id="@+id/textView34"
+                            android:layout_width="wrap_content"
+                            android:layout_height="30dp"
+                            android:layout_weight="1"
+                            android:gravity="center_vertical"
+                            android:text="0"
+                            android:textAlignment="viewEnd" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/textView35"
+                            android:layout_width="150dp"
+                            android:layout_height="30dp"
+                            android:gravity="center_vertical"
+                            android:text="Continue Point (CP)" />
+
+                        <TextView
+                            android:id="@+id/textView37"
+                            android:layout_width="wrap_content"
+                            android:layout_height="30dp"
+                            android:layout_weight="1"
+                            android:gravity="center_vertical"
+                            android:text="0"
+                            android:textAlignment="viewEnd" />
+                    </LinearLayout>
+                </LinearLayout>
+
+            </RelativeLayout>
+
+        </android.support.v7.widget.CardView>
+
+    </RelativeLayout>
+
+</LinearLayout>

@@ -99,6 +99,7 @@ public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
             DataModel.Post item = Tab1Global._newsData.get(position-1);
             GenericViewHolder genericViewHolder = (GenericViewHolder) holder;
             genericViewHolder.tvTitle.setText(item.getTitle());
+            genericViewHolder.tvUrl.setText(item.getUrl());
             genericViewHolder.tvPostTime.setText(CommonFunction.getTimeAgo(item.date));
             if(item.thumbnail_images.thumbnail.url.isEmpty()) {
                 genericViewHolder.ivThumbnail.setVisibility(View.GONE);
@@ -186,6 +187,7 @@ public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
 
         TextView tvTitle;
         TextView tvPostTime;
+        TextView tvUrl;
         ImageView ivThumbnail;
         CardView cvNews;
 
@@ -193,6 +195,7 @@ public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
             super (itemView);
             tvTitle = (TextView) itemView.findViewById(R.id.txt_title);
             tvPostTime = (TextView) itemView.findViewById(R.id.txt_time);
+            tvUrl = (TextView) itemView.findViewById(R.id.txt_url);
             ivThumbnail = (ImageView) itemView.findViewById(R.id.img_thumb);
             cvNews = (CardView) itemView.findViewById(R.id.card_news);
         }
