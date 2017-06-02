@@ -12,7 +12,8 @@
     <color name="colorActiveDot">#0ABD22</color>
     <color name="colorInactiveDot">#CCCCCC</color>
 
-    <color name="colorMainBg">#309B3D</color>
+    <!--<color name="colorMainBg">#309B3D</color>-->
+    <color name="colorMainBg">#585A58</color>
     <color name="colorWrong">#D0021B</color>
 
     <color name="colorDisable">#40000000</color>
