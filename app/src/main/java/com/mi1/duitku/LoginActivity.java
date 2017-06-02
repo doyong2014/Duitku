@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
 import android.util.Log;
@@ -20,9 +21,13 @@ import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonParser;
 import com.mi1.duitku.Common.AppGlobal;
 import com.mi1.duitku.Common.CommonFunction;
 import com.mi1.duitku.Common.Constant;
+import com.mi1.duitku.Common.PackageDetailInfo;
 import com.mi1.duitku.Common.UserInfo;
 import com.mi1.duitku.Main.MainActivity;
 import com.quickblox.auth.session.QBSettings;
@@ -32,6 +37,7 @@ import com.quickblox.core.exception.QBResponseException;
 import com.quickblox.users.QBUsers;
 import com.quickblox.users.model.QBUser;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -42,6 +48,13 @@ import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.List;
+import java.util.ListIterator;
+
+import javax.security.auth.callback.PasswordCallback;
 
 public class LoginActivity extends BaseActivity implements OnClickListener {
 
@@ -89,10 +102,12 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 
     private void login(){
 
-        String[] params = new String[3];
+        String[] params = new String[4];
         params[0] = userName;
-        params[1] = CommonFunction.md5(password);
-        params[2] = Constant.COMMUNITY_CODE;
+        params[1] = password;
+        //CommonFunction.md5(password);
+        params[2] = Constant.LOGIN_TYPE;
+        params[3] = Constant.COMMUNITY_CODE;
         LoginAsync _loginAsync = new LoginAsync();
         _loginAsync.execute(params);
     }
@@ -167,13 +182,15 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 
             try {
 
-                URL url = new URL(Constant.LOGIN_PAGE);
+                URL url = new URL(Constant.URLLOGINDIGI1);//(Constant.LOGIN_PAGE); //+ "?loginUrl=" + Constant.URLLOGINDIGI1);
+
 
                 JSONObject jsonObject = new JSONObject();
                 try {
                     jsonObject.put("username", param[0]);
                     jsonObject.put("password", param[1]);
-                    jsonObject.put("community_code", param[2]);
+                    jsonObject.put("type", param[2]);
+//                    jsonObject.put("community_code", param[3]);
 
 //                    jsonObject.put("username", "8618642502551"); // 081213497969  8618642502551
 //                    jsonObject.put("password", CommonFunction.md5("NB1NSFW5"));// TMIA7EPD  NB1NSFW5
@@ -231,11 +248,20 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
             try {
 
                 JSONObject jsonObj = new JSONObject(result);
+                JSONArray ja = jsonObj.getJSONArray("obj");
                 String statusCode = jsonObj.getString(Constant.JSON_STATUS_CODE);
 
                 if (statusCode.equals("00")){
                     Gson gson = new GsonBuilder().create();
                     AppGlobal._userInfo = gson.fromJson(result, UserInfo.class);
+                    List<PackageDetailInfo> packageDetailInfoList = new ArrayList<PackageDetailInfo>();
+                    for(int a = 0; a< ja.length(); a++)
+                    {
+                        String data = ja.getString(a);
+                        packageDetailInfoList.add(gson.fromJson(data,PackageDetailInfo.class));
+//                        JSONObject jo = new JSONObject(data);
+                    }
+                    AppGlobal._userInfo.packageDetail = packageDetailInfoList;
                     initQBFramework();
                     loginQB();
 

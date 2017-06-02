@@ -1,5 +1,7 @@
 package com.mi1.duitku.Common;
 
+import java.util.List;
+
 public class UserInfo {
 
 	public String token;
@@ -12,8 +14,11 @@ public class UserInfo {
 	public String name;
 	public String phoneNumber;
 	public String picUrl;
+	public List<PackageDetailInfo> packageDetail;
 
 	public  UserInfo(){
 
 	}
 }
+
+

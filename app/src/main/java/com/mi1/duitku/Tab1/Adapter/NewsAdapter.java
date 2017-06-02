@@ -68,7 +68,7 @@ public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
 
         if(holder instanceof HeaderViewHolder) {
             HeaderViewHolder headerHolder = (HeaderViewHolder) holder;
-            headerHolder.tvBalance.setText(String.format(context.getString(R.string.news_balance), CommonFunction.formatNumberingWithoutRP(AppGlobal._userInfo.userbalance)));
+            headerHolder.tvBalance.setText("");//String.format(context.getString(R.string.news_balance), CommonFunction.formatNumberingWithoutRP(AppGlobal._userInfo.userbalance)));
             headerHolder.tvTopUp.setOnClickListener (new View.OnClickListener () {
                 @Override
                 public void onClick (View view) {

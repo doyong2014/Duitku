@@ -13,7 +13,8 @@
             android:id="@+id/textView9"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="activity_share_code.xml" />
+            android:text="activity_share_code.xml"
+            android:visibility="gone" />
 
         <ImageView
             android:id="@+id/img_full"
@@ -55,6 +56,12 @@
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp">
 
+                <Spinner
+                    android:id="@+id/spinner_package"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:spinnerMode="dialog" />
+
                 <TextView
                     android:id="@+id/txt_name"
                     android:layout_width="match_parent"
@@ -63,7 +70,8 @@
                     android:paddingLeft="5dp"
                     android:paddingTop="15dp"
                     android:text="Information"
-                    android:textSize="14sp" />
+                    android:textSize="14sp"
+                    android:visibility="invisible" />
 
                 <View
                     android:id="@+id/viewSep"
@@ -92,7 +100,7 @@
                             android:text="Total Partners" />
 
                         <TextView
-                            android:id="@+id/textView11"
+                            android:id="@+id/txtTotalPartners"
                             android:layout_width="wrap_content"
                             android:layout_height="30dp"
                             android:layout_weight="1"
@@ -115,7 +123,7 @@
                             android:text="Cummulative RP" />
 
                         <TextView
-                            android:id="@+id/textView16"
+                            android:id="@+id/txtCummulativeRP"
                             android:layout_width="wrap_content"
                             android:layout_height="30dp"
                             android:layout_weight="1"
@@ -137,7 +145,7 @@
                             android:text="LGI" />
 
                         <TextView
-                            android:id="@+id/textView19"
+                            android:id="@+id/txtLGI"
                             android:layout_width="wrap_content"
                             android:layout_height="30dp"
                             android:layout_weight="1"
@@ -159,7 +167,7 @@
                             android:text="Cummulative Day LP" />
 
                         <TextView
-                            android:id="@+id/textView22"
+                            android:id="@+id/txtCummulativeDayLP"
                             android:layout_width="wrap_content"
                             android:layout_height="30dp"
                             android:layout_weight="1"
@@ -181,7 +189,7 @@
                             android:text="Loyalty Point (LP)" />
 
                         <TextView
-                            android:id="@+id/textView25"
+                            android:id="@+id/txtLP"
                             android:layout_width="wrap_content"
                             android:layout_height="30dp"
                             android:layout_weight="1"
@@ -203,7 +211,7 @@
                             android:text="Register Wallet (RW)" />
 
                         <TextView
-                            android:id="@+id/textView28"
+                            android:id="@+id/txtRW"
                             android:layout_width="wrap_content"
                             android:layout_height="30dp"
                             android:layout_weight="1"
@@ -225,7 +233,7 @@
                             android:text="Wallet Point (WP)" />
 
                         <TextView
-                            android:id="@+id/textView31"
+                            android:id="@+id/txtWP"
                             android:layout_width="wrap_content"
                             android:layout_height="30dp"
                             android:layout_weight="1"
@@ -247,7 +255,7 @@
                             android:text="Profit Point (PP)" />
 
                         <TextView
-                            android:id="@+id/textView34"
+                            android:id="@+id/txtPP"
                             android:layout_width="wrap_content"
                             android:layout_height="30dp"
                             android:layout_weight="1"
@@ -269,7 +277,30 @@
                             android:text="Continue Point (CP)" />
 
                         <TextView
-                            android:id="@+id/textView37"
+                            android:id="@+id/txtCP"
+                            android:layout_width="wrap_content"
+                            android:layout_height="30dp"
+                            android:layout_weight="1"
+                            android:gravity="center_vertical"
+                            android:text="0"
+                            android:textAlignment="viewEnd" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/TextViewMP"
+                            android:layout_width="150dp"
+                            android:layout_height="30dp"
+                            android:gravity="center_vertical"
+                            android:text="Mall Point (MP)" />
+
+                        <TextView
+                            android:id="@+id/txtMP"
                             android:layout_width="wrap_content"
                             android:layout_height="30dp"
                             android:layout_weight="1"
