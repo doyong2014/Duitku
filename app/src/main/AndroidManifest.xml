@@ -11,24 +11,30 @@
     <uses-permission android:name="android.permission.READ_CONTACTS" />
 
     <application
+        android:name=".ApplicationClass"
         android:allowBackup="true"
         android:hardwareAccelerated="true"
         android:icon="@drawable/logodigi1"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme"
-        android:name=".ApplicationClass">
-
-        <meta-data android:name="com.quickblox.messages.TYPE" android:value="FCM" />
-        <meta-data android:name="com.quickblox.messages.SENDER_ID" android:value="@string/fcm_sender_id" />
-        <meta-data android:name="com.quickblox.messages.QB_ENVIRONMENT" android:value="DEVELOPMENT" />
+        android:theme="@style/AppTheme">
+        <meta-data
+            android:name="com.quickblox.messages.TYPE"
+            android:value="FCM" />
+        <meta-data
+            android:name="com.quickblox.messages.SENDER_ID"
+            android:value="@string/fcm_sender_id" />
+        <meta-data
+            android:name="com.quickblox.messages.QB_ENVIRONMENT"
+            android:value="DEVELOPMENT" />
 
         <activity
             android:name=".HomeActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppThemeNoTitle">
-            <intent-filter>
+          <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -39,10 +45,10 @@
             android:name=".WelcomeActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppThemeNoTitle" />
-        <!--<activity-->
-            <!--android:name=".HomeActivity"-->
-            <!--android:screenOrientation="portrait"-->
-            <!--android:theme="@style/AppThemeNoTitle" />-->
+        <!-- <activity -->
+        <!-- android:name=".HomeActivity" -->
+        <!-- android:screenOrientation="portrait" -->
+        <!-- android:theme="@style/AppThemeNoTitle" /> -->
         <activity
             android:name=".LoginActivity"
             android:label="Login"
@@ -120,12 +126,12 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".Tab5.AboutUsActivity"
-            android:theme="@style/AppThemeNoTitle"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:theme="@style/AppThemeNoTitle" />
         <activity
             android:name=".Tab5.ContactUsActivity"
-            android:theme="@style/AppThemeNoTitle"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:theme="@style/AppThemeNoTitle" />
         <activity
             android:name=".Tab5.HelpActivity"
             android:label="BANTUAN"
@@ -159,29 +165,33 @@
             android:name=".BaseActivity"
             android:screenOrientation="portrait" />
 
-        <!--<service-->
-            <!--android:name=".Common.MyFCMService">-->
-            <!--<intent-filter>-->
-                <!--<action android:name="com.google.firebase.MESSAGING_EVENT"/>-->
-            <!--</intent-filter>-->
-        <!--</service>-->
-         <service
-            android:name="com.quickblox.messages.services.fcm.QBFcmPushListenerService">
+        <!-- <service -->
+        <!-- android:name=".Common.MyFCMService"> -->
+        <!-- <intent-filter> -->
+        <!-- <action android:name="com.google.firebase.MESSAGING_EVENT"/> -->
+        <!-- </intent-filter> -->
+        <!-- </service> -->
+        <service android:name="com.quickblox.messages.services.fcm.QBFcmPushListenerService">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
-        <service
-            android:name="com.quickblox.messages.services.fcm.QBFcmPushInstanceIDService">
+        <service android:name="com.quickblox.messages.services.fcm.QBFcmPushInstanceIDService">
             <intent-filter>
-                <action android:name="com.google.firebase.INSTANCE_ID_EVENT"/>
+                <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
             </intent-filter>
         </service>
-        <service
-        android:name=".Common.MyFCMService">
+        <service android:name=".Common.MyFCMService">
             <intent-filter>
-                <action android:name="com.google.firebase.MESSAGING_EVENT"/>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
+
+        <activity android:name=".Tab5.Register.RegisterChildActivity"
+            android:label="Register Child"
+            android:screenOrientation="portrait">
+
+        </activity>
     </application>
+
 </manifest>

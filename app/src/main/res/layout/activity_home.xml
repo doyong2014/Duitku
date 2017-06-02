@@ -30,16 +30,17 @@
             android:textSize="18sp"
             android:gravity="center"/>
 
-        <View
+       <!-- <View
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="5" />
+            android:layout_weight="0" /> -->
 
         <Button
             android:id="@+id/btn_home_sign"
+            android:visibility="invisible"
             android:layout_width="0dp"
             android:layout_height="40dp"
-            android:layout_weight="35"
+            android:layout_weight="0"
             android:background="@drawable/btn_green"
             android:text="@string/signin"
             android:textColor="@android:color/white"

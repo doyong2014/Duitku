@@ -225,6 +225,41 @@
         android:background="#333333" />
 
     <LinearLayout
+        android:id="@+id/nav_add_user"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="14"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:weightSum="100"
+        >
+
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:adjustViewBounds="true"
+            android:src="@drawable/ic_group"
+            android:scaleType="fitCenter"
+            />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="10sp"
+            android:padding="1dp"
+            android:text="@string/nav_tambah_user"
+            android:textColor="#AEAEAE"
+            android:gravity="center"
+            />
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="#333333" />
+
+    <LinearLayout
         android:id="@+id/nav_logout"
         android:layout_width="match_parent"
         android:layout_height="0dp"

@@ -25,12 +25,17 @@ dependencies {
     compile('com.afollestad.material-dialogs:core:0.9.0.2') {
         transitive = true
     }
+
+
+    compile('com.weiwangcn.betterspinner:library-material:1.1.0') {
+        exclude group: 'com.android.support', module: 'appcompat-v7'
+    }
     compile 'com.github.ybq:Android-SpinKit:1.1.0'
-    compile 'com.android.support:appcompat-v7:25.2.0'
-    compile 'com.android.support:design:25.2.0'
+    compile 'com.android.support:appcompat-v7:25.3.1'
+    compile 'com.android.support:design:25.3.1'
     compile 'com.jpardogo.materialtabstrip:library:1.1.1'
-    compile 'com.android.support:support-v4:25.2.0'
-    compile 'com.android.support:cardview-v7:25.2.0'
+    compile 'com.android.support:support-v4:25.3.1'
+    compile 'com.android.support:cardview-v7:25.3.1'
     compile 'de.hdodenhof:circleimageview:2.1.0'
     compile 'com.squareup.picasso:picasso:2.5.2'
     compile 'com.daimajia.slider:library:1.1.5@aar'
@@ -45,10 +50,17 @@ dependencies {
     compile 'com.quickblox:quickblox-android-sdk-messages:3.3.1'
     compile 'com.tsengvn:Typekit:1.0.0'
     compile 'org.ocpsoft.prettytime:prettytime:4.0.1.Final'
-
-    compile "com.google.android.gms:play-services-gcm:10.2.1"
+    compile 'com.google.android.gms:play-services-gcm:10.2.1'
     compile 'com.google.firebase:firebase-messaging:10.2.1'
-    compile "com.google.firebase:firebase-core:10.2.1"
+    compile 'com.google.firebase:firebase-core:10.2.1'
+    compile 'com.github.badoualy:stepper-indicator:master'
 }
+
+
+
+
+
+
+
 
 apply plugin: 'com.google.gms.google-services'

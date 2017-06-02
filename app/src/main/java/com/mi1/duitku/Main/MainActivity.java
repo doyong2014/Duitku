@@ -55,6 +55,7 @@ import com.mi1.duitku.Tab3.Common.Tab3Global;
 import com.mi1.duitku.Tab5.AboutUsActivity;
 import com.mi1.duitku.Tab5.ContactUsActivity;
 import com.mi1.duitku.Tab5.HelpActivity;
+import com.mi1.duitku.Tab5.Register.RegisterChildActivity;
 import com.quickblox.auth.QBAuth;
 import com.quickblox.auth.session.BaseService;
 import com.quickblox.auth.session.QBSession;
@@ -176,6 +177,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
         LinearLayout navBagikan = (LinearLayout)findViewById(R.id.nav_share);
         navBagikan.setOnClickListener(this);
+
+        LinearLayout navAddUser = (LinearLayout)findViewById(R.id.nav_add_user);
+        navAddUser.setOnClickListener(this);
 
         LinearLayout navLogout = (LinearLayout)findViewById(R.id.nav_logout);
         navLogout.setOnClickListener(this);
@@ -577,6 +581,11 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
             case R.id.nav_logout:
                 dlDrawer.closeDrawers();
                 logout();
+                break;
+            case R.id.nav_add_user:
+                dlDrawer.closeDrawers();
+                intent = new Intent(MainActivity.this, RegisterChildActivity.class);
+                startActivity(intent);
                 break;
         }
     }

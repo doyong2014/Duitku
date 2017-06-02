@@ -71,6 +71,7 @@
     <string name="nav_bantuan">BANTUAN</string>
     <string name="nav_bagikan">BAGIKAN</string>
     <string name="nav_logout">LOG OUT</string>
+    <string name="nav_tambah_user">REGISTER\nUSER</string>
 
     <string name="news_balance">Saldo Rp %1$s</string>
     <string name="top_up">TOP UP</string>
@@ -163,4 +164,14 @@
     <string name="fcm_sender_id">402604308168</string>
     <string name="group_name">Group Name</string>
 
+    <string-array name="stepLabels">
+        <item>Choose Package</item>
+        <item>Referral</item>
+        <item>Account Information</item>
+        <item>Bank Account</item>
+        <item>Complete Registration</item>
+    </string-array>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
