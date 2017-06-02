@@ -186,31 +186,33 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 
 
                 JSONObject jsonObject = new JSONObject();
-                try {
-                    jsonObject.put("username", param[0]);
+                /* try {
+                   jsonObject.put("username", param[0]);
                     jsonObject.put("password", param[1]);
                     jsonObject.put("type", param[2]);
-//                    jsonObject.put("community_code", param[3]);
-
-//                    jsonObject.put("username", "8618642502551"); // 081213497969  8618642502551
-//                    jsonObject.put("password", CommonFunction.md5("NB1NSFW5"));// TMIA7EPD  NB1NSFW5
-//                    jsonObject.put("community_code", param[2]);
 
                 } catch (JSONException e) {
                     e.printStackTrace();
-                }
+                }*/
+
+                StringBuilder postData = new StringBuilder();
+                postData.append("username=" + param[0] + "&");
+                postData.append("password=" + param[1] + "&");
+                postData.append("type=" + param[2]);
+                byte[] postDataBytes = postData.toString().getBytes("UTF-8");
 
                 HttpURLConnection conn = (HttpURLConnection) url.openConnection();
                 conn.setReadTimeout(10000); /* milliseconds */
                 conn.setConnectTimeout(15000); /* milliseconds */
-                conn.setRequestProperty("content-type", "application/json");
-                conn.setRequestProperty("Accept", "application/json");
+                //conn.setRequestProperty("content-type", "application/json");
+                //conn.setRequestProperty("Accept", "application/json");
+                conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
+                conn.setRequestProperty("Content-Length", String.valueOf(postDataBytes.length));
                 conn.setRequestMethod("POST");
                 conn.setDoOutput(true);
                 conn.setDoInput(true);
-
                 OutputStreamWriter wr = new OutputStreamWriter(conn.getOutputStream(), "UTF-8");
-                wr.write(jsonObject.toString());
+                wr.write(postData.toString());
                 wr.flush();
 
                 if (conn.getResponseCode() == HttpURLConnection.HTTP_OK){
@@ -248,7 +250,30 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
             try {
 
                 JSONObject jsonObj = new JSONObject(result);
-                JSONArray ja = jsonObj.getJSONArray("obj");
+                boolean status = (boolean)jsonObj.get("status");
+
+                if (status){
+                    JSONArray ja = jsonObj.getJSONArray("obj");
+                    Gson gson = new GsonBuilder().create();
+                    //AppGlobal._userInfo = gson.fromJson(result, UserInfo.class);
+                    AppGlobal._userInfo = CommonFunction.JimmyApitoUserInfo(ja.getJSONObject(0)); //get first occurence
+                    List<PackageDetailInfo> packageDetailInfoList = new ArrayList<PackageDetailInfo>();
+                    for(int a = 0; a< ja.length(); a++)
+                    {
+                        String data = ja.getString(a);
+                        packageDetailInfoList.add(gson.fromJson(data,PackageDetailInfo.class));
+//                        JSONObject jo = new JSONObject(data);
+                    }
+                    AppGlobal._userInfo.packageDetail = packageDetailInfoList;
+                    initQBFramework();
+                    loginQB();
+                }
+                else {
+                    progress.dismiss();
+                    String error = jsonObj.getString("errors");
+                    dispError(error);
+                }
+                /*JSONArray ja = jsonObj.getJSONArray("obj");
                 String statusCode = jsonObj.getString(Constant.JSON_STATUS_CODE);
 
                 if (statusCode.equals("00")){
@@ -275,7 +300,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
                     progress.dismiss();
                     String status = jsonObj.getString(Constant.JSON_STATUS_MESSAGE);
                     dispError(status);
-                }
+                }*/
 
 
             } catch (Exception e) {

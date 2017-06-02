@@ -6,6 +6,8 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.provider.MediaStore;
 
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.ocpsoft.prettytime.PrettyTime;
 
 import java.io.UnsupportedEncodingException;
@@ -205,5 +207,21 @@ public class CommonFunction {
         int imageWidth = options.outWidth;
 
         return imageHeight;
+    }
+
+    public static UserInfo JimmyApitoUserInfo(JSONObject obj){
+        UserInfo userInfo = new UserInfo();
+        try {
+            userInfo.email = obj.getString("email");
+            userInfo.phoneNumber = obj.getString("telpnum");
+            userInfo.name = obj.getString("name");
+            userInfo.picUrl = "";
+            userInfo.vaNumber = "";
+            userInfo.userbalance = "0";
+        }
+        catch (JSONException ex) {
+
+        }
+        return userInfo;
     }
 }
