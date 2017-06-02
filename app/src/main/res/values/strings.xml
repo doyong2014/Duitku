@@ -1,7 +1,7 @@
 <resources>
-    <string name="app_name">Digi1</string>
+    <string name="app_name">DiGi1</string>
 
-    <string name="splash_bottom_txt">MARI BERGABUNG SEKARANG DAN TERIMA PENDAPATAN PASIF SETIAP KALI BAYAR TOP-UP PREPAID <![CDATA["&"]]> BILL</string>
+    <string name="splash_bottom_txt">Koperasi Indonesia  <![CDATA[ \n ]]> Maju Makmur Sejahtera</string>
     <!--<string name="splash_middle_txt">MASTER\nAGEN ANTAR\nBANGSA</string>-->
     <string name="splash_middle_txt">DIGI1 BEKERJA SAMA DENGAN KOPERASI INDONESIA</string>
     <string name="splash_top_txt">DIGI1 BEKERJA SAMA DENGAN</string>
@@ -62,7 +62,7 @@
     <string name="error_failed_connect">Failed connect to server.</string>
     <string name="error_dismatch_password">Dismatch password.</string>
 
-    <string name="search_hint">Search Digi1 Indonesia</string>
+    <string name="search_hint">Search DiGi1 Indonesia</string>
 
     <string name="nav_profil">PROFIL</string>
     <string name="nav_beranda">BERANDA</string>
@@ -129,11 +129,10 @@
         practice or experiences. The initial awakenings are new discoveries about the dynamics of consciousness, while
         the stabilisation is the assimilation of what is being discovered into one<![CDATA["'"]]>s life experience. Sometimes,
         a new discovery can completely over-rule or modify upon an older one.</string>
-    <string name="contact_title">Mi1 Indonesia</string>
-    <string name="contact_msg">Gedung Wisma Mitra Sunter, Tower B, Room 701, JI, Yos Sudarso Kav 89. Boulevar Mitra Sunter.
-        Jakarta Utara Undonesia</string>
-    <string name="contact_phone_num">021-65301763</string>
-    <string name="contact_email">mohr.arvid@gmail.com</string>
+    <string name="contact_title">DiGi1 Indonesia</string>
+    <string name="contact_msg"></string>
+    <string name="contact_phone_num"></string>
+    <string name="contact_email"></string>
 
     <string-array name="help_content">
         <item>Developed by the Intel Corporation, HDCP stands for high-bandwidth digital content protection. As the descriptive

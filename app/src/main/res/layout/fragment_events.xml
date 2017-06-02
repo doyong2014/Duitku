@@ -1,6 +1,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_height="match_parent">
 
     <com.lcodecore.tkrefreshlayout.TwinklingRefreshLayout
@@ -10,6 +11,7 @@
         android:layout_alignParentTop="true"
         app:tr_wave_height="50dp"
         app:tr_head_height="40dp"
+        android:visibility="gone"
         app:tr_bottom_height="40dp"
         android:padding="8dp" >
 
@@ -31,6 +33,7 @@
         android:layout_marginRight="12dp"
         android:orientation="vertical"
         android:gravity="center"
+        android:visibility="gone"
         android:background="@drawable/up_bg">
 
         <ImageView
@@ -51,4 +54,13 @@
 
     </LinearLayout>
 
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:text="Coming Soon!"
+        android:textSize="24sp"
+        tools:text="Coming Soon!" />
 </RelativeLayout>

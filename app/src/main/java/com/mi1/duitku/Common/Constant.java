@@ -38,6 +38,7 @@ public class Constant {
 	public static final String GIFT_PAGE = root_url + "webapi/api/Gift";
 
 	public static final String URLLOGINDIGI1 = "http://103.236.201.138:88/MLM/index.php/api/login";
+	public static final String CHANGE_PASSWORD_DIGI1 = "http://103.236.201.138:88/MLM/index.php/api/change_password";
 	
 	public static final String JSON_STATUS_MESSAGE = "statusMessage";
 	public static final String JSON_STATUS_CODE = "statusCode";

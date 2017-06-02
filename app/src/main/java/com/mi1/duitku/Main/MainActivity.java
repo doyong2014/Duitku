@@ -173,13 +173,13 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         navHubungi.setOnClickListener(this);
 
         LinearLayout navBantuan = (LinearLayout)findViewById(R.id.nav_help);
-        navBantuan.setOnClickListener(this);
+        //navBantuan.setOnClickListener(this);
 
         LinearLayout navBagikan = (LinearLayout)findViewById(R.id.nav_share);
-        navBagikan.setOnClickListener(this);
+        //navBagikan.setOnClickListener(this);
 
         LinearLayout navAddUser = (LinearLayout)findViewById(R.id.nav_add_user);
-        navAddUser.setOnClickListener(this);
+        //navAddUser.setOnClickListener(this);
 
         LinearLayout navLogout = (LinearLayout)findViewById(R.id.nav_logout);
         navLogout.setOnClickListener(this);

@@ -89,12 +89,20 @@ public class ChangePasswordActivity extends BaseActivity {
     private void changePassword(){
 
         String[] params = new String[6];
-        params[0] = AppGlobal._userInfo.token;
+        /*params[0] = AppGlobal._userInfo.token;
         params[1] = CommonFunction.md5(oldPassword);
         params[2] = CommonFunction.md5(newPassword);
         params[3] = CommonFunction.md5(confirmPassword);
         params[4] = AppGlobal._userInfo.phoneNumber;
+        params[5] = Constant.COMMUNITY_CODE;*/
+
+        params[0] = AppGlobal._userInfo.phoneNumber;
+        params[1] = oldPassword;
+        params[2] = newPassword;
+        params[3] = confirmPassword;
+        params[4] = Constant.LOGIN_TYPE;
         params[5] = Constant.COMMUNITY_CODE;
+
         ChangePasswordAsync _changePasswordAsync = new ChangePasswordAsync();
         _changePasswordAsync.execute(params);
     }
@@ -155,9 +163,9 @@ public class ChangePasswordActivity extends BaseActivity {
 
             try {
 
-                URL url = new URL(Constant.CHANGE_PASSWORD_PAGE);
+                URL url = new URL(Constant.CHANGE_PASSWORD_DIGI1);
 
-                JSONObject jsonObject = new JSONObject();
+                /*JSONObject jsonObject = new JSONObject();
                 try {
                     jsonObject.put("token", param[0]);
                     jsonObject.put("oldPassword", param[1]);
@@ -168,19 +176,31 @@ public class ChangePasswordActivity extends BaseActivity {
 
                 } catch (JSONException e) {
                     e.printStackTrace();
-                }
+                }*/
+
+                StringBuilder postData = new StringBuilder();
+                postData.append("username=" + param[0] + "&");
+                postData.append("password=" + param[2] + "&");
+                postData.append("confirm=" + param[3] + "&");
+                postData.append("lastpassword=" + param[1] + "&");
+                postData.append("type=" + param[4]);
+
+                byte[] postDataBytes = postData.toString().getBytes("UTF-8");
 
                 HttpURLConnection conn = (HttpURLConnection) url.openConnection();
                 conn.setReadTimeout(10000); /* milliseconds */
                 conn.setConnectTimeout(15000); /* milliseconds */
-                conn.setRequestProperty("content-type", "application/json");
-                conn.setRequestProperty("Accept", "application/json");
+                //conn.setRequestProperty("content-type", "application/json");
+                //conn.setRequestProperty("Accept", "application/json");
+                conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
+                conn.setRequestProperty("Content-Length", String.valueOf(postDataBytes.length));
+                conn.setRequestMethod("POST");
                 conn.setRequestMethod("POST");
                 conn.setDoOutput(true);
                 conn.setDoInput(true);
 
                 OutputStreamWriter wr = new OutputStreamWriter(conn.getOutputStream(), "UTF-8");
-                wr.write(jsonObject.toString());
+                wr.write(postData.toString());
                 wr.flush();
 
                 if (conn.getResponseCode() == HttpURLConnection.HTTP_OK){
@@ -223,12 +243,13 @@ public class ChangePasswordActivity extends BaseActivity {
             try {
 
                 JSONObject jsonObj = new JSONObject(result);
-                String statusCode = jsonObj.getString(Constant.JSON_STATUS_CODE);
-
-                if (statusCode.equals("00")){
+                //String statusCode = jsonObj.getString(Constant.JSON_STATUS_CODE);
+                boolean isValid = jsonObj.getBoolean("st");
+                if (isValid){
                     showDialog();
                 } else {
-                    String status = jsonObj.getString(Constant.JSON_STATUS_MESSAGE);
+                    //String status = jsonObj.getString(Constant.JSON_STATUS_MESSAGE);
+                    String status = jsonObj.getString("msg");
                     dispError(status);
                 }
 
