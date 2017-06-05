@@ -39,6 +39,9 @@ public class Constant {
 
 	public static final String URLLOGINDIGI1 = "http://103.236.201.138:88/MLM/index.php/api/login";
 	public static final String CHANGE_PASSWORD_DIGI1 = "http://103.236.201.138:88/MLM/index.php/api/change_password";
+	public static final String FORGOT_PASSWORD_DIGI1 = "http://103.236.201.138:88/MLM/index.php/api/forgot_password";
+	public static final String FORGOT_PASSWORD_PROCESS_DIGI1 = "http://103.236.201.138:88/MLM/index.php/api/forgot_process";
+	public static final String FORGOT_PASSWORD_NEW_PASSWORD_DIGI1 = "http://103.236.201.138:88/MLM/index.php/api/newpassword";
 	
 	public static final String JSON_STATUS_MESSAGE = "statusMessage";
 	public static final String JSON_STATUS_CODE = "statusCode";
