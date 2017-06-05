@@ -176,10 +176,10 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         //navBantuan.setOnClickListener(this);
 
         LinearLayout navBagikan = (LinearLayout)findViewById(R.id.nav_share);
-        //navBagikan.setOnClickListener(this);
+        navBagikan.setOnClickListener(this);
 
         LinearLayout navAddUser = (LinearLayout)findViewById(R.id.nav_add_user);
-        //navAddUser.setOnClickListener(this);
+        navAddUser.setOnClickListener(this);
 
         LinearLayout navLogout = (LinearLayout)findViewById(R.id.nav_logout);
         navLogout.setOnClickListener(this);
@@ -584,8 +584,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 break;
             case R.id.nav_add_user:
                 dlDrawer.closeDrawers();
-                intent = new Intent(MainActivity.this, RegisterChildActivity.class);
-                startActivity(intent);
+                //intent = new Intent(MainActivity.this, RegisterChildActivity.class);
+                //startActivity(intent);
                 break;
         }
     }
