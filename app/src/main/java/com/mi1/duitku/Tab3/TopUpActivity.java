@@ -100,7 +100,7 @@ public class TopUpActivity extends BaseActivity {
         inquiry.setMerchantCode(Constant.MERCHANT_CODE);
         inquiry.setOrderId(orderId);
         inquiry.setAmount(amount);
-        inquiry.setProductDetail("Top-up Mi1 Indonesia");
+        inquiry.setProductDetail("Top-up DiGi1 Indonesia");
         inquiry.setAdditionalParam("");
         inquiry.setSign(sign);
 

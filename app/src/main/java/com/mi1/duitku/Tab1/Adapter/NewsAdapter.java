@@ -91,8 +91,8 @@ public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
             headerHolder.cvTransfer.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intent  = new Intent(context, TransferActivity.class);
-                    context.startActivity(intent);
+                    //Intent intent  = new Intent(context, TransferActivity.class);
+                    //context.startActivity(intent);
                 }
             });
         } else if(holder instanceof GenericViewHolder) {
@@ -208,13 +208,13 @@ public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
                 .itemsCallbackSingleChoice(-1, new MaterialDialog.ListCallbackSingleChoice() {
                     @Override
                     public boolean onSelection(MaterialDialog dialog, View view, int which, CharSequence text) {
-                        if(which == 0) {
+                       /* if(which == 0) {
                             Intent intent = new Intent(context, PurchaseProcessPLNActivity.class);
                             context.startActivity(intent);
                         } else if(which == 1){
                             Intent intent = new Intent(context, PurchaseActivity.class);
                             context.startActivity(intent);
-                        }
+                        }*/
                         return true;
                     }
                 })
@@ -234,7 +234,7 @@ public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
                     @Override
                     public boolean onSelection(MaterialDialog dialog, View view, int which, CharSequence text) {
                         Intent intent = null;
-                        if(which == 0) {
+                        /*if(which == 0) {
                             intent = new Intent(context, PaymentProcessActivity.class);
                             intent.putExtra(PaymentProcessActivity.TAG_ACTIVITYTITLE, "PLN Pasca Bayar");
                             intent.putExtra(PaymentProcessActivity.TAG_ACTIVITYPRODUCTCODE, "PLNPASCH");
@@ -245,7 +245,7 @@ public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
                             String product_title = context.getResources().getStringArray(R.array.postpaid)[which];
                             intent.putExtra(PaymentActivity.TAG_ACTIVITYTITLE, product_title);
                             context.startActivity(intent);
-                        }
+                        }*/
                         return true;
                     }
                 })

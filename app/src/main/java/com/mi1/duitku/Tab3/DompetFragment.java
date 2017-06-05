@@ -109,8 +109,8 @@ public class DompetFragment extends Fragment {
         tvTransfer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent  = new Intent(_context, TransferActivity.class);
-                _context.startActivity(intent);
+                //Intent intent  = new Intent(_context, TransferActivity.class);
+                //_context.startActivity(intent);
             }
         });
 
@@ -134,8 +134,8 @@ public class DompetFragment extends Fragment {
         cardTransfer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent  = new Intent(_context, TransferActivity.class);
-                _context.startActivity(intent);
+              //  Intent intent  = new Intent(_context, TransferActivity.class);
+              //  _context.startActivity(intent);
             }
         });
 
@@ -250,13 +250,13 @@ public class DompetFragment extends Fragment {
                 .itemsCallbackSingleChoice(-1, new MaterialDialog.ListCallbackSingleChoice() {
                     @Override
                     public boolean onSelection(MaterialDialog dialog, View view, int which, CharSequence text) {
-                        if(which == 0) {
+                      /*  if(which == 0) {
                             Intent intent = new Intent(_context, PurchaseProcessPLNActivity.class);
                             startActivity(intent);
                         } else if(which == 1){
                             Intent intent = new Intent(_context, PurchaseActivity.class);
                             startActivity(intent);
-                        }
+                        }*/
                         return true;
                     }
                 })
@@ -276,7 +276,7 @@ public class DompetFragment extends Fragment {
                     @Override
                     public boolean onSelection(MaterialDialog dialog, View view, int which, CharSequence text) {
                         Intent intent = null;
-                        if(which == 0) {
+                        /*if(which == 0) {
                             intent = new Intent(_context, PaymentProcessActivity.class);
                             intent.putExtra(PaymentProcessActivity.TAG_ACTIVITYTITLE, "PLN Pasca Bayar");
                             intent.putExtra(PaymentProcessActivity.TAG_ACTIVITYPRODUCTCODE, "PLNPASCH");
@@ -287,7 +287,7 @@ public class DompetFragment extends Fragment {
                             String product_title = getResources().getStringArray(R.array.postpaid)[which];
                             intent.putExtra(PaymentActivity.TAG_ACTIVITYTITLE, product_title);
                             startActivity(intent);
-                        }
+                        }*/
                         return true;
                     }
                 })
