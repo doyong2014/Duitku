@@ -134,8 +134,7 @@ public class DompetFragment extends Fragment {
         cardTransfer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-              //  Intent intent  = new Intent(_context, TransferActivity.class);
-              //  _context.startActivity(intent);
+                showTransferDialog();
             }
         });
 
@@ -276,6 +275,42 @@ public class DompetFragment extends Fragment {
                     @Override
                     public boolean onSelection(MaterialDialog dialog, View view, int which, CharSequence text) {
                         Intent intent = null;
+                        /*if(which == 0) {
+                            intent = new Intent(_context, PaymentProcessActivity.class);
+                            intent.putExtra(PaymentProcessActivity.TAG_ACTIVITYTITLE, "PLN Pasca Bayar");
+                            intent.putExtra(PaymentProcessActivity.TAG_ACTIVITYPRODUCTCODE, "PLNPASCH");
+                            intent.putExtra(PaymentProcessActivity.TAG_ACTIVITYPRODUCTNAME, "PLN PASCA BAYAR");
+                            startActivity(intent);
+                        } else {
+                            intent = new Intent(_context, PaymentActivity.class);
+                            String product_title = getResources().getStringArray(R.array.postpaid)[which];
+                            intent.putExtra(PaymentActivity.TAG_ACTIVITYTITLE, product_title);
+                            startActivity(intent);
+                        }*/
+                        return true;
+                    }
+                })
+                .positiveText("OK")
+                .positiveColorRes(R.color.colorPrimary)
+                .negativeText("CANCEL")
+                .negativeColorRes(R.color.colorDisable)
+                .canceledOnTouchOutside(false)
+                .show();
+    }
+
+    private void showTransferDialog() {
+
+        new MaterialDialog.Builder(_context)
+                .items(R.array.transferdigi1)
+                .itemsCallbackSingleChoice(-1, new MaterialDialog.ListCallbackSingleChoice() {
+                    @Override
+                    public boolean onSelection(MaterialDialog dialog, View view, int which, CharSequence text) {
+                        Intent intent = null;
+                        intent = new Intent(_context, TransferActivity.class);
+                        intent.putExtra(PaymentProcessActivity.TAG_ACTIVITYTITLE, getResources().getStringArray(R.array.transferdigi1)[which]);
+                        intent.putExtra(PaymentProcessActivity.TAG_ACTIVITYPRODUCTCODE, getResources().getStringArray(R.array.transferdigi1)[which]);
+                        intent.putExtra(PaymentProcessActivity.TAG_ACTIVITYPRODUCTNAME, getResources().getStringArray(R.array.transferdigi1)[which]);
+                        startActivity(intent);
                         /*if(which == 0) {
                             intent = new Intent(_context, PaymentProcessActivity.class);
                             intent.putExtra(PaymentProcessActivity.TAG_ACTIVITYTITLE, "PLN Pasca Bayar");

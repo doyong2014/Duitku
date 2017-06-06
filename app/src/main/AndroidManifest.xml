@@ -141,7 +141,7 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".Tab5.ShareCodeActivity"
-            android:label="Share code"
+            android:label="Wallet Information"
             android:screenOrientation="portrait" />
         <activity
             android:name=".Tab5.ChangePasswordActivity"

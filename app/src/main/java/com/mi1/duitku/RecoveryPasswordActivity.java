@@ -246,7 +246,7 @@ public class RecoveryPasswordActivity extends BaseActivity {
                 if (statusCode.equals("true")){
                     showDialog();
                 } else {
-                    String status = jsonObj.getString(Constant.JSON_STATUS_MESSAGE);
+                    String status = jsonObj.getString("error");
                     dispError(status);
                 }
 

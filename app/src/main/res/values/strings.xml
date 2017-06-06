@@ -114,6 +114,13 @@
         <item>TELKOM GROUP</item>
     </string-array>
 
+    <string-array name="transferdigi1">
+        <item>TRANSFER LP</item>
+        <item>TRANSFER WP</item>
+        <item>TRANSFER MP</item>
+        <item>TRANSFER PP</item>
+    </string-array>
+
     <string name="login_failed">Login gagal, silahkan coba lagi</string>
     <string name="null_data">Data tidak tersedia</string>
     <string name="data_already_inquiry">Data telah diinquiry</string>
