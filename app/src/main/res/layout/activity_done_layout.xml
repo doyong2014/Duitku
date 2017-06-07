@@ -35,11 +35,12 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="20sp"
+                    android:layout_alignTop="@+id/txt_amount"
+                    android:layout_toLeftOf="@+id/txt_amount"
                     android:text="RP"
                     android:textColor="@color/colorPrimary"
-                    android:layout_alignTop="@+id/txt_amount"
-                    android:layout_toLeftOf="@+id/txt_amount" />
+                    android:textSize="20sp"
+                    android:visibility="invisible" />
 
                 <ImageView
                     android:id="@+id/img_done"
@@ -69,6 +70,26 @@
                     android:layout_below="@+id/txt_sent_to"
                     android:gravity="center"
                     android:text="nian@chakratechnology.com"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/txt_kode_trx"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/txt_subscriber_id"
+                    android:layout_centerHorizontal="true"
+                    android:gravity="center"
+                    android:text="Kode Transaksi"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/txt_trxid"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/txt_kode_trx"
+                    android:layout_centerHorizontal="true"
+                    android:gravity="center"
+                    android:text="WS000000"
                     android:textSize="16sp" />
 
             </RelativeLayout>

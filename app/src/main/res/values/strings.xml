@@ -83,6 +83,8 @@
     <string name="pre_paid">Pembayaran</string>
     <string name="buy">Beli</string>
     <string name="transfer">Transfer</string>
+    <string name="convert">Konversi</string>
+    <string name="exchange">Exchange</string>
 
     <string name="balance">Saldo</string>
     <string name="pre_payment">Pembayaran Prabayar</string>
@@ -117,8 +119,21 @@
     <string-array name="transferdigi1">
         <item>TRANSFER LP</item>
         <item>TRANSFER WP</item>
-        <item>TRANSFER MP</item>
         <item>TRANSFER PP</item>
+    </string-array>
+
+    <string-array name="convertdigi1">
+        <item>WP to MP</item>
+        <item>WP to PP</item>
+        <item>LP to MP</item>
+        <item>LP to PP</item>
+        <item>PP to MP</item>
+    </string-array>
+
+    <string-array name="exchangedigi1">
+        <item>LP to DiGiMall.com IDR</item>
+        <item>LP to eCash IDR</item>
+        <item>LP to Mobile Apps IDR</item>
     </string-array>
 
     <string name="login_failed">Login gagal, silahkan coba lagi</string>

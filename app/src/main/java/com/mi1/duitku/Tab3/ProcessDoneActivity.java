@@ -24,6 +24,7 @@ public class ProcessDoneActivity extends BaseActivity {
     private String mStrBillAmount;
     private String mStrSubscriberId;
     private String mStrStatusMsg;
+    private String mStrTrxId;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -37,16 +38,20 @@ public class ProcessDoneActivity extends BaseActivity {
             mStrBillAmount = intent.getStringExtra(TAG_BILLAMOUNT);
             mStrSubscriberId = intent.getStringExtra(TAG_SUBSCRIBERID);
             mStrStatusMsg = intent.getStringExtra(TAG_STATUS_MESSAGE);
-        }
+            mStrTrxId = intent.getStringExtra("TrxID");
 
+        }
         TextView tvBillAmmount = (TextView) findViewById(R.id.txt_amount);
         tvBillAmmount.setText(mStrBillAmount);
 
         TextView tvSubscriberId = (TextView) findViewById(R.id.txt_subscriber_id);
         tvSubscriberId.setText(mStrSubscriberId);
 
+        TextView tvTrxId = (TextView) findViewById(R.id.txt_trxid);
+        tvTrxId.setText(mStrTrxId);
+
         TextView tvStatus = (TextView) findViewById(R.id.txt_sent_to);
-//        tvStatus.setText(mStrStatusMsg);
+        tvStatus.setText(mStrStatusMsg.toUpperCase());
 
         Button btnFinish = (Button) findViewById(R.id.btn_finish);
         btnFinish.setOnClickListener(new View.OnClickListener() {

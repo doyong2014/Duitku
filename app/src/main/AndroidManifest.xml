@@ -32,7 +32,7 @@
             android:name=".HomeActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppThemeNoTitle">
-          <intent-filter>
+            <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -187,11 +187,11 @@
             </intent-filter>
         </service>
 
-        <activity android:name=".Tab5.Register.RegisterChildActivity"
+        <activity
+            android:name=".Tab5.Register.RegisterChildActivity"
             android:label="Register Child"
-            android:screenOrientation="portrait">
-
-        </activity>
+            android:screenOrientation="portrait"></activity>
+        <activity android:name=".Tab3.ConvertActivity"></activity>
     </application>
 
 </manifest>

@@ -23,6 +23,7 @@ import com.mi1.duitku.LoginActivity;
 import com.mi1.duitku.Main.MainActivity;
 import com.mi1.duitku.R;
 import com.mi1.duitku.Tab5.ChangePasswordActivity;
+import com.mi1.duitku.Tab5.ShareCodeActivity;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -69,7 +70,14 @@ public class DompetFragment extends Fragment {
         });
 
         tvBalance = (TextView) view.findViewById(R.id.txt_balance);
-        tvBalance.setText(CommonFunction.formatNumberingWithoutRP(AppGlobal._userInfo.userbalance));
+        tvBalance.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent  = new Intent(_context, ShareCodeActivity.class);
+                _context.startActivity(intent);
+            }
+        });
+//        tvBalance.setText(CommonFunction.formatNumberingWithoutRP(AppGlobal._userInfo.userbalance));
 
         TextView tvTopup = (TextView) view.findViewById(R.id.txt_topup);
         tvTopup.setOnClickListener(new View.OnClickListener() {
@@ -109,8 +117,23 @@ public class DompetFragment extends Fragment {
         tvTransfer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Intent intent  = new Intent(_context, TransferActivity.class);
-                //_context.startActivity(intent);
+                showTransferDialog();
+            }
+        });
+
+        TextView tvConvert = (TextView) view.findViewById(R.id.txt_convert);
+        tvConvert.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showConvertDialog();
+            }
+        });
+
+        TextView tvExchange = (TextView) view.findViewById(R.id.txt_exchange);
+        tvExchange.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showExchangeDialog();
             }
         });
 
@@ -311,18 +334,54 @@ public class DompetFragment extends Fragment {
                         intent.putExtra(PaymentProcessActivity.TAG_ACTIVITYPRODUCTCODE, getResources().getStringArray(R.array.transferdigi1)[which]);
                         intent.putExtra(PaymentProcessActivity.TAG_ACTIVITYPRODUCTNAME, getResources().getStringArray(R.array.transferdigi1)[which]);
                         startActivity(intent);
-                        /*if(which == 0) {
-                            intent = new Intent(_context, PaymentProcessActivity.class);
-                            intent.putExtra(PaymentProcessActivity.TAG_ACTIVITYTITLE, "PLN Pasca Bayar");
-                            intent.putExtra(PaymentProcessActivity.TAG_ACTIVITYPRODUCTCODE, "PLNPASCH");
-                            intent.putExtra(PaymentProcessActivity.TAG_ACTIVITYPRODUCTNAME, "PLN PASCA BAYAR");
-                            startActivity(intent);
-                        } else {
-                            intent = new Intent(_context, PaymentActivity.class);
-                            String product_title = getResources().getStringArray(R.array.postpaid)[which];
-                            intent.putExtra(PaymentActivity.TAG_ACTIVITYTITLE, product_title);
-                            startActivity(intent);
-                        }*/
+                        return true;
+                    }
+                })
+                .positiveText("OK")
+                .positiveColorRes(R.color.colorPrimary)
+                .negativeText("CANCEL")
+                .negativeColorRes(R.color.colorDisable)
+                .canceledOnTouchOutside(false)
+                .show();
+    }
+
+    private void showConvertDialog()
+    {
+        new MaterialDialog.Builder(_context)
+                .items(R.array.convertdigi1)
+                .itemsCallbackSingleChoice(-1, new MaterialDialog.ListCallbackSingleChoice() {
+                    @Override
+                    public boolean onSelection(MaterialDialog dialog, View view, int which, CharSequence text) {
+                        Intent intent = null;
+                        intent = new Intent(_context, ConvertActivity.class);
+                        intent.putExtra(PaymentProcessActivity.TAG_ACTIVITYTITLE, getResources().getStringArray(R.array.convertdigi1)[which]);
+                        intent.putExtra(PaymentProcessActivity.TAG_ACTIVITYPRODUCTCODE, getResources().getStringArray(R.array.convertdigi1)[which]);
+                        intent.putExtra(PaymentProcessActivity.TAG_ACTIVITYPRODUCTNAME, getResources().getStringArray(R.array.convertdigi1)[which]);
+                        startActivity(intent);
+                        return true;
+                    }
+                })
+                .positiveText("OK")
+                .positiveColorRes(R.color.colorPrimary)
+                .negativeText("CANCEL")
+                .negativeColorRes(R.color.colorDisable)
+                .canceledOnTouchOutside(false)
+                .show();
+    }
+
+    private void showExchangeDialog()
+    {
+        new MaterialDialog.Builder(_context)
+                .items(R.array.exchangedigi1)
+                .itemsCallbackSingleChoice(-1, new MaterialDialog.ListCallbackSingleChoice() {
+                    @Override
+                    public boolean onSelection(MaterialDialog dialog, View view, int which, CharSequence text) {
+                        Intent intent = null;
+                        intent = new Intent(_context, TransferActivity.class);
+                        intent.putExtra(PaymentProcessActivity.TAG_ACTIVITYTITLE, getResources().getStringArray(R.array.exchangedigi1)[which]);
+                        intent.putExtra(PaymentProcessActivity.TAG_ACTIVITYPRODUCTCODE, getResources().getStringArray(R.array.exchangedigi1)[which]);
+                        intent.putExtra(PaymentProcessActivity.TAG_ACTIVITYPRODUCTNAME, getResources().getStringArray(R.array.exchangedigi1)[which]);
+                        startActivity(intent);
                         return true;
                     }
                 })

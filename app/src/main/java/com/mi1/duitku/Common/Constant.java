@@ -47,6 +47,8 @@ public class Constant {
 	public static final String URL_TRANSFER_WP_DIGI1 = "http://103.236.201.138:88/MLM/index.php/api/transfer_wp";
 	public static final String URL_TRANSFER_PP_DIGI1 = "http://103.236.201.138:88/MLM/index.php/api/transfer_pp";
 	public static final String URL_TRANSFER_MP_DIGI1 = "http://103.236.201.138:88/MLM/index.php/api/transfer_mp";
+    public static final String URL_CONVERT_DIGI1 = "http://103.236.201.138:88/MLM/index.php/api/conversation";
+    public static final String URL_EXCHANGE_DIGI1 = "http://103.236.201.138:88/MLM/index.php/api/exchange";
 	
 	public static final String JSON_STATUS_MESSAGE = "statusMessage";
 	public static final String JSON_STATUS_CODE = "statusCode";
