@@ -131,9 +131,16 @@
     </string-array>
 
     <string-array name="exchangedigi1">
-        <item>LP to DiGiMall.com IDR</item>
+        <item>MP to DiGiMall.com IDR</item>
         <item>LP to eCash IDR</item>
         <item>LP to Mobile Apps IDR</item>
+    </string-array>
+    <string-array name="choiceexchangedigi1">
+        <item>10%</item>
+        <item>25%</item>
+        <item>50%</item>
+        <item>75%</item>
+        <item>100%</item>
     </string-array>
 
     <string name="login_failed">Login gagal, silahkan coba lagi</string>

@@ -51,7 +51,8 @@ public class ProcessDoneActivity extends BaseActivity {
         tvTrxId.setText(mStrTrxId);
 
         TextView tvStatus = (TextView) findViewById(R.id.txt_sent_to);
-        tvStatus.setText(mStrStatusMsg.toUpperCase());
+        if(mStrStatusMsg != null)
+            tvStatus.setText(mStrStatusMsg.toUpperCase());
 
         Button btnFinish = (Button) findViewById(R.id.btn_finish);
         btnFinish.setOnClickListener(new View.OnClickListener() {

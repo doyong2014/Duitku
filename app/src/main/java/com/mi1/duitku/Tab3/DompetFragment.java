@@ -377,7 +377,7 @@ public class DompetFragment extends Fragment {
                     @Override
                     public boolean onSelection(MaterialDialog dialog, View view, int which, CharSequence text) {
                         Intent intent = null;
-                        intent = new Intent(_context, TransferActivity.class);
+                        intent = new Intent(_context, ExchangeActivity.class);
                         intent.putExtra(PaymentProcessActivity.TAG_ACTIVITYTITLE, getResources().getStringArray(R.array.exchangedigi1)[which]);
                         intent.putExtra(PaymentProcessActivity.TAG_ACTIVITYPRODUCTCODE, getResources().getStringArray(R.array.exchangedigi1)[which]);
                         intent.putExtra(PaymentProcessActivity.TAG_ACTIVITYPRODUCTNAME, getResources().getStringArray(R.array.exchangedigi1)[which]);

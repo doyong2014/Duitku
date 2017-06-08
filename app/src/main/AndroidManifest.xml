@@ -190,8 +190,9 @@
         <activity
             android:name=".Tab5.Register.RegisterChildActivity"
             android:label="Register Child"
-            android:screenOrientation="portrait"></activity>
-        <activity android:name=".Tab3.ConvertActivity"></activity>
+            android:screenOrientation="portrait" />
+        <activity android:name=".Tab3.ConvertActivity" />
+        <activity android:name=".Tab3.ExchangeActivity"></activity>
     </application>
 
 </manifest>
