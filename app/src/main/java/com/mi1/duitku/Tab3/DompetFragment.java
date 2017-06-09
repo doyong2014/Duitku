@@ -101,7 +101,8 @@ public class DompetFragment extends Fragment {
         tvPrePayment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showPrePaidDialog();
+//                showPrePaidDialog();
+                Toast.makeText(getActivity(), "Coming Soon", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -109,7 +110,8 @@ public class DompetFragment extends Fragment {
         tvPostPayment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showPostPaidDialog();
+//                showPostPaidDialog();
+                Toast.makeText(getActivity(), "Coming Soon", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -141,7 +143,8 @@ public class DompetFragment extends Fragment {
         cardPayment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showPostPaidDialog();
+//                showPostPaidDialog();
+                Toast.makeText(getActivity(), "Coming Soon", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -149,7 +152,8 @@ public class DompetFragment extends Fragment {
         cardBuy.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showPrePaidDialog();
+//                showPrePaidDialog();
+                Toast.makeText(getActivity(), "Coming Soon", Toast.LENGTH_SHORT).show();
             }
         });
 

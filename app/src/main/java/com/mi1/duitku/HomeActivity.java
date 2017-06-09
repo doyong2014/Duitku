@@ -7,6 +7,7 @@ import android.widget.Button;
 
 import com.mi1.duitku.Common.AppGlobal;
 import com.mi1.duitku.Common.Constant;
+import com.mi1.duitku.Tab5.Register.RegisterChildActivity;
 import com.quickblox.auth.session.QBSettings;
 import com.quickblox.core.StoringMechanism;
 
@@ -42,7 +43,7 @@ public class HomeActivity extends BaseActivity {
         btnSign.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(HomeActivity.this, SignupActivity.class);
+                Intent intent = new Intent(HomeActivity.this, RegisterChildActivity.class);
                 startActivity(intent);
             }
         });

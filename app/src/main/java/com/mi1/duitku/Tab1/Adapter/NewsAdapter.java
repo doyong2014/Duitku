@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.daimajia.slider.library.SliderLayout;
@@ -79,13 +80,15 @@ public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
             headerHolder.cvPayment.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    showPostPaidDialog();
+//                    showPostPaidDialog();
+//                    Toast.makeText(context, "Coming Soon", Toast.LENGTH_SHORT).show();
                 }
             });
             headerHolder.cvBuy.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    showPrePaidDialog();
+//                    showPrePaidDialog();
+//                    Toast.makeText(context, "Coming Soon", Toast.LENGTH_SHORT).show();
                 }
             });
             headerHolder.cvTransfer.setOnClickListener(new View.OnClickListener() {

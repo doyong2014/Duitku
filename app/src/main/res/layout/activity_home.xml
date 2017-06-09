@@ -19,9 +19,9 @@
             android:layout_height="40dp"
             android:layout_weight="35"
             android:background="@drawable/btn_white"
+            android:gravity="center"
             android:text="@string/login"
-            android:textSize="18sp"
-            android:gravity="center"/>
+            android:textSize="18sp" />
 
        <!-- <View
             android:layout_width="0dp"
@@ -30,15 +30,16 @@
 
         <Button
             android:id="@+id/btn_home_sign"
-            android:visibility="invisible"
             android:layout_width="0dp"
             android:layout_height="40dp"
-            android:layout_weight="0"
+            android:layout_marginLeft="5dp"
+            android:layout_weight="35"
             android:background="@drawable/btn_green"
-            android:text="@string/signin"
+            android:gravity="center"
+            android:text="Register"
             android:textColor="@android:color/white"
             android:textSize="18sp"
-            android:gravity="center" />
+            android:visibility="gone" />
 
     </LinearLayout>
 

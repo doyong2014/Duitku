@@ -184,6 +184,11 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         LinearLayout navLogout = (LinearLayout)findViewById(R.id.nav_logout);
         navLogout.setOnClickListener(this);
 
+        Fragment fragment = null;
+        fragment = new Tab5Fragment();
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        ft.replace(R.id.content_fragment, fragment);
+        ft.commit();
     }
 
     @Override
@@ -228,6 +233,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         ft.replace(R.id.content_fragment, fragment);
         ft.commit();
+//        bottomTab.setCurrentItem(4);
     }
 
     private void hideKeyboard(){

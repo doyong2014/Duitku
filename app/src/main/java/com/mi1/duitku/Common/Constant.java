@@ -49,6 +49,9 @@ public class Constant {
 	public static final String URL_TRANSFER_MP_DIGI1 = "http://103.236.201.138:88/MLM/index.php/api/transfer_mp";
     public static final String URL_CONVERT_DIGI1 = "http://103.236.201.138:88/MLM/index.php/api/conversation";
     public static final String URL_EXCHANGE_DIGI1 = "http://103.236.201.138:88/MLM/index.php/api/exchange";
+	public static final String URL_REGISTER_DIGI1 = "http://103.236.201.138:88/MLM/index.php/api/register";
+	public static final String URL_ACTIVATION_DIGI1 = "http://103.236.201.138:88/MLM/index.php/api/activation";
+	public static final String URL_CHANGEPIN_DIGI1 = "http://103.236.201.138:88/MLM/index.php/api/change_pin";
 	
 	public static final String JSON_STATUS_MESSAGE = "statusMessage";
 	public static final String JSON_STATUS_CODE = "statusCode";

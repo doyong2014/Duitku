@@ -6,6 +6,8 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
 import android.util.Log;
@@ -30,6 +32,7 @@ import com.mi1.duitku.Common.Constant;
 import com.mi1.duitku.Common.PackageDetailInfo;
 import com.mi1.duitku.Common.UserInfo;
 import com.mi1.duitku.Main.MainActivity;
+import com.mi1.duitku.Main.Tab5Fragment;
 import com.quickblox.auth.session.QBSettings;
 import com.quickblox.core.QBEntityCallback;
 import com.quickblox.core.StoringMechanism;
@@ -359,6 +362,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
             public void onSuccess(QBUser qbUser, Bundle bundle) {
                 AppGlobal.qbID = qbUser.getId();
                 progress.dismiss();
+
                 Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                 startActivity(intent);
                 HomeActivity._instance.finish();
