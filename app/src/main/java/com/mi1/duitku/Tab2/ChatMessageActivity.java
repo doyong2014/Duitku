@@ -77,10 +77,11 @@ public class ChatMessageActivity extends BaseActivity implements QBChatDialogMes
                 chatMessage.setSenderId(AppGlobal.qbID);
                 chatMessage.setSaveToHistory(true);
                 chatMessage.setProperty("username", AppGlobal._userInfo.name);
-                chatMessage.setProperty("picUrl", AppGlobal._userInfo.picUrl);
+                if(AppGlobal._userInfo.picUrl != null && !AppGlobal._userInfo.picUrl.isEmpty())
+                    chatMessage.setProperty("picUrl", AppGlobal._userInfo.picUrl);
                 chatMessage.setProperty(PROPERTY_SAVE_TO_HISTORY, "1");
-                chatMessage.setDateSent(System.currentTimeMillis() / 1000);
-                chatMessage.setMarkable(true);
+                //chatMessage.setDateSent(System.currentTimeMillis() / 1000);
+                //chatMessage.setMarkable(true);
 
                 try {
                     qbChatDialog.sendMessage(chatMessage);
