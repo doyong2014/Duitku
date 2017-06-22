@@ -55,13 +55,14 @@
         android:paddingRight="10dp">
 
         <EditText
+            android:id="@+id/edt_rw"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Register Wallet (RW)"
-            android:textSize="16sp"
             android:enabled="false"
+            android:hint="Register Wallet (RW)"
+            android:maxLines="1"
             android:text="3,500"
-            android:maxLines="1" />
+            android:textSize="16sp" />
 
     </android.support.design.widget.TextInputLayout>
 
@@ -72,13 +73,14 @@
         android:paddingRight="10dp">
 
         <EditText
+            android:id="@+id/edt_lp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:enabled="false"
             android:hint="Loyalty Point (LP)"
+            android:maxLines="1"
             android:text="1,500"
-            android:textSize="16sp"
-            android:maxLines="1" />
+            android:textSize="16sp" />
 
     </android.support.design.widget.TextInputLayout>
 
@@ -92,16 +94,15 @@
         <Button
             android:id="@+id/btn_login"
             style="?android:textAppearanceSmall"
-            android:layout_height="40dp"
             android:layout_width="160dp"
-            android:layout_marginTop="30dp"
+            android:layout_height="40dp"
             android:layout_gravity="center_horizontal"
-            android:text="Continue"
-            android:onClick="jumpToPage"
-            android:textSize="18sp"
-            android:textColor="@android:color/white"
+            android:layout_marginTop="30dp"
             android:background="@drawable/btn_green"
-            />
+            android:onClick="jumpToPage"
+            android:text="Continue"
+            android:textColor="@android:color/white"
+            android:textSize="18sp" />
     </android.support.v7.widget.ButtonBarLayout>
         <!-- Content here -->
     </LinearLayout>

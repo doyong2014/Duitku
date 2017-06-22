@@ -38,12 +38,13 @@ tools:context="com.mi1.duitku.Tab5.Register.StepRegisterThreeFragment">
             android:paddingRight="10dp">
 
             <EditText
+                android:id="@+id/edt_bank_branch"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Bank Branch"
-                android:textSize="16sp"
+                android:maxLines="1"
                 android:text=""
-                android:maxLines="1" />
+                android:textSize="16sp" />
 
         </android.support.design.widget.TextInputLayout>
 
@@ -54,12 +55,13 @@ tools:context="com.mi1.duitku.Tab5.Register.StepRegisterThreeFragment">
             android:paddingRight="10dp">
 
             <EditText
+                android:id="@+id/edt_bank_acc_number"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Bank Account Number"
+                android:maxLines="1"
                 android:text=""
-                android:textSize="16sp"
-                android:maxLines="1" />
+                android:textSize="16sp" />
 
         </android.support.design.widget.TextInputLayout>
 
@@ -70,11 +72,12 @@ tools:context="com.mi1.duitku.Tab5.Register.StepRegisterThreeFragment">
             android:paddingRight="10dp">
 
             <EditText
+                android:id="@+id/edt_bank_address"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Bank Address"
-                android:textSize="16sp"
-                android:maxLines="3" />
+                android:maxLines="3"
+                android:textSize="16sp" />
 
         </android.support.design.widget.TextInputLayout>
 
@@ -85,11 +88,12 @@ tools:context="com.mi1.duitku.Tab5.Register.StepRegisterThreeFragment">
             android:paddingRight="10dp">
 
             <EditText
+                android:id="@+id/edt_beneficiary_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Beneficiary Name"
-                android:textSize="16sp"
-                android:maxLines="1" />
+                android:maxLines="1"
+                android:textSize="16sp" />
 
         </android.support.design.widget.TextInputLayout>
 
@@ -101,11 +105,12 @@ tools:context="com.mi1.duitku.Tab5.Register.StepRegisterThreeFragment">
             android:paddingRight="10dp">
 
             <EditText
+                android:id="@+id/edt_beneficiary_id"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Beneficiary ID"
-                android:textSize="16sp"
-                android:maxLines="1" />
+                android:maxLines="1"
+                android:textSize="16sp" />
 
         </android.support.design.widget.TextInputLayout>
 
@@ -116,11 +121,12 @@ tools:context="com.mi1.duitku.Tab5.Register.StepRegisterThreeFragment">
             android:paddingRight="10dp">
 
             <EditText
+                android:id="@+id/edt_beneficiary_relationship"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Beneficiary relationship"
-                android:textSize="16sp"
-                android:maxLines="1" />
+                android:maxLines="1"
+                android:textSize="16sp" />
 
         </android.support.design.widget.TextInputLayout>
 
@@ -131,11 +137,12 @@ tools:context="com.mi1.duitku.Tab5.Register.StepRegisterThreeFragment">
             android:paddingRight="10dp">
 
             <EditText
+                android:id="@+id/edt_spouse_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="spouse name"
-                android:textSize="16sp"
-                android:maxLines="1" />
+                android:maxLines="1"
+                android:textSize="16sp" />
 
         </android.support.design.widget.TextInputLayout>
 
@@ -146,11 +153,12 @@ tools:context="com.mi1.duitku.Tab5.Register.StepRegisterThreeFragment">
             android:paddingRight="10dp">
 
             <EditText
+                android:id="@+id/edt_spouse_passport"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="spouse License Id / Passport"
-                android:textSize="16sp"
-                android:maxLines="1" />
+                android:maxLines="1"
+                android:textSize="16sp" />
 
         </android.support.design.widget.TextInputLayout>
 
@@ -162,18 +170,17 @@ tools:context="com.mi1.duitku.Tab5.Register.StepRegisterThreeFragment">
             android:gravity="center">
 
             <Button
-                android:id="@+id/btn_login"
+                android:id="@+id/btn_last_step"
                 style="?android:textAppearanceSmall"
-                android:layout_height="40dp"
                 android:layout_width="160dp"
-                android:layout_marginTop="30dp"
+                android:layout_height="40dp"
                 android:layout_gravity="center_horizontal"
-                android:text="Continue"
-                android:onClick="jumpToPage"
-                android:textSize="18sp"
-                android:textColor="@android:color/white"
+                android:layout_marginTop="30dp"
                 android:background="@drawable/btn_green"
-                />
+                android:onClick="jumpToPage"
+                android:text="Continue"
+                android:textColor="@android:color/white"
+                android:textSize="18sp" />
         </android.support.v7.widget.ButtonBarLayout>
         <!-- Content here -->
     </LinearLayout>

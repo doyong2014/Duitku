@@ -590,8 +590,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 break;
             case R.id.nav_add_user:
                 dlDrawer.closeDrawers();
-                //intent = new Intent(MainActivity.this, RegisterChildActivity.class);
-                //startActivity(intent);
+                intent = new Intent(MainActivity.this, RegisterChildActivity.class);
+                startActivity(intent);
                 break;
         }
     }

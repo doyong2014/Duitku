@@ -21,13 +21,14 @@
         android:paddingLeft="10dp"
         android:paddingRight="10dp">
 
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Nama"
-            android:text=""
-            android:textSize="16sp"
-            android:maxLines="1" />
+            <EditText
+                android:id="@+id/edt_nama"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Nama"
+                android:maxLines="1"
+                android:text=""
+                android:textSize="16sp" />
 
     </android.support.design.widget.TextInputLayout>
 
@@ -38,12 +39,13 @@
             android:paddingRight="10dp">
 
             <EditText
+                android:id="@+id/edt_username"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Username"
+                android:maxLines="1"
                 android:text=""
-                android:textSize="16sp"
-                android:maxLines="1" />
+                android:textSize="16sp" />
 
         </android.support.design.widget.TextInputLayout>
 
@@ -71,36 +73,40 @@
             android:paddingRight="10dp">
 
             <EditText
+                android:id="@+id/edt_passport"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="License ID/Passport"
-                android:textSize="16sp"
-                android:maxLines="1" />
+                android:maxLines="1"
+                android:textSize="16sp" />
 
         </android.support.design.widget.TextInputLayout>
 
 
         <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/radio_gender"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
+            android:orientation="vertical"
             android:paddingLeft="10dp"
-            android:paddingRight="10dp"
-            android:orientation="vertical">
+            android:paddingRight="10dp">
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Gender"
-                />
-            <RadioButton android:id="@+id/radio_pirates"
+                android:text="Gender" />
+
+            <RadioButton
+                android:id="@+id/radio_male"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Male"
-                />
-            <RadioButton android:id="@+id/radio_ninjas"
+                android:text="Male" />
+
+            <RadioButton
+                android:id="@+id/radio_female"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Female"
-                />
+                android:text="Female" />
         </RadioGroup>
 
         <android.support.design.widget.TextInputLayout
@@ -110,11 +116,12 @@
             android:paddingRight="10dp">
 
             <EditText
+                android:id="@+id/edt_address"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Address"
-                android:textSize="16sp"
-                android:maxLines="3" />
+                android:maxLines="3"
+                android:textSize="16sp" />
 
         </android.support.design.widget.TextInputLayout>
 
@@ -125,11 +132,12 @@
             android:paddingRight="10dp">
 
             <EditText
+                android:id="@+id/edt_province"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="State/Province"
-                android:textSize="16sp"
-                android:maxLines="1" />
+                android:maxLines="1"
+                android:textSize="16sp" />
 
         </android.support.design.widget.TextInputLayout>
 
@@ -140,11 +148,12 @@
             android:paddingRight="10dp">
 
             <EditText
+                android:id="@+id/edt_city"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="City/Town"
-                android:textSize="16sp"
-                android:maxLines="1" />
+                android:maxLines="1"
+                android:textSize="16sp" />
 
         </android.support.design.widget.TextInputLayout>
 
@@ -155,11 +164,12 @@
             android:paddingRight="10dp">
 
             <EditText
+                android:id="@+id/edt_zipcode"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Postal/Zip Code"
-                android:textSize="16sp"
-                android:maxLines="1" />
+                android:maxLines="1"
+                android:textSize="16sp" />
 
         </android.support.design.widget.TextInputLayout>
 
@@ -170,11 +180,12 @@
             android:paddingRight="10dp">
 
             <EditText
+                android:id="@+id/edt_telpnum"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Mobile Tel No"
-                android:textSize="16sp"
-                android:maxLines="1" />
+                android:maxLines="1"
+                android:textSize="16sp" />
 
         </android.support.design.widget.TextInputLayout>
 
@@ -184,12 +195,13 @@
         android:paddingLeft="10dp"
         android:paddingRight="10dp">
 
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Office Tel No"
-            android:textSize="16sp"
-            android:maxLines="1" />
+            <EditText
+                android:id="@+id/edt_officenum"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Office Tel No"
+                android:maxLines="1"
+                android:textSize="16sp" />
 
     </android.support.design.widget.TextInputLayout>
 
@@ -200,11 +212,12 @@
             android:paddingRight="10dp">
 
             <EditText
+                android:id="@+id/edt_homenum"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Home Tel No"
-                android:textSize="16sp"
-                android:maxLines="1" />
+                android:maxLines="1"
+                android:textSize="16sp" />
 
         </android.support.design.widget.TextInputLayout>
 
@@ -216,11 +229,12 @@
             android:paddingRight="10dp">
 
             <EditText
+                android:id="@+id/edt_fax"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Fax"
-                android:textSize="16sp"
-                android:maxLines="1" />
+                android:maxLines="1"
+                android:textSize="16sp" />
 
         </android.support.design.widget.TextInputLayout>
 
@@ -231,11 +245,12 @@
             android:paddingRight="10dp">
 
             <EditText
+                android:id="@+id/edt_email"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Email"
-                android:textSize="16sp"
-                android:maxLines="1" />
+                android:maxLines="1"
+                android:textSize="16sp" />
 
         </android.support.design.widget.TextInputLayout>
 
@@ -247,18 +262,17 @@
             android:gravity="center">
 
             <Button
-                android:id="@+id/btn_login"
+                android:id="@+id/btn_step2"
                 style="?android:textAppearanceSmall"
-                android:layout_height="40dp"
                 android:layout_width="160dp"
-                android:layout_marginTop="30dp"
+                android:layout_height="40dp"
                 android:layout_gravity="center_horizontal"
-                android:text="Continue"
-                android:onClick="jumpToPage"
-                android:textSize="18sp"
-                android:textColor="@android:color/white"
+                android:layout_marginTop="30dp"
                 android:background="@drawable/btn_green"
-                />
+                android:onClick="jumpToPage"
+                android:text="Continue"
+                android:textColor="@android:color/white"
+                android:textSize="18sp" />
         </android.support.v7.widget.ButtonBarLayout>
         <!-- Content here -->
     </LinearLayout>

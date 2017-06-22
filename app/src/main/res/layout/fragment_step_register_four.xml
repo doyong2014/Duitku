@@ -21,11 +21,12 @@ tools:context="com.mi1.duitku.Tab5.Register.StepRegisterFourFragment">
             android:paddingRight="10dp">
 
             <EditText
+                android:id="@+id/edt_referral_code"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Introduced By"
-                android:textSize="16sp"
-                android:maxLines="1" />
+                android:hint="Referral Code"
+                android:maxLines="1"
+                android:textSize="16sp" />
 
         </android.support.design.widget.TextInputLayout>
 
@@ -36,59 +37,68 @@ tools:context="com.mi1.duitku.Tab5.Register.StepRegisterFourFragment">
             android:paddingRight="10dp">
 
             <EditText
+                android:id="@+id/edt_referral_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Introducer Name"
-                android:textSize="16sp"
-                android:maxLines="1" />
+                android:editable="false"
+                android:enabled="false"
+                android:hint="Referral Name"
+                android:maxLines="1"
+                android:textSize="16sp" />
 
         </android.support.design.widget.TextInputLayout>
 
         <RadioGroup
+            android:id="@+id/radio_placement"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
+            android:orientation="vertical"
             android:paddingLeft="10dp"
-            android:paddingRight="10dp"
-            android:orientation="vertical">
+            android:paddingRight="10dp">
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Placement Code"
-                />
-            <RadioButton android:id="@+id/radio_left_a"
+                android:text="Placement Code" />
+
+            <RadioButton
+                android:id="@+id/radio_left_a"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Auto Far Left Regional A"
-                />
-            <RadioButton android:id="@+id/radio_left_b"
+                android:text="Auto Far Left Regional A" />
+
+            <RadioButton
+                android:id="@+id/radio_right_b"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Auto Far Left Regional B"
-                />
+                android:text="Auto Far Left Regional B" />
         </RadioGroup>
 
 
         <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/radio_reg_method"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
+            android:orientation="vertical"
             android:paddingLeft="10dp"
-            android:paddingRight="10dp"
-            android:orientation="vertical">
+            android:paddingRight="10dp">
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Registration Method"
-                />
-            <RadioButton android:id="@+id/radio_pirates"
+                android:text="Registration Method" />
+
+            <RadioButton
+                android:id="@+id/radio_full"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Full RW"
-                />
-            <RadioButton android:id="@+id/radio_ninjas"
+                android:text="Full RW" />
+
+            <RadioButton
+                android:id="@+id/radio_half"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="50 % RW / 50 % LP"
-                />
+                android:text="50 % RW / 50 % LP" />
         </RadioGroup>
 
         <android.support.design.widget.TextInputLayout
@@ -98,11 +108,12 @@ tools:context="com.mi1.duitku.Tab5.Register.StepRegisterFourFragment">
             android:paddingRight="10dp">
 
             <EditText
+                android:id="@+id/edt_pin"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="PIN"
-                android:textSize="16sp"
-                android:maxLines="1" />
+                android:maxLines="1"
+                android:textSize="16sp" />
 
         </android.support.design.widget.TextInputLayout>
 
@@ -114,18 +125,17 @@ tools:context="com.mi1.duitku.Tab5.Register.StepRegisterFourFragment">
             android:gravity="center">
 
             <Button
-                android:id="@+id/btn_login"
+                android:id="@+id/btn_continue_4"
                 style="?android:textAppearanceSmall"
-                android:layout_height="40dp"
                 android:layout_width="160dp"
-                android:layout_marginTop="30dp"
+                android:layout_height="40dp"
                 android:layout_gravity="center_horizontal"
-                android:text="Continue"
-                android:onClick="jumpToPage"
-                android:textSize="18sp"
-                android:textColor="@android:color/white"
+                android:layout_marginTop="30dp"
                 android:background="@drawable/btn_green"
-                />
+                android:onClick="jumpToPage"
+                android:text="Continue"
+                android:textColor="@android:color/white"
+                android:textSize="18sp" />
         </android.support.v7.widget.ButtonBarLayout>
         <!-- Content here -->
     </LinearLayout>

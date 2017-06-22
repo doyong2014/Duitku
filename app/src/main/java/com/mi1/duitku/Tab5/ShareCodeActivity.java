@@ -105,18 +105,6 @@ public class ShareCodeActivity extends BaseActivity implements AdapterView.OnIte
             spinnerPackage.setOnItemSelectedListener(this);
         }
 
-//        tvName.setText(AppGlobal._userInfo.name + " - Wallet Information");
-//        tvTotalPartner.setText(AppGlobal._userInfo.packageDetail.get(0).children_left.replace(".00","") + "/" + AppGlobal._userInfo.packageDetail.get(0).children_right.replace(".00",""));
-//        tvCummulativeRP.setText(CommonFunction.formatNumberingWithoutRP(AppGlobal._userInfo.packageDetail.get(0).komulative_vp_left.replace(".00","")) + "/" + CommonFunction.formatNumberingWithoutRP(AppGlobal._userInfo.packageDetail.get(0).komulative_vp_right.replace(".00","")));
-//        tvLGI.setText(CommonFunction.formatNumberingWithoutRP(AppGlobal._userInfo.packageDetail.get(0).pairing_vp_left.replace(".00","")) + "/" + CommonFunction.formatNumberingWithoutRP(AppGlobal._userInfo.packageDetail.get(0).pairing_vp_right.replace(".00","")));
-//        tvCummulativeDayLP.setText(CommonFunction.formatNumberingWithoutRP(AppGlobal._userInfo.packageDetail.get(0).day_vp_left.replace(".00","")) + "/" + CommonFunction.formatNumberingWithoutRP(AppGlobal._userInfo.packageDetail.get(0).day_vp_right.replace(".00","")));
-//        tvLP.setText(CommonFunction.formatNumberingWithoutRP(AppGlobal._userInfo.packageDetail.get(0).lp.replace(".00","")));
-//        tvRW.setText(CommonFunction.formatNumberingWithoutRP(AppGlobal._userInfo.packageDetail.get(0).rv.replace(".00","")));
-//        tvWP.setText(CommonFunction.formatNumberingWithoutRP(AppGlobal._userInfo.packageDetail.get(0).wp.replace(".00","")));
-//        tvPP.setText(CommonFunction.formatNumberingWithoutRP(AppGlobal._userInfo.packageDetail.get(0).pp.replace(".00","")));
-//        tvCP.setText(CommonFunction.formatNumberingWithoutRP(AppGlobal._userInfo.packageDetail.get(0).cp.replace(".00","")));
-//        tvMP.setText(CommonFunction.formatNumberingWithoutRP(AppGlobal._userInfo.packageDetail.get(0).mp.replace(".00","")));
-
     }
 
     @Override

@@ -332,6 +332,8 @@ public class DompetFragment extends Fragment {
                 .itemsCallbackSingleChoice(-1, new MaterialDialog.ListCallbackSingleChoice() {
                     @Override
                     public boolean onSelection(MaterialDialog dialog, View view, int which, CharSequence text) {
+                        if(which == -1)
+                            return  false;
                         Intent intent = null;
                         intent = new Intent(_context, TransferActivity.class);
                         intent.putExtra(PaymentProcessActivity.TAG_ACTIVITYTITLE, getResources().getStringArray(R.array.transferdigi1)[which]);
@@ -356,6 +358,8 @@ public class DompetFragment extends Fragment {
                 .itemsCallbackSingleChoice(-1, new MaterialDialog.ListCallbackSingleChoice() {
                     @Override
                     public boolean onSelection(MaterialDialog dialog, View view, int which, CharSequence text) {
+                        if(which == -1)
+                            return  false;
                         Intent intent = null;
                         intent = new Intent(_context, ConvertActivity.class);
                         intent.putExtra(PaymentProcessActivity.TAG_ACTIVITYTITLE, getResources().getStringArray(R.array.convertdigi1)[which]);
@@ -380,6 +384,8 @@ public class DompetFragment extends Fragment {
                 .itemsCallbackSingleChoice(-1, new MaterialDialog.ListCallbackSingleChoice() {
                     @Override
                     public boolean onSelection(MaterialDialog dialog, View view, int which, CharSequence text) {
+                        if(which == -1)
+                            return  false;
                         Intent intent = null;
                         intent = new Intent(_context, ExchangeActivity.class);
                         intent.putExtra(PaymentProcessActivity.TAG_ACTIVITYTITLE, getResources().getStringArray(R.array.exchangedigi1)[which]);

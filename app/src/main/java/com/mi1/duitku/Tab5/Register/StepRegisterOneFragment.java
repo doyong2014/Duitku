@@ -1,14 +1,23 @@
 package com.mi1.duitku.Tab5.Register;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.TextView;
 
+import com.afollestad.materialdialogs.DialogAction;
+import com.afollestad.materialdialogs.MaterialDialog;
+import com.mi1.duitku.Common.AppGlobal;
 import com.mi1.duitku.R;
 import com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner;
 
@@ -28,11 +37,15 @@ public class StepRegisterOneFragment extends Fragment {
 
     private MaterialBetterSpinner spinner_package;
 
-    String[] SPINNERLIST = {"Community", "Group", "Family", "Personal"};
+    String[] SPINNERLIST = {"a","b","c","d","e"};//getActivity().getApplicationContext().
 
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+    private String selectedPackage;
+    private String selectedPackageValue;
+    private int RWNeeded;
+    private int currentRW;
 
     private OnFragmentInteractionListener mListener;
 
@@ -65,6 +78,7 @@ public class StepRegisterOneFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+        SPINNERLIST = getResources().getStringArray(R.array.packagelist);
     }
 
     @Override
@@ -75,7 +89,61 @@ public class StepRegisterOneFragment extends Fragment {
         spinner_package = (MaterialBetterSpinner) view.findViewById(R.id.spinner_package);
         ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item, SPINNERLIST);
         spinner_package.setAdapter(arrayAdapter);
+        spinner_package.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                selectedPackage = getResources().getStringArray(R.array.packagelist)[position];
+                selectedPackageValue = getResources().getStringArray(R.array.packagelistvalue)[position];
+                switch (selectedPackage)
+                {
+                    case "Community":
+                        RWNeeded = 8000;
+                        break;
+                    case "Group":
+                        RWNeeded = 4000;
+                        break;
+                    case "Family":
+                        RWNeeded = 2100;
+                        break;
+                    case "Personal":
+                        RWNeeded = 500;
+                        break;
+                    case "Trial":
+                        RWNeeded = 140;
+                        break;
+                }
+            }
+        });
+//        spinner_package.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
+//        {
+//            @Override
+//            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+//
+//            }
+//
+//            @Override
+//            public void onNothingSelected(AdapterView<?> parent) {
+//
+//            }
+//        });
 
+        currentRW = Integer.parseInt(AppGlobal._userInfo.packageDetail.get(0).rv.replace(".00",""));
+        Button btnContinue = (Button) view.findViewById(R.id.btn_login);
+        btnContinue.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if(validate())
+                {
+                    AppGlobal._registerInfo.package_id = selectedPackageValue;
+                    ((RegisterChildActivity)getActivity()).jumpToPage(v);
+                }
+                else
+                {
+                    showDialog();
+                }
+            }
+        });
         return view;
 
     }
@@ -85,6 +153,14 @@ public class StepRegisterOneFragment extends Fragment {
         if (mListener != null) {
             mListener.onFragmentInteraction(uri);
         }
+    }
+
+    public boolean validate()
+    {
+        if(currentRW < RWNeeded)
+            return false;
+        else
+            return true;
     }
 
     @Override
@@ -111,5 +187,19 @@ public class StepRegisterOneFragment extends Fragment {
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
+    }
+
+    private void showDialog() {
+
+        new AlertDialog.Builder(getContext())
+                .setTitle("RW Tidak Cukup")
+                .setMessage("Jumlah Register Wallet Kurang")
+                .setCancelable(false)
+                .setPositiveButton("ok", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        return;
+                    }
+                }).show();
     }
 }
